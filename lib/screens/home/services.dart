@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers
-
 import 'package:absherv2/screens/imports.dart';
 
 
@@ -38,7 +36,7 @@ class DynamicItemListGrid extends StatelessWidget {
         } else if (snapshot.hasData) {
           final dynamicItems = snapshot.data!;
           if (dynamicItems.isEmpty) {
-            return const Text('No items available.');
+            return Text('No items available.');
           } else {
             return Container(
               child: GridView.builder(
@@ -87,7 +85,7 @@ class DynamicItemListGrid extends StatelessWidget {
             );
           }
         } else {
-          return const Text('No data available.');
+          return Text('No data available.');
         }
       },
     );
