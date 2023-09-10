@@ -1,0 +1,35 @@
+|-- android/
+|-- assets/
+|   |-- assets/
+|   |-- services-icon/
+|-- ios/
+|-- lib/
+|   |-- screens/
+|   |   |-- home/
+|   |   |   |-- main-home.dart
+|   |   |   |-- services.dart
+|   |   |   |-- ...
+|   |   |-- layout/
+|   |   |   |-- app_bar.dart
+|   |   |   |-- custom_drawer.dart
+|   |   |   |-- bottom_navigation.dart
+|   |   |   |-- ...
+|   |   |-- widgets/
+|   |   |   |-- image_slider.dart
+|   |   |   |-- testimonial_list.dart
+|   |   |   |-- ...
+|   |   |-- services/
+|   |   |   |-- main_services.dart
+|   |   |   |-- ...
+|   |-- app-config.dart
+|   |-- imports.dart
+|   |- Api.dart
+|-- test/
+|-- .gitignore
+|-- .metadata
+|-- .packages
+|-- .flutter-intellij
+|-- .pubspec.yaml
+|-- README.md
+|-- pubspec.lock
+|-- pubspec.yaml
