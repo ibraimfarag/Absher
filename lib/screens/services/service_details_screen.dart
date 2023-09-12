@@ -26,9 +26,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   // title: Text('Service Details'),
-      // ),
+      appBar: AppBar(
+        // title: Text('Service Details'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
