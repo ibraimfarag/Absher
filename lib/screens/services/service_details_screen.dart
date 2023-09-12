@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
-class ServiceDetailsScreen extends StatelessWidget {
+import 'package:absherv2/screens/imports.dart';
+class ServiceDetailsScreen extends StatefulWidget {
   final int id;
   final int subId;
   final String name;
@@ -20,34 +19,84 @@ class ServiceDetailsScreen extends StatelessWidget {
   });
 
   @override
+  State<ServiceDetailsScreen> createState() => _ServiceDetailsScreenState();
+}
+
+class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // title: Text('Service Details'),
-      ),
-      body: Center(
+      // appBar: AppBar(
+      //   // title: Text('Service Details'),
+      // ),
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Network Image
             Image.network(
-              imagePath, // Use the provided image URL
-              width: 200, // Set the width as needed
-              height: 200, // Set the height as needed
+              widget.imagePath,
+              width: double.infinity, // Full width
               fit: BoxFit.cover,
             ),
-            SizedBox(height: 16),
-            Text(
-              text, // Display the service name or details
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // Service Name or Details
+Row(
+  mainAxisAlignment: MainAxisAlignment.end, // Align text to the right
+  children: [
+    Padding(
+      padding: const EdgeInsets.all(16.0), // Add your desired padding
+      child: Text(
+        widget.text,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.right,
+      ),
+    ),
+  ],
+),
+
+            // Bio
+  Row(
+  mainAxisAlignment: MainAxisAlignment.end, // Align to the right
+  children: [
+    Flexible(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20 ,8,20,8), // Add padding here
+        child: Text(
+          widget.bio,
+          textAlign: TextAlign.right,
+        ),
+      ),
+    ),
+  ],
+),
+
+
+            // Preview Cost
+        Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Text(
+      'تكلفة المعاينة: ${widget.previewCost} جنية',
+      textAlign: TextAlign.center,
+    ),
+  ],
+),
+            // Button
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16,0,16,16),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Add your button action here
+                },
+                child: Text('مـعـايـنـة'),
+              ),
             ),
-            // Add more widgets to display additional details as needed
-            Text('ID: $id'),
-            Text('Sub ID: $subId'),
-            Text('Bio: $bio'),
-            Text('Preview Cost: $previewCost'),
           ],
         ),
       ),
+      
     );
   }
 }
