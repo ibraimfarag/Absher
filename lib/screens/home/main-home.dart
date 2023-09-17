@@ -75,8 +75,10 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
              SizedBox(
   height: 200,
   child: DynamicItemListGrid(
+    
     itemCount: 8,
     dynamicItemsFuture: fetchDynamicItems(), // Replace with your data fetching method
+    navigator: Navigator.of(context),
   ),
 ),
             // Row 4

@@ -31,7 +31,11 @@ class _MainAppState extends State<MainApp> {
         // textDirection: TextDirection.ltr, // or TextDirection.rtl
         child: Scaffold(
           appBar: const MyAppBar(),
-          body: _getBodyWidget(_currentIndex), // Start with the first screen
+       body: Builder(
+  builder: (BuildContext context) {
+    return _getBodyWidget(_currentIndex, Navigator.of(context));
+  },
+), // Pass the Navigator
           bottomNavigationBar: MyBottomNavigationBar(
             currentIndex: _currentIndex,
             onTabTapped: (index) {
@@ -48,15 +52,18 @@ class _MainAppState extends State<MainApp> {
     );
   }
 
-  Widget _getBodyWidget(int index) {
+  Widget _getBodyWidget(int index, NavigatorState navigator) {
     switch (index) {
       case 0:
         return const MainHomeScreen();
       case 1:
         return const MainHomeScreenService();
-      // case 2:
-      //   return SettingsScreen();
-      // Add more cases for other screens
+      case 2:
+ return DynamicItemListGrid(
+          itemCount: 8,
+          dynamicItemsFuture: fetchDynamicItems(),
+          navigator: navigator, // Pass the Navigator
+        );      // Add more cases for other screens
       default:
         return Container();
     }

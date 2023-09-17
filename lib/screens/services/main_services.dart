@@ -61,8 +61,10 @@ class _MainHomeScreenServiceState extends State<MainHomeScreenService> {
             SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child:  DynamicItemListGrid(
+                  
     itemCount: 8,
     dynamicItemsFuture: fetchDynamicItems(), // Replace with your data fetching method
+    navigator: Navigator.of(context),
   ),),
             // Row 4
 

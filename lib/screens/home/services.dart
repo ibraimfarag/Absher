@@ -23,11 +23,14 @@ class DynamicItem {
 class DynamicItemListGrid extends StatelessWidget {
   final int itemCount; // Add a parameter to accept the itemCount
   final Future<List<DynamicItem>> dynamicItemsFuture; // Add this parameter
+  final NavigatorState navigator; // Add this parameter
 
   const DynamicItemListGrid({
     Key? key,
     required this.itemCount,
     required this.dynamicItemsFuture, // Add this parameter
+    required this.navigator, // Add this parameter
+
   }) : super(key: key);
 
   @override
