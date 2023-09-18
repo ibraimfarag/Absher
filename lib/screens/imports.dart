@@ -33,6 +33,15 @@ export 'package:absherv2/screens/widgets/image_slider.dart';
 // /* ------------------------------- // screens ------------------------------- */
 // /* -------------------------------------------------------------------------- */
 
+
+
+// /* ---------------------------- // Authentication --------------------------- */
+
+export 'package:absherv2/screens/auth/login.dart';
+
+export 'package:absherv2/screens/auth/register.dart';
+
+
 // /* ----------------------------- // Home screen ----------------------------- */
 
 export 'package:absherv2/screens/home/main-home.dart';
@@ -43,3 +52,4 @@ export 'package:absherv2/screens/widgets/testimonial_list.dart';
 
 export 'package:absherv2/screens/services/main_services.dart';
 export 'package:absherv2/screens/services/service_details_screen.dart';
+
