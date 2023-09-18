@@ -5,7 +5,8 @@ class ServiceDetailsScreen extends StatefulWidget {
   final String name;
   final String imagePath;
   final String bio;
-  final double previewCost;
+  final String cost;
+  final String costNotes;
   final String text;
 
   ServiceDetailsScreen({
@@ -14,7 +15,8 @@ class ServiceDetailsScreen extends StatefulWidget {
     required this.name,
     required this.imagePath,
     required this.bio,
-    required this.previewCost,
+    required this.cost,
+    required this.costNotes,
     required this.text,
   });
 
@@ -78,7 +80,17 @@ Row(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
     Text(
-      'تكلفة المعاينة: ${widget.previewCost} جنية',
+      '  ${widget.cost} ',
+      textAlign: TextAlign.center,
+    ),
+  ],
+),
+            // Preview Cost
+        Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Text(
+      ' ${widget.costNotes} ',
       textAlign: TextAlign.center,
     ),
   ],

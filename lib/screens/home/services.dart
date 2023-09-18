@@ -6,7 +6,8 @@ class DynamicItem {
   final String name;
   final String imagePath;
   final String bio;
-  final double previewCost;
+  final String cost;
+  final String costNotes;
   final String text;
 
   DynamicItem({
@@ -15,7 +16,8 @@ class DynamicItem {
     required this.name,
     required this.imagePath,
     required this.bio,
-    required this.previewCost,
+    required this.cost,
+    required this.costNotes,
     required this.text,
   });
 }
@@ -68,7 +70,8 @@ class DynamicItemListGrid extends StatelessWidget {
           name: dynamicItem.name, // Pass the 'name' parameter
           imagePath: dynamicItem.imagePath,
           bio: dynamicItem.bio,
-          previewCost: dynamicItem.previewCost,
+          cost: dynamicItem.cost,
+          costNotes: dynamicItem.costNotes,
           text: dynamicItem.text,
         ),
       ),
@@ -132,7 +135,8 @@ Future<List<DynamicItem>> fetchDynamicItems() async {
         name: itemData['name'] as String,
         imagePath: itemData['iconUrl'] as String,
         bio: itemData['bio'] as String,
-        previewCost: itemData['previewCost'] as double,
+        cost: itemData['cost'] as String,
+        costNotes: itemData['costNotes'] as String, // You can use the 'name' field as text
         text: itemData['name'] as String, // You can use the 'name' field as text
       );
     }).toList();
