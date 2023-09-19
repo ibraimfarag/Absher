@@ -27,88 +27,87 @@ class ServiceDetailsScreen extends StatefulWidget {
 class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // title: Text('Service Details'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Network Image
-            Image.network(
-              widget.imagePath,
-              width: double.infinity, // Full width
-              fit: BoxFit.cover,
-            ),
-            // Service Name or Details
-Row(
-  mainAxisAlignment: MainAxisAlignment.end, // Align text to the right
-  children: [
-    Padding(
-      padding: const EdgeInsets.all(16.0), // Add your desired padding
-      child: Text(
-        widget.text,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-        textAlign: TextAlign.right,
-      ),
-    ),
-  ],
-),
-
-            // Bio
-  Row(
-  mainAxisAlignment: MainAxisAlignment.end, // Align to the right
-  children: [
-    Flexible(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20 ,8,20,8), // Add padding here
-        child: Text(
-          widget.bio,
-          textAlign: TextAlign.right,
-        ),
-      ),
-    ),
-  ],
-),
-
-
-            // Preview Cost
-        Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Text(
-      '  ${widget.cost} ',
-      textAlign: TextAlign.center,
-    ),
-  ],
-),
-            // Preview Cost
-        Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Text(
-      ' ${widget.costNotes} ',
-      textAlign: TextAlign.center,
-    ),
-  ],
-),
-            // Button
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16,0,16,16),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Add your button action here
-                },
-                child: Text('مـعـايـنـة'),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+         appBar: MyAppBar(showBackButton: true), // To show the back button
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Network Image
+              Image.network(
+                widget.imagePath,
+                width: double.infinity, // Full width
+                fit: BoxFit.cover,
               ),
-            ),
-          ],
+              // Service Name or Details
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  widget.text,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                                                fontFamily: AppVariables.serviceFontFamily,
+
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+
+              // Bio
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  widget.bio,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(                            fontFamily: AppVariables.serviceFontFamily,
+),
+                ),
+              ),
+
+              // Preview Cost
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  '  ${widget.cost} ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(                            fontFamily: AppVariables.serviceFontFamily,
+)
+                ),
+              ),
+
+              // Cost Notes
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  ' ${widget.costNotes} ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(                            fontFamily: AppVariables.serviceFontFamily,
+),
+                ),
+              ),
+
+              // Button
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Add your button action here
+                  },
+                  child: Text('مـعـايـنـة'
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
+         bottomNavigationBar: MyBottomNavigationBar(initialIndex: 1), // Add the bottom navigation bar here
+
+        
+         drawer: const CustomDrawer(),
       ),
-      
     );
   }
 }

@@ -19,6 +19,30 @@ static Future<List<Map<String, dynamic>>> fetchData(String endpoint) async {
     throw Exception('Failed to load data from the API');
   }
 }
+
+static Future<String> login(String phone, String password) async {
+  final Map<String, String> requestData = {
+    'phone': phone,
+    'password': password,
+  };
+
+  final response = await http.post(
+    Uri.parse('$baseUrl/Clients/login'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(requestData),
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> responseBody = json.decode(response.body);
+    final String token = responseBody['token'];
+    return token;
+  } else {
+    throw Exception('Login failed. Check your credentials and try again.');
+  }
+}
+
   // Example method to post data to the API
   static Future<void> postData(String endpoint, Map<String, dynamic> data) async {
     final response = await http.post(

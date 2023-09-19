@@ -9,10 +9,15 @@ class MainHomeScreen extends StatefulWidget {
 
 class _MainHomeScreenState extends State<MainHomeScreen> {
   final List<Testimonial> _testimonials = getTestimonials();
-
+  // int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Directionality(
+        // Set the text direction for the app
+        textDirection: TextDirection.rtl, // or TextDirection.rtl
+        // textDirection: TextDirection.ltr, // or TextDirection.rtl
+        child:  Scaffold(
+           appBar: MyAppBar(showBackButton: false),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -155,6 +160,13 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
           ],
         ),
       ),
+                 bottomNavigationBar: MyBottomNavigationBar(initialIndex: 0), // Add the bottom navigation bar here
+
+
+          drawer: const CustomDrawer(),
+    ),
+    
     );
+  
   }
 }

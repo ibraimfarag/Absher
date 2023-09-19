@@ -13,7 +13,11 @@ class _MainHomeScreenServiceState extends State<MainHomeScreenService> {
  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Directionality(
+        // Set the text direction for the app
+        textDirection: TextDirection.rtl, // or TextDirection.rtl
+        // textDirection: TextDirection.ltr, // or TextDirection.rtl
+        child: Scaffold( appBar: MyAppBar(showBackButton: false),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -119,6 +123,12 @@ class _MainHomeScreenServiceState extends State<MainHomeScreenService> {
           ],
         ),
       ),
+
+               bottomNavigationBar: MyBottomNavigationBar(initialIndex: 1), // Add the bottom navigation bar here
+
+        
+         drawer: const CustomDrawer(),
+    ),
     );
   }
 }

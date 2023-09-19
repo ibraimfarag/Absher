@@ -35,9 +35,13 @@ class CustomDrawer extends StatelessWidget {
                           fontFamily: AppVariables().titleFontFamily,
                         ),
                       ),
-                      onTap: () {
-                        // Handle menu item 1 click
-                      },
+ onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MainHomeScreen()),
+    );
+  },
+
                     ),
 
                     ListTile(
@@ -57,7 +61,7 @@ class CustomDrawer extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        // Handle menu item 1 click
+                         Navigator.pushReplacementNamed(context, '/login');
                       },
                     ),
                     ListTile(

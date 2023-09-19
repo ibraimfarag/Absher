@@ -44,4 +44,5 @@ class AppVariables {
   double titleFontSize = 13;
   double iconSize = 34;
   String titleFontFamily = 'sidebar-menu';
+  static const String  serviceFontFamily = 'sidebar-menu';
 }

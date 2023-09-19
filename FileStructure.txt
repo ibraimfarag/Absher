@@ -1,50 +1,5 @@
 absherv2
-│── assets
-│   │── 1.jpg
-│   │── banner1.png
-│   │── banner2.png
-│   │── banner3.png
-│   │── banner4.png
-│   │── client.jpeg
-│   │── logo.png
-│   │── reviews_ar.png
-│   │── reviews_en.png
-│   │── services-icon
-│   │   │── item_1.png
-│   │   │── item_10.png
-│   │   │── item_11.png
-│   │   │── item_12.png
-│   │   │── item_13.png
-│   │   │── item_14.png
-│   │   │── item_15.png
-│   │   │── item_16.png
-│   │   │── item_2.png
-│   │   │── item_3.png
-│   │   │── item_4.png
-│   │   │── item_5.png
-│   │   │── item_6.png
-│   │   │── item_7.png
-│   │   │── item_8.png
-│   │   │── item_9.png
-│   │   └── New folder
-│   │       │── item_1.png
-│   │       │── item_10.png
-│   │       │── item_11.png
-│   │       │── item_12.png
-│   │       │── item_13.png
-│   │       │── item_14.png
-│   │       │── item_15.png
-│   │       │── item_16.png
-│   │       │── item_2.png
-│   │       │── item_3.png
-│   │       │── item_4.png
-│   │       │── item_5.png
-│   │       │── item_6.png
-│   │       │── item_7.png
-│   │       │── item_8.png
-│   │       └── item_9.png
-│   │── services_logo_ar.png
-│   └── services_logo_en.png
+|
 │── lib
 │   │── api.dart
 │   │── app-config.dart
@@ -61,12 +16,16 @@ absherv2
 │   │   │── pages
 │   │   └── widgets
 │   └── screens
+│       │── auth
+│       │   │── login.dart
+│       │   └── register.dart
 │       │── home
 │       │   │── main-home.dart
 │       │   └── services.dart
 │       │── imports.dart
 │       │── layout
 │       │   │── app_bar.dart
+│       │   │── body_widget_builder.dart
 │       │   │── bottom_navigation.dart
 │       │   └── custom_drawer.dart
 │       │── services
@@ -75,7 +34,15 @@ absherv2
 │       └── widgets
 │           │── image_slider.dart
 │           └── testimonial_list.dart
-│
 │── pubspec.lock
 │── pubspec.yaml
 │── README.md
+│── src
+│   │── codeunit
+│   │── page
+│   │── pagecust
+│   │── permissionset
+│   │── query
+│   │── report
+│   │   └── layout
+│   └── table
