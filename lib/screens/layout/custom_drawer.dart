@@ -1,10 +1,17 @@
 import 'package:absherv2/screens/imports.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+        // Access the AuthProvider using Provider.of
+    final authProvider = Provider.of<AuthProvider>(context);
+    bool isAuthenticated = authProvider.isAuthenticated;
+
+    // Retrieve the user's name from the AuthProvider
+    String? userName = authProvider.name;
     return Drawer(
       child: Directionality(
         // Set the text direction for the app
@@ -19,6 +26,31 @@ class CustomDrawer extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(0, 50, 20, 0),
                 child: Column(
                   children: [
+                      if (isAuthenticated)
+                    ListTile(
+                      trailing: Icon(
+                        Icons.account_circle_outlined,
+                        color: AppVariables().iconColor,
+                        size: AppVariables().iconSize, // Set the icon size here
+                      ),
+                      title: Text(
+                        ' $userName مرحبا ',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: AppVariables().titleColor,
+                          fontSize: AppVariables().titleFontSize,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: AppVariables().titleFontFamily,
+                        ),
+                      ),
+ onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MainHomeScreen()),
+    );
+  },
+
+                    ),
                     ListTile(
                       trailing: Icon(
                         Icons.home,
@@ -43,7 +75,7 @@ class CustomDrawer extends StatelessWidget {
   },
 
                     ),
-
+                        if (!isAuthenticated)
                     ListTile(
                       trailing: Icon(
                         Icons.fingerprint,
@@ -64,6 +96,7 @@ class CustomDrawer extends StatelessWidget {
                          Navigator.pushReplacementNamed(context, '/login');
                       },
                     ),
+                      if (!isAuthenticated)
                     ListTile(
                       trailing: Icon(
                         Icons.person,
@@ -125,6 +158,7 @@ class CustomDrawer extends StatelessWidget {
                         // Handle menu item 1 click
                       },
                     ),
+                      if (isAuthenticated)
                     ListTile(
                       trailing: Icon(
                         Icons.account_balance_wallet,
@@ -165,6 +199,7 @@ class CustomDrawer extends StatelessWidget {
                         // Handle menu item 1 click
                       },
                     ),
+                      if (isAuthenticated)
                     ListTile(
                       trailing: Icon(
                         Icons.manage_accounts,
@@ -185,6 +220,28 @@ class CustomDrawer extends StatelessWidget {
                         // Handle menu item 1 click
                       },
                     ),
+                      if (isAuthenticated)
+                    ListTile(
+                      trailing: Icon(
+                        Icons.logout_outlined,
+                        color: AppVariables().iconColor,
+                        size: AppVariables().iconSize, // Set the icon size here
+                      ),
+                      title: Text(
+                        'تسجيل الخروج',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: AppVariables().titleColor,
+                          fontSize: AppVariables().titleFontSize,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: AppVariables().titleFontFamily,
+                        ),
+                      ),
+                      onTap: () {
+                       authProvider.logout();
+                      },
+                    ),
+                    
                     ListTile(
                       trailing: Icon(
                         Icons.info,

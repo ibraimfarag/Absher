@@ -41,8 +41,8 @@ dependencies:
   provider: ^6.0.5
   carousel_slider: ^4.2.1
   http: ^0.13.3
-  jwt_decode: ^3.0.2
-  dev_dependencies:
+
+dev_dependencies:
   flutter_test:
     sdk: flutter
 

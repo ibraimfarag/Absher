@@ -1,21 +1,24 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:absherv2/screens/imports.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+      child: MainApp(),
+    ),
+  );
 }
 
-class MainApp extends StatefulWidget {
+class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
 
   @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  @override
   Widget build(BuildContext context) {
+        final authProvider = Provider.of<AuthProvider>(context);
+
     // Removed the unused themeColor variable
     return MaterialApp(
       theme: ThemeData(
@@ -23,7 +26,8 @@ class _MainAppState extends State<MainApp> {
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: MainHomeScreen(), // Set MainHomeScreen as the initial screen
+        body:  MainHomeScreen() , // Set MainHomeScreen as the initial screen
+        // body: authProvider.isAuthenticated ? MainHomeScreen() : LoginScreen(), // Set MainHomeScreen as the initial screen
       ),
        routes: {
     '/screen1': (context) => MainHomeScreen(), // Replace MainHomeScreen with your home screen

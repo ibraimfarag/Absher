@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:absherv2/main.dart';
 import 'package:absherv2/screens/imports.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -30,59 +32,38 @@ Future<void> attemptLogin() async {
     );
 
     String name = decodedToken['name'];
-    String userPhone = decodedToken['phone'];
-    String email = decodedToken['email'];
+    
+    // Access the AuthProvider and update the authentication state
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    authProvider.login(token, name);
 
-    // Handle successful login
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Login Successful'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Name: $name'),
-              Text('Phone: $userPhone'),
-              Text('Email: $email'),
-              Text('Token: $token'),  // Display the token or any other relevant information
-            ],
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the alert dialog
-                // Navigate to another screen if needed
-                // Example: Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
+    // Handle successful login and navigation
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainApp()));
   } catch (e) {
     // Handle login failure
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Login Failed'),
-          content: Text('Error: $e'),  // Display the error message
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the alert dialog
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
+ showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: Text('خطأ في تسجيل الدخول', textAlign: TextAlign.right),
+      content: Text(
+        'حدث خطأ أثناء محاولة تسجيل الدخول. الرجاء التأكد من بيانات الدخول و المحاولة مرة أخرى.',
+        textAlign: TextAlign.right,
+      ),  // Replace with your Arabic error message
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the alert dialog
+          },
+          child: Text('موافق'),
+        ),
+      ],
     );
+  },
+);
+
   }
-}
-  @override
+}  @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,

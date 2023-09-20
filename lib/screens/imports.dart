@@ -5,7 +5,7 @@
 export 'package:flutter/material.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:flutter/services.dart';
-export 'package:jwt_decode/jwt_decode.dart';
+export 'package:flutter/foundation.dart';
 
 // /* -------------------------------------------------------------------------- */
 // /* ------------------------------ // App config ----------------------------- */
@@ -43,6 +43,8 @@ export 'package:absherv2/screens/widgets/image_slider.dart';
 export 'package:absherv2/screens/auth/login.dart';
 
 export 'package:absherv2/screens/auth/register.dart';
+
+export 'package:absherv2/screens/auth/auth_provider.dart';
 
 
 // /* ----------------------------- // Home screen ----------------------------- */
