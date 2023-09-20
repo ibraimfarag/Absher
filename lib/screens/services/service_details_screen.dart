@@ -4,6 +4,7 @@ class ServiceDetailsScreen extends StatefulWidget {
   final int subId;
   final String name;
   final String imagePath;
+  final String coverPath;
   final String bio;
   final String cost;
   final String costNotes;
@@ -14,6 +15,7 @@ class ServiceDetailsScreen extends StatefulWidget {
     required this.subId,
     required this.name,
     required this.imagePath,
+    required this.coverPath,
     required this.bio,
     required this.cost,
     required this.costNotes,
@@ -37,7 +39,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
             children: [
               // Network Image
               Image.network(
-                widget.imagePath,
+                widget.coverPath,
                 width: double.infinity, // Full width
                 fit: BoxFit.cover,
               ),

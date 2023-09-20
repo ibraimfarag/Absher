@@ -5,6 +5,7 @@ class DynamicItem {
   final int subId;
   final String name;
   final String imagePath;
+  final String coverPath;
   final String bio;
   final String cost;
   final String costNotes;
@@ -15,6 +16,7 @@ class DynamicItem {
     required this.subId,
     required this.name,
     required this.imagePath,
+    required this.coverPath,
     required this.bio,
     required this.cost,
     required this.costNotes,
@@ -69,6 +71,7 @@ class DynamicItemListGrid extends StatelessWidget {
           subId: dynamicItem.subId, // Pass the 'subId' parameter
           name: dynamicItem.name, // Pass the 'name' parameter
           imagePath: dynamicItem.imagePath,
+          coverPath: dynamicItem.coverPath,
           bio: dynamicItem.bio,
           cost: dynamicItem.cost,
           costNotes: dynamicItem.costNotes,
@@ -135,6 +138,7 @@ Future<List<DynamicItem>> fetchDynamicItems() async {
         subId: itemData['subId'] as int,
         name: itemData['name'] as String,
         imagePath: itemData['iconUrl'] as String,
+        coverPath: itemData['coverUrl'] as String,
         bio: itemData['bio'] as String,
         cost: itemData['cost'] as String,
         costNotes: itemData['costNotes'] as String, // You can use the 'name' field as text
