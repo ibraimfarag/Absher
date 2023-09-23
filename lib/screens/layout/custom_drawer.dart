@@ -114,7 +114,7 @@ class CustomDrawer extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        // Handle menu item 1 click
+                             Navigator.pushReplacementNamed(context, '/register');
                       },
                     ),
 

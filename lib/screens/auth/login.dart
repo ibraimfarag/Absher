@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 
 import 'package:absherv2/main.dart';
 import 'package:absherv2/screens/imports.dart';
@@ -32,7 +33,7 @@ Future<void> attemptLogin() async {
     );
 
     String name = decodedToken['name'];
-    
+
     // Access the AuthProvider and update the authentication state
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     authProvider.login(token, name);
@@ -40,30 +41,38 @@ Future<void> attemptLogin() async {
     // Handle successful login and navigation
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainApp()));
   } catch (e) {
-    // Handle login failure
- showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return AlertDialog(
-      title: Text('خطأ في تسجيل الدخول', textAlign: TextAlign.right),
-      content: Text(
-        'حدث خطأ أثناء محاولة تسجيل الدخول. الرجاء التأكد من بيانات الدخول و المحاولة مرة أخرى.',
-        textAlign: TextAlign.right,
-      ),  // Replace with your Arabic error message
-      actions: [
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pop(); // Close the alert dialog
-          },
-          child: Text('موافق'),
-        ),
-      ],
-    );
-  },
-);
+    // Handle login failure and display the API response message
+    
+    String errorMessage = '$e'; // Display the error message;
 
+    // Check if the error is an HTTP response error
+
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('خطأ في تسجيل الدخول', textAlign: TextAlign.right),
+          content: Text(
+            errorMessage,
+            textAlign: TextAlign.right,
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the alert dialog
+              },
+              child: Text('موافق'),
+            ),
+          ],
+        );
+      },
+    );
   }
-}  @override
+}
+
+
+  @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -172,9 +181,7 @@ Future<void> attemptLogin() async {
               ),
                GestureDetector( // Wrap the text with GestureDetector
                 onTap: () {
-                  // Handle the tap event, e.g., navigate to another screen
-                  // You can use Navigator to navigate to a different screen
-                  // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => AnotherScreen()));
+                   Navigator.pushReplacementNamed(context, '/register');
                 },
                 child: Text(
                   "اضغط هنا",
@@ -198,3 +205,5 @@ Future<void> attemptLogin() async {
     );
   }
 }
+
+

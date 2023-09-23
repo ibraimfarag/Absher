@@ -105,7 +105,7 @@ class DynamicItemListGrid extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 10,
+                            fontSize: 8,
                             color: AppVariables.themeColor,
                             fontFamily: AppVariables.serviceFontFamily,
                           ),

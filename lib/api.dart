@@ -39,9 +39,63 @@ static Future<String> login(String phone, String password) async {
     final String token = responseBody['token'];
     return token;
   } else {
-    throw Exception('Login failed. Check your credentials and try again.');
+final Map<String, dynamic> responseBody = json.decode(response.body);
+  final String error = responseBody['message'];
+  throw ApiException(error); // Throw your custom ApiException
   }
 }
+
+
+static Future<void> registerUser(String name, String phone, String email, String password) async {
+  final Map<String, dynamic> requestData = {
+    'name': name,
+    'phone': phone,
+    'email': email,
+    'password': password,
+  };
+
+  final response = await http.post(
+    Uri.parse('$baseUrl/Clients/register'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(requestData),
+  );
+
+  if (response.statusCode != 200) {
+    final Map<String, dynamic> responseBody = json.decode(response.body);
+    final String error = responseBody['message'];
+    throw ApiException(error); // Throw your custom ApiException
+  }
+}
+// API function to verify the account
+static Future<String?> verifyAccount(String phoneNumber, String code) async {
+  final Map<String, dynamic> requestData = {
+    'phone': phoneNumber,
+    'code': code,
+  };
+
+  final response = await http.post(
+    Uri.parse('$baseUrl/Clients/active'),
+    headers: <String, String>{
+      'accept': 'text/plain',
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(requestData),
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> responseBody = json.decode(response.body);
+    final String token = responseBody['token'];
+    return token;
+  } else {
+    // Verification unsuccessful
+     final Map<String, dynamic> responseBody = json.decode(response.body);
+     final String error = responseBody['message'];
+    throw ApiException(error); // Throw your custom ApiException
+  }
+}
+
 
   // Example method to post data to the API
   static Future<void> postData(String endpoint, Map<String, dynamic> data) async {
@@ -59,4 +113,14 @@ static Future<String> login(String phone, String password) async {
   }
 
   // Add more API methods as needed
+}
+class ApiException implements Exception {
+  final String message;
+
+  ApiException(this.message);
+
+  @override
+  String toString() {
+    return message;
+  }
 }

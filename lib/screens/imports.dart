@@ -46,6 +46,8 @@ export 'package:absherv2/screens/auth/register.dart';
 
 export 'package:absherv2/screens/auth/auth_provider.dart';
 
+export 'package:absherv2/screens/auth/verify.dart';
+
 
 // /* ----------------------------- // Home screen ----------------------------- */
 

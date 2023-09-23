@@ -32,7 +32,9 @@ class MainApp extends StatelessWidget {
        routes: {
     '/screen1': (context) => MainHomeScreen(), // Replace MainHomeScreen with your home screen
     '/screen2': (context) => MainHomeScreenService(), // Define a route for Screen 1
-    '/login': (context) => LoginScreen(), // Define a route for Screen 1
+    '/login': (context) => LoginScreen(), // Define a route for login
+    '/register': (context) => RegisterScreen(), // Define a route for rigster
+    '/verify': (context) => VerifyScreen(), // Define a route for verify
 
   },
     );
