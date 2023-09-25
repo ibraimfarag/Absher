@@ -32,12 +32,13 @@ Future<void> attemptLogin() async {
       ),
     );
 
+    String mobile = decodedToken['phone'];
     String name = decodedToken['name'];
-
+  String id = decodedToken['id'];
+  String email = decodedToken['email'];
     // Access the AuthProvider and update the authentication state
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    authProvider.login(token, name);
-
+authProvider.login(token, id, name, email, mobile);
     // Handle successful login and navigation
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainApp()));
   } catch (e) {

@@ -103,11 +103,15 @@ ElevatedButton(
         ),
       );
 
-      String name = decodedToken['name'];
 
+
+    String mobile = decodedToken['phone'];
+    String name = decodedToken['name'];
+  String id = decodedToken['id'];
+  String email = decodedToken['email'];
       // Access the AuthProvider and update the authentication state
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      authProvider.login(token, name);
+authProvider.login(token, id, name, email, mobile);
 
       // Verification successful, you can navigate to the next screen or perform other actions
       showDialog(

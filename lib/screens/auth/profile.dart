@@ -24,11 +24,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Access the AuthProvider and get the user's name and email from the token
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     String? userName = authProvider.name;
-    // String? userEmail = authProvider.email;
+    String? userEmail = authProvider.email;
 
     // Set the initial values of the name and email TextFormFields
     nameController.text = userName ?? ''; // Use '' if userName is null
-    // emailController.text = userEmail ?? ''; // Use '' if userEmail is null
+    emailController.text = userEmail ?? ''; // Use '' if userEmail is null
   }
 
   @override
