@@ -118,87 +118,87 @@ class CustomDrawer extends StatelessWidget {
                       },
                     ),
 
-                    ListTile(
-                      trailing: Icon(
-                        Icons.local_offer,
-                        color: AppVariables().iconColor,
-                        size: AppVariables().iconSize, // Set the icon size here
-                      ),
-                      title: Text(
-                        'العروض',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: AppVariables().titleColor,
-                          fontSize: AppVariables().titleFontSize,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppVariables().titleFontFamily,
-                        ),
-                      ),
-                      onTap: () {
-                        // Handle menu item 1 click
-                      },
-                    ),
-                    ListTile(
-                      trailing: Icon(
-                        Icons.shopping_bag,
-                        color: AppVariables().iconColor,
-                        size: AppVariables().iconSize, // Set the icon size here
-                      ),
-                      title: Text(
-                        'طلباتي',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: AppVariables().titleColor,
-                          fontSize: AppVariables().titleFontSize,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppVariables().titleFontFamily,
-                        ),
-                      ),
-                      onTap: () {
-                        // Handle menu item 1 click
-                      },
-                    ),
-                      if (isAuthenticated)
-                    ListTile(
-                      trailing: Icon(
-                        Icons.account_balance_wallet,
-                        color: AppVariables().iconColor,
-                        size: AppVariables().iconSize, // Set the icon size here
-                      ),
-                      title: Text(
-                        'المحفظة',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: AppVariables().titleColor,
-                          fontSize: AppVariables().titleFontSize,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppVariables().titleFontFamily,
-                        ),
-                      ),
-                      onTap: () {
-                        // Handle menu item 1 click
-                      },
-                    ),
-                    ListTile(
-                      trailing: Icon(
-                        Icons.share,
-                        color: AppVariables().iconColor,
-                        size: AppVariables().iconSize, // Set the icon size here
-                      ),
-                      title: Text(
-                        'دعوة الاصدقاء',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: AppVariables().titleColor,
-                          fontSize: AppVariables().titleFontSize,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppVariables().titleFontFamily,
-                        ),
-                      ),
-                      onTap: () {
-                        // Handle menu item 1 click
-                      },
-                    ),
+                    // ListTile(
+                    //   trailing: Icon(
+                    //     Icons.local_offer,
+                    //     color: AppVariables().iconColor,
+                    //     size: AppVariables().iconSize, // Set the icon size here
+                    //   ),
+                    //   title: Text(
+                    //     'العروض',
+                    //     textAlign: TextAlign.right,
+                    //     style: TextStyle(
+                    //       color: AppVariables().titleColor,
+                    //       fontSize: AppVariables().titleFontSize,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontFamily: AppVariables().titleFontFamily,
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     // Handle menu item 1 click
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   trailing: Icon(
+                    //     Icons.shopping_bag,
+                    //     color: AppVariables().iconColor,
+                    //     size: AppVariables().iconSize, // Set the icon size here
+                    //   ),
+                    //   title: Text(
+                    //     'طلباتي',
+                    //     textAlign: TextAlign.right,
+                    //     style: TextStyle(
+                    //       color: AppVariables().titleColor,
+                    //       fontSize: AppVariables().titleFontSize,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontFamily: AppVariables().titleFontFamily,
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     // Handle menu item 1 click
+                    //   },
+                    // ),
+                    //   if (isAuthenticated)
+                    // ListTile(
+                    //   trailing: Icon(
+                    //     Icons.account_balance_wallet,
+                    //     color: AppVariables().iconColor,
+                    //     size: AppVariables().iconSize, // Set the icon size here
+                    //   ),
+                    //   title: Text(
+                    //     'المحفظة',
+                    //     textAlign: TextAlign.right,
+                    //     style: TextStyle(
+                    //       color: AppVariables().titleColor,
+                    //       fontSize: AppVariables().titleFontSize,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontFamily: AppVariables().titleFontFamily,
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     // Handle menu item 1 click
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   trailing: Icon(
+                    //     Icons.share,
+                    //     color: AppVariables().iconColor,
+                    //     size: AppVariables().iconSize, // Set the icon size here
+                    //   ),
+                    //   title: Text(
+                    //     'دعوة الاصدقاء',
+                    //     textAlign: TextAlign.right,
+                    //     style: TextStyle(
+                    //       color: AppVariables().titleColor,
+                    //       fontSize: AppVariables().titleFontSize,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontFamily: AppVariables().titleFontFamily,
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     // Handle menu item 1 click
+                    //   },
+                    // ),
                       if (isAuthenticated)
                     ListTile(
                       trailing: Icon(
@@ -217,7 +217,7 @@ class CustomDrawer extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        // Handle menu item 1 click
+                             Navigator.pushReplacementNamed(context, '/profile');
                       },
                     ),
                       if (isAuthenticated)
