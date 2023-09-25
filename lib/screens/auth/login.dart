@@ -24,13 +24,24 @@ Future<void> attemptLogin() async {
   final String password = passwordController.text;
 
   try {
-    final String token = await API.login(phone, password);
-    // Decode the token to extract information
-    Map<String, dynamic> decodedToken = json.decode(
-      utf8.decode(
-        base64Url.decode(token.split('.')[1]),
-      ),
-    );
+String token = await API.login(phone, password);
+List<String> tokenParts = token.split('.');
+if (tokenParts.length == 3) {
+  String payload = tokenParts[1];
+  int paddingLength = 4 - (payload.length % 4);
+  String padding = '=' * paddingLength;
+  payload += padding;
+  tokenParts[1] = payload;
+  token = tokenParts.join('.');
+}
+
+// Now, decode the token as you did before
+Map<String, dynamic> decodedToken = json.decode(
+  utf8.decode(
+    base64Url.decode(token.split('.')[1]),
+  ),
+);
+
 
     String mobile = decodedToken['phone'];
     String name = decodedToken['name'];
