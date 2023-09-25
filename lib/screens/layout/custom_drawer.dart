@@ -21,7 +21,7 @@ class CustomDrawer extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height ,
+                height: MediaQuery.of(context).size.height-60 ,
                 color: AppVariables().menuBackgroundColor,
                 padding: const EdgeInsets.fromLTRB(0, 50, 20, 0),
                 child: Column(
@@ -242,46 +242,46 @@ class CustomDrawer extends StatelessWidget {
                       },
                     ),
                     
-                    ListTile(
-                      trailing: Icon(
-                        Icons.info,
-                        color: AppVariables().iconColor,
-                        size: AppVariables().iconSize, // Set the icon size here
-                      ),
-                      title: Text(
-                        'عن الشركة',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: AppVariables().titleColor,
-                          fontSize: AppVariables().titleFontSize,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppVariables().titleFontFamily,
-                        ),
-                      ),
-                      onTap: () {
-                        // Handle menu item 1 click
-                      },
-                    ),
-                    ListTile(
-                      trailing: Icon(
-                        Icons.phone_enabled,
-                        color: AppVariables().iconColor,
-                        size: AppVariables().iconSize, // Set the icon size here
-                      ),
-                      title: Text(
-                        'اتصل بنا',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: AppVariables().titleColor,
-                          fontSize: AppVariables().titleFontSize,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppVariables().titleFontFamily,
-                        ),
-                      ),
-                      onTap: () {
-                        // Handle menu item 1 click
-                      },
-                    ),
+                    // ListTile(
+                    //   trailing: Icon(
+                    //     Icons.info,
+                    //     color: AppVariables().iconColor,
+                    //     size: AppVariables().iconSize, // Set the icon size here
+                    //   ),
+                    //   title: Text(
+                    //     'عن الشركة',
+                    //     textAlign: TextAlign.right,
+                    //     style: TextStyle(
+                    //       color: AppVariables().titleColor,
+                    //       fontSize: AppVariables().titleFontSize,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontFamily: AppVariables().titleFontFamily,
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     // Handle menu item 1 click
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   trailing: Icon(
+                    //     Icons.phone_enabled,
+                    //     color: AppVariables().iconColor,
+                    //     size: AppVariables().iconSize, // Set the icon size here
+                    //   ),
+                    //   title: Text(
+                    //     'اتصل بنا',
+                    //     textAlign: TextAlign.right,
+                    //     style: TextStyle(
+                    //       color: AppVariables().titleColor,
+                    //       fontSize: AppVariables().titleFontSize,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontFamily: AppVariables().titleFontFamily,
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     // Handle menu item 1 click
+                    //   },
+                    // ),
                     ListTile(
                       trailing: Icon(
                         Icons.chat_bubble_outline,
@@ -298,9 +298,20 @@ class CustomDrawer extends StatelessWidget {
                           fontFamily: AppVariables().titleFontFamily,
                         ),
                       ),
-                      onTap: () {
-                        // Handle menu item 1 click
-                      },
+                     onTap: () async {
+  final phoneNumber = '01001802203'; // Replace with the desired phone number
+  final message = 'مرحبًا، أنا أود القدوم ببعض الاقتراحات/الشكاوي';
+
+  final whatsappUrl = 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
+
+  if (await canLaunch(whatsappUrl)) {
+    await launch(whatsappUrl);
+  } else {
+    // Handle error - unable to launch WhatsApp
+    print('Could not launch WhatsApp');
+  }
+},
+
                     ),
                     // Add more menu items as needed
                   ],

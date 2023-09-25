@@ -6,6 +6,7 @@ export 'package:flutter/material.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:flutter/services.dart';
 export 'package:flutter/foundation.dart';
+export 'package:url_launcher/url_launcher.dart';
 
 // /* -------------------------------------------------------------------------- */
 // /* ------------------------------ // App config ----------------------------- */
