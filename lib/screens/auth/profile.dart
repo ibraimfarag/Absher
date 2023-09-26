@@ -169,16 +169,13 @@ Future<void> updateProfile() async {
                 child: Text('تحديث'),
               ),
                             SizedBox(height: 20),
-Text(
-  'Your Token: ${authProvider.token}', // Display the token here
-  style: customTextStyle,
-),
+// Text(
+//   'Your Token: ${authProvider.token}', // Display the token here
+//   style: customTextStyle,
+// ),
 
-                            SizedBox(height: 20),
-Text(
-  'Your Token: ${authProvider.token}', // Display the token here
-  style: customTextStyle,
-),            ],
+                     
+          ],
           ),
         ),
         bottomNavigationBar: MyBottomNavigationBar(initialIndex: 1),

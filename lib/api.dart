@@ -120,9 +120,12 @@ static Future<void> updateProfile(BuildContext context, Map<String, dynamic> dat
         // Extract the new token from the response
         final Map<String, dynamic> responseBody = json.decode(response.body);
         final String newToken = responseBody['token'];
-               print('new token : $newToken');
+        
         // Update the token in the AuthProvider
         authProvider.updateToken(newToken);
+
+        // Now, let's decode and set the new token's data
+        authProvider.decodeAndSetToken(newToken);
 
         print('Profile updated successfully.');
       } else {
@@ -139,7 +142,6 @@ static Future<void> updateProfile(BuildContext context, Map<String, dynamic> dat
     throw Exception('Token is null. User is not authenticated.');
   }
 }
-
 
 
 
