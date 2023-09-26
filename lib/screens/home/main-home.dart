@@ -77,15 +77,24 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                 ],
               ),
             ),
-             SizedBox(
-  height: 200,
-  child: DynamicItemListGrid(
+//              SizedBox(
+//   height: 200,
+//   child: DynamicItemListGrid(
     
-    itemCount: 8,
-    dynamicItemsFuture: fetchDynamicItems(), // Replace with your data fetching method
-    navigator: Navigator.of(context),
-  ),
-),
+//     itemCount: 8,
+//     dynamicItemsFuture: fetchDynamicItems(), // Replace with your data fetching method
+//     navigator: Navigator.of(context),
+//   ),
+// ),
+        Container(
+          // height: 200,  // Set a fixed height or use other sizing constraints as needed
+          child: DynamicItemListGrid(
+            itemCount: 8,
+            dynamicItemsFuture: fetchDynamicItems(),
+            navigator: Navigator.of(context),
+          ),
+        ),
+
             // Row 4
             Container(
               color: Colors.transparent,
