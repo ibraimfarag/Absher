@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:absherv2/screens/imports.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +9,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-    TextStyle customTextStyle = TextStyle(
+  
+  TextStyle customTextStyle = TextStyle(
     fontFamily: AppVariables.serviceFontFamily,
     fontSize: 16,
     fontWeight: FontWeight.normal,
@@ -21,24 +24,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
 
-    // Access the AuthProvider and get the user's name and email from the token
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     String? userName = authProvider.name;
     String? userEmail = authProvider.email;
-
-    // Set the initial values of the name and email TextFormFields
-    nameController.text = userName ?? ''; // Use '' if userName is null
-    emailController.text = userEmail ?? ''; // Use '' if userEmail is null
+      final String? token = authProvider.token;
+    nameController.text = userName ?? '';
+    emailController.text = userEmail ?? '';
   }
 
+  // Function to update the user's profile
+// Function to update the user's profile
+Future<void> updateProfile() async {
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  final String? token = authProvider.token;
+
+  if (token != null) {
+    final String name = nameController.text;
+    final String email = emailController.text;
+
+    final Map<String, dynamic> requestData = {
+      'name': name,
+      'email': email,
+    };
+
+    try {
+      final response = await API.updateProfile(context, requestData);
+
+
+    } catch (e) {
+      // Handle any exceptions that may occur
+      // Show an error dialog or handle the error appropriately
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('خطأ في التحديث', textAlign: TextAlign.right),
+            content: Text(
+              'حدث خطأ أثناء تحديث معلومات الحساب.',
+              textAlign: TextAlign.right,
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the error dialog
+                },
+                child: Text('موافق'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+}
   @override
   Widget build(BuildContext context) {
+      final authProvider = Provider.of<AuthProvider>(context);
+  final String? token = authProvider.token;
+       print('$token');
     return Directionality(
       textDirection: TextDirection.rtl,
-      child:  Scaffold(
-           appBar: MyAppBar(showBackButton: false),
-
-      body:    SingleChildScrollView( // Wrap your content in SingleChildScrollView
+      child: Scaffold(
+        appBar: MyAppBar(showBackButton: false),
+        body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -51,10 +99,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: customTextStyle,
                   ),
                   TextFormField(
- controller: nameController, // Use the name controller here
+                    controller: nameController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
-                      hintText: 'ادخل اسم ',
+                      hintText: 'ادخل اسم',
                       filled: true,
                       fillColor: Color.fromARGB(255, 240, 240, 240),
                       focusedBorder: OutlineInputBorder(
@@ -72,20 +120,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
-                     // Change keyboardType to TextInputType.text for entering a username
-  keyboardType: TextInputType.text,
-  // Remove the inputFormatters for username, or you can add specific formatters as needed
-  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
-  // inputFormatters: <TextInputFormatter>[
-  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
-  // ],
-                 
+                    keyboardType: TextInputType.text,
                     style: customTextStyle,
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-            
               SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,8 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: customTextStyle,
                   ),
                   TextFormField(
- controller: emailController  , 
-
+                    controller: emailController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: 'ادخل البريد الالكتروني',
@@ -117,39 +155,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
-                   keyboardType: TextInputType.emailAddress, // Use TextInputType.emailAddress
-  inputFormatters: <TextInputFormatter>[
-    LengthLimitingTextInputFormatter(255), // Limit the length to a reasonable email length (255 characters)
-  ],
+                    keyboardType: TextInputType.emailAddress,
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(255),
+                    ],
                     style: customTextStyle,
                   ),
                 ],
               ),
               SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-               
-                ],
+              ElevatedButton(
+                onPressed: updateProfile, // Call the updateProfile method here
+                child: Text('تحديث'),
               ),
-             
-              SizedBox(height: 10),
-            
-             ElevatedButton(
-  onPressed: () async {
-
-
-
-
-  },
-  child: Text('تحديث'),
+                            SizedBox(height: 20),
+Text(
+  'Your Token: ${authProvider.token}', // Display the token here
+  style: customTextStyle,
 ),
-            ],
+
+                            SizedBox(height: 20),
+Text(
+  'Your Token: ${authProvider.token}', // Display the token here
+  style: customTextStyle,
+),            ],
           ),
         ),
         bottomNavigationBar: MyBottomNavigationBar(initialIndex: 1),
         drawer: const CustomDrawer(),
-    ),
+      ),
     );
   }
 }

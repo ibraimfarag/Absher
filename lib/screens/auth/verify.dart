@@ -11,21 +11,18 @@ class VerifyScreen extends StatefulWidget {
 
 class _VerifyScreenState extends State<VerifyScreen> {
   TextEditingController verifyCodeController = TextEditingController();
-  String phoneNumber = '';
+String phoneNumber = '';
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
 
-    // Retrieve the phone number from route arguments
-    final Map<String, String>? args = ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
-    if (args != null && args.containsKey('phone')) {
-      setState(() {
-        phoneNumber = args['phone'] ?? '';
-      });
-    }
+  // Retrieve the phone number from route arguments
+  final Map<String, String>? args = ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
+  if (args != null && args.containsKey('phone')) {
+    phoneNumber = args['phone'] ?? ''; // Use the null-aware operator to provide a default value
   }
-
+}
 
   @override
   Widget build(BuildContext context) {
@@ -96,22 +93,9 @@ ElevatedButton(
       // Call the API to verify the account
       final token = await API.verifyAccount(phoneNumber, verifyCodeController.text);
 
-      // Decode the token to extract information
-      Map<String, dynamic> decodedToken = json.decode(
-        utf8.decode(
-          base64Url.decode(token!.split('.')[1]),
-        ),
-      );
-
-
-
-    String mobile = decodedToken['phone'];
-    String name = decodedToken['name'];
-  String id = decodedToken['id'];
-  String email = decodedToken['email'];
-      // Access the AuthProvider and update the authentication state
+      // Decode the token and set it in the AuthProvider
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-authProvider.login(token, id, name, email, mobile);
+      authProvider.decodeAndSetToken(token!);
 
       // Verification successful, you can navigate to the next screen or perform other actions
       showDialog(
@@ -136,6 +120,7 @@ authProvider.login(token, id, name, email, mobile);
       );
     } catch (e) {
       // Verification unsuccessful, handle the exception and show an error dialog
+      print('$e');
       showDialog(
         context: context,
         builder: (BuildContext context) {

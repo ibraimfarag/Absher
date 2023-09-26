@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:absherv2/screens/imports.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -15,6 +17,7 @@ class AuthProvider with ChangeNotifier {
 
   bool get isAuthenticated => _token != null;
 
+
   void login(String token, String id, String name, String email, String mobile) {
     _token = token;
     _id = id; // Store id, email, and phone
@@ -23,8 +26,40 @@ class AuthProvider with ChangeNotifier {
     _mobile = mobile;
     notifyListeners();
   }
+void decodeAndSetToken(String token) {
+  List<String> tokenParts = token.split('.');
+  if (tokenParts.length == 3) {
+    String payload = tokenParts[1];
 
-  void logout() {
+    // Ensure the payload is properly padded
+    while (payload.length % 4 != 0) {
+      payload += '=';
+    }
+
+    Map<String, dynamic> decodedToken = json.decode(
+      utf8.decode(
+        base64Url.decode(payload),
+      ),
+    );
+
+    String mobile = decodedToken['phone'];
+    String name = decodedToken['name'];
+    String id = decodedToken['id'];
+    String email = decodedToken['email'];
+
+    // Now, set these values in your AuthProvider
+    _mobile = mobile;
+    _name = name;
+    _id = id;
+    _email = email;
+    _token = token;  // Set the token
+
+    // Notify listeners and update authentication status
+    notifyListeners();
+  }
+}
+
+ void logout() {
     _token = null;
     _id = null;
     _name = null;
@@ -32,5 +67,11 @@ class AuthProvider with ChangeNotifier {
     _mobile = null;
     notifyListeners();
   }
+
+  void updateToken(String newToken) {
+  _token = newToken;
+  notifyListeners();
+}
+
 }
 

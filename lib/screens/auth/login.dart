@@ -22,44 +22,27 @@ final TextEditingController phoneController = TextEditingController();
 Future<void> attemptLogin() async {
   final String phone = phoneController.text;
   final String password = passwordController.text;
+try {
+      String token = await API.login(phone, password);
 
-  try {
-String token = await API.login(phone, password);
-List<String> tokenParts = token.split('.');
-if (tokenParts.length == 3) {
-  String payload = tokenParts[1];
-  int paddingLength = 4 - (payload.length % 4);
-  String padding = '=' * paddingLength;
-  payload += padding;
-  tokenParts[1] = payload;
-  token = tokenParts.join('.');
-}
+      // Access the AuthProvider using Provider.of
+      AuthProvider authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-// Now, decode the token as you did before
-Map<String, dynamic> decodedToken = json.decode(
-  utf8.decode(
-    base64Url.decode(token.split('.')[1]),
-  ),
-);
+      // Call the method to decode and set token information
+      authProvider.decodeAndSetToken(token);
+
+      // Handle successful login and navigation
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainApp()));
+    } catch (e) {
 
 
-    String mobile = decodedToken['phone'];
-    String name = decodedToken['name'];
-  String id = decodedToken['id'];
-  String email = decodedToken['email'];
-    // Access the AuthProvider and update the authentication state
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-authProvider.login(token, id, name, email, mobile);
-    // Handle successful login and navigation
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainApp()));
-  } catch (e) {
     // Handle login failure and display the API response message
     
     String errorMessage = '$e'; // Display the error message;
 
     // Check if the error is an HTTP response error
 
-
+print('$e');
     showDialog(
       context: context,
       builder: (BuildContext context) {

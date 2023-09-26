@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:absherv2/screens/auth/auth_provider.dart';
+import 'package:absherv2/screens/imports.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class API {
   // Define the base URL of your API
@@ -37,6 +40,7 @@ static Future<String> login(String phone, String password) async {
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseBody = json.decode(response.body);
     final String token = responseBody['token'];
+       print('$token');
     return token;
   } else {
 final Map<String, dynamic> responseBody = json.decode(response.body);
@@ -95,6 +99,49 @@ static Future<String?> verifyAccount(String phoneNumber, String code) async {
     throw ApiException(error); // Throw your custom ApiException
   }
 }
+
+static Future<void> updateProfile(BuildContext context, Map<String, dynamic> data) async {
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  final String? token = authProvider.token;
+
+  if (token != null) {
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/Clients'),
+        headers: <String, String>{
+          'accept': 'text/plain',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        // Extract the new token from the response
+        final Map<String, dynamic> responseBody = json.decode(response.body);
+        final String newToken = responseBody['token'];
+               print('new token : $newToken');
+        // Update the token in the AuthProvider
+        authProvider.updateToken(newToken);
+
+        print('Profile updated successfully.');
+      } else {
+        print('$token');
+        print('Error during profile update. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Profile update failed.');
+      }
+    } catch (e) {
+      print('Error during profile update: $e');
+      throw e;
+    }
+  } else {
+    throw Exception('Token is null. User is not authenticated.');
+  }
+}
+
+
+
 
 
   // Example method to post data to the API
