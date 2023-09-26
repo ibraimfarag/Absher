@@ -99,7 +99,6 @@ static Future<String?> verifyAccount(String phoneNumber, String code) async {
     throw ApiException(error); // Throw your custom ApiException
   }
 }
-
 static Future<void> updateProfile(BuildContext context, Map<String, dynamic> data) async {
   final authProvider = Provider.of<AuthProvider>(context, listen: false);
   final String? token = authProvider.token;
@@ -128,6 +127,25 @@ static Future<void> updateProfile(BuildContext context, Map<String, dynamic> dat
         authProvider.decodeAndSetToken(newToken);
 
         print('Profile updated successfully.');
+
+        // Show a success alert
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Your profile has been updated successfully.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       } else {
         print('$token');
         print('Error during profile update. Status code: ${response.statusCode}');
@@ -142,6 +160,7 @@ static Future<void> updateProfile(BuildContext context, Map<String, dynamic> dat
     throw Exception('Token is null. User is not authenticated.');
   }
 }
+
 
 
 
