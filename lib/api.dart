@@ -129,23 +129,30 @@ static Future<void> updateProfile(BuildContext context, Map<String, dynamic> dat
         print('Profile updated successfully.');
 
         // Show a success alert
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Success'),
-              content: Text('Your profile has been updated successfully.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
+       showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        'عملية ناجحه',
+        textAlign: TextAlign.right,
+      ),
+      content: Text(
+        'تم تحديث البيانات بنجاح.',
+        textAlign: TextAlign.right,
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
           },
-        );
+          child: Text('موافق'),
+        ),
+      ],
+    );
+  },
+);
+
       } else {
         print('$token');
         print('Error during profile update. Status code: ${response.statusCode}');

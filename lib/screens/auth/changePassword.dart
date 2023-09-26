@@ -194,7 +194,31 @@ ElevatedButton(
     }
 
     if (newPassword != confirmPassword) {
-      // Handle password mismatch, show an error message, or prevent submission.
+      // Passwords don't match, show an alert
+showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        'خطأ',
+        textAlign: TextAlign.right, // Align the title to the right
+      ),
+      content: Text(
+        'كلمة السر وتأكيد كلمة السر غير متطابقين.',
+        textAlign: TextAlign.right, // Align the content to the right
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('موافق'),
+        ),
+      ],
+    );
+  },
+);
+
       return;
     }
 

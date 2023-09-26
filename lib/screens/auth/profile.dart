@@ -54,26 +54,30 @@ Future<void> updateProfile() async {
     } catch (e) {
       // Handle any exceptions that may occur
       // Show an error dialog or handle the error appropriately
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('خطأ في التحديث', textAlign: TextAlign.right),
-            content: Text(
-              'حدث خطأ أثناء تحديث معلومات الحساب.',
-              textAlign: TextAlign.right,
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the error dialog
-                },
-                child: Text('موافق'),
-              ),
-            ],
-          );
-        },
-      );
+showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        'خطأ في التحديث',
+        textAlign: TextAlign.right,
+      ),
+      content: Text(
+        'حدث خطأ أثناء تحديث معلومات الحساب.',
+        textAlign: TextAlign.right,
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the error dialog
+          },
+          child: Text('موافق'),
+        ),
+      ],
+    );
+  },
+);
+
     }
   }
 }
