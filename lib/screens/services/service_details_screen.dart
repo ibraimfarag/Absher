@@ -1,4 +1,5 @@
 import 'package:absherv2/screens/imports.dart';
+import 'package:provider/provider.dart';
 class ServiceDetailsScreen extends StatefulWidget {
   final int id;
   final int subId;
@@ -94,13 +95,75 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
               // Button
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Add your button action here
-                  },
-                  child: Text('مـعـايـنـة'
-                  ),
+                child:ElevatedButton(
+  onPressed: () {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    if (authProvider.isAuthenticated) {
+      // User is authenticated, perform the action here
+      // Add your button action here
+    } else {
+      // User is not authenticated, show an alert
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'تنبيه',
+              textAlign: TextAlign.right,
+              style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+            ),
+            content: Text(
+              'لا يمكنك القيام بهذا الإجراء بدون تسجيل الدخول.',
+              textAlign: TextAlign.right,
+              style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+            ),
+            actions: [
+      
+              TextButton(
+                onPressed: () {
+                 Navigator.pushReplacementNamed(context, '/login');
+                },
+                child: Text(
+                  'تسجيل الدخول',
+                  style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
                 ),
+              ),
+              TextButton(
+                onPressed: () {
+                   
+                     Navigator.pushReplacementNamed(context, '/register');
+
+                },
+                child: Text(
+                  'التسجيل',
+                  style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+                ),
+              ),
+                      TextButton(
+                onPressed: () {
+                 
+
+                },
+                child: Text(
+                  'موافق',
+                  style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  },
+  child: Text(
+    'مـعـايـنـة',
+    style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+  ),
+),
+
+
+
               ),
             ],
           ),
