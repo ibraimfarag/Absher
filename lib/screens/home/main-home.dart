@@ -92,7 +92,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
               height: 50,
               child: GestureDetector(
                 onTap: () {
-                  // _currentIndex = 1;
+                                          Navigator.pushReplacementNamed(context, '/screen2');
+
                 },
                 child: const Center(
                   child: Text(

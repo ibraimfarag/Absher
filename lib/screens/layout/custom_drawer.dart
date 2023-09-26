@@ -44,10 +44,10 @@ class CustomDrawer extends StatelessWidget {
                         ),
                       ),
  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MainHomeScreen()),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => MainHomeScreen()),
+    // );
   },
 
                     ),
@@ -320,8 +320,8 @@ class CustomDrawer extends StatelessWidget {
                         ),
                       ),
                      onTap: () async {
-  final phoneNumber = '01001802203'; // Replace with the desired phone number
-  final message = 'مرحبًا، أنا أود القدوم ببعض الاقتراحات/الشكاوي';
+  final phoneNumber = AppVariables().phoneNumber; // Replace with the desired phone number
+  final message = AppVariables().whatsappMsg;
 
   final whatsappUrl = 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
 
