@@ -162,7 +162,28 @@ static Future<void> updateProfile(BuildContext context, Map<String, dynamic> dat
 }
 
 
+static Future<void> updatePassword(String token, String newPassword, String confirmPassword) async {
+  final Map<String, dynamic> requestData = {
+    'password': newPassword,
+    'confirmPassword': confirmPassword,
+  };
 
+  final response = await http.patch(
+    Uri.parse('$baseUrl/Clients/ChangePassword'),
+    headers: <String, String>{
+      'accept': 'text/plain',
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer $token',
+    },
+    body: jsonEncode(requestData),
+  );
+
+  if (response.statusCode == 200) {
+    // Password updated successfully
+  } else {
+    // Handle error cases
+  }
+}
 
 
   // Example method to post data to the API

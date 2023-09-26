@@ -51,6 +51,9 @@ export 'package:absherv2/screens/auth/verify.dart';
 
 export 'package:absherv2/screens/auth/profile.dart';
 
+export 'package:absherv2/screens/auth/changePassword.dart';
+
+
 
 // /* ----------------------------- // Home screen ----------------------------- */
 

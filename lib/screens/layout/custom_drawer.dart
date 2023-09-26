@@ -223,6 +223,27 @@ class CustomDrawer extends StatelessWidget {
                       if (isAuthenticated)
                     ListTile(
                       trailing: Icon(
+                        Icons.password,
+                        color: AppVariables().iconColor,
+                        size: AppVariables().iconSize, // Set the icon size here
+                      ),
+                      title: Text(
+                        'تغير كلمة السر ',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: AppVariables().titleColor,
+                          fontSize: AppVariables().titleFontSize,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: AppVariables().titleFontFamily,
+                        ),
+                      ),
+                      onTap: () {
+                             Navigator.pushReplacementNamed(context, '/changePassword');
+                      },
+                    ),
+                      if (isAuthenticated)
+                    ListTile(
+                      trailing: Icon(
                         Icons.logout_outlined,
                         color: AppVariables().iconColor,
                         size: AppVariables().iconSize, // Set the icon size here
