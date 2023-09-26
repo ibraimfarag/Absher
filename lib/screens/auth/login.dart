@@ -153,20 +153,20 @@ print('$e');
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  Text(
-                    'تذكرني',
-                    style: TextStyle(
-                      fontFamily: AppVariables.serviceFontFamily,
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Checkbox(
+              //       value: false,
+              //       onChanged: (value) {},
+              //     ),
+              //     Text(
+              //       'تذكرني',
+              //       style: TextStyle(
+              //         fontFamily: AppVariables.serviceFontFamily,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 10),
               Text(
                 "ان لم يكن لديك حساب",
