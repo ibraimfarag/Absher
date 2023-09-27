@@ -81,7 +81,7 @@ class DynamicItemListGrid extends StatelessWidget {
                         child: Column(
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(10),
                               child: Container(
                                 padding:
                                     EdgeInsets.fromLTRB(20, 10, 20, 10),
