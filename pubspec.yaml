@@ -43,7 +43,10 @@ dependencies:
   http: ^0.13.3
   dio: ^5.3.3
   url_launcher: ^6.1.14
-
+  google_maps_flutter: ^2.5.0
+  geolocator: ^10.1.0
+  permission_handler: ^11.0.0
+  share: ^2.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -155,3 +155,27 @@ Future<List<DynamicItem>> fetchDynamicItems() async {
     throw Exception('Failed to fetch dynamic items: $e');
   }
 }
+
+class ServiceDetailsArguments {
+  final int id;
+  final int subId;
+  final String name;
+  final String imagePath;
+  final String coverPath;
+  final String bio;
+  final String cost;
+  final String costNotes;
+  final String text;
+
+  ServiceDetailsArguments({
+    required this.id,
+    required this.subId,
+    required this.name,
+    required this.imagePath,
+    required this.coverPath,
+    required this.bio,
+    required this.cost,
+    required this.costNotes,
+    required this.text,
+  });
+}

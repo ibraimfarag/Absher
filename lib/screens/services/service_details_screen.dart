@@ -100,8 +100,23 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     if (authProvider.isAuthenticated) {
-      // User is authenticated, perform the action here
-      // Add your button action here
+       // User is authenticated, perform the action here
+      // Pass the service data and navigate to RequestOrderScreen
+         Navigator.pushNamed(
+        context,
+        '/RequestOrder',
+        arguments: ServiceDetailsArguments(
+          id: widget.id,
+          subId: widget.subId,
+          name: widget.name,
+          imagePath: widget.imagePath,
+          coverPath: widget.coverPath,
+          bio: widget.bio,
+          cost: widget.cost,
+          costNotes: widget.costNotes,
+          text: widget.text,
+        ),
+      );
     } else {
       // User is not authenticated, show an alert
       showDialog(

@@ -7,7 +7,11 @@ export 'package:carousel_slider/carousel_slider.dart';
 export 'package:flutter/services.dart';
 export 'package:flutter/foundation.dart';
 export 'package:url_launcher/url_launcher.dart';
+export 'package:google_maps_flutter/google_maps_flutter.dart';
+export 'package:geolocator/geolocator.dart';
 
+export 'package:share/share.dart';
+// export
 // /* -------------------------------------------------------------------------- */
 // /* ------------------------------ // App config ----------------------------- */
 // /* -------------------------------------------------------------------------- */
@@ -32,6 +36,8 @@ export 'package:absherv2/screens/layout/body_widget_builder.dart';
 // /* -------------------------------------------------------------------------- */
 
 export 'package:absherv2/screens/widgets/image_slider.dart';
+
+export 'package:absherv2/screens/widgets/map_screen.dart';
 
 // /* -------------------------------------------------------------------------- */
 // /* ------------------------------- // screens ------------------------------- */

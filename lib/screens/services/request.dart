@@ -1,6 +1,11 @@
 import 'package:absherv2/screens/imports.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RequestOrderScreen extends StatefulWidget {
+  final String? locationLink; // Location link received from MapSelectionScreen
+
+  RequestOrderScreen({this.locationLink});
+
   @override
   State<RequestOrderScreen> createState() => _RequestOrderScreenState();
 }
@@ -12,10 +17,23 @@ class _RequestOrderScreenState extends State<RequestOrderScreen> {
     fontWeight: FontWeight.normal,
     color: Colors.black,
   );
-final TextEditingController nameController = TextEditingController();
-final TextEditingController phoneController = TextEditingController();
-final TextEditingController emailController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
+  
+Future<LocationPermission> _requestLocationPermission() async {
+  final status = await Permission.location.request();
+  if (status.isGranted) {
+    return LocationPermission.always; // or LocationPermission.whileInUse
+  } else {
+    return LocationPermission.denied;
+  }
+}
+
+//  late GoogleMapController mapController;
+
+//    final LatLng _center = const LatLng(45.521563, -122.677433);
+
+//   void _onMapCreated(GoogleMapController controller) {
+//     mapController = controller;
+//   }
 
 
   @override
@@ -26,21 +44,152 @@ final TextEditingController passwordController = TextEditingController();
         appBar: MyAppBar(showBackButton: false),
         body:  SingleChildScrollView( // Wrap your content in SingleChildScrollView
           padding: const EdgeInsets.all(16.0),
+          
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+                   Text(
+                    '  تم اختيار خدمة :  ',
+                    style: customTextStyle,
+                  ),
+                   Text(
+                    '  رقم الخدمة:  ',
+                    style: customTextStyle,
+                  ),
+                 Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '  رقم الموبيل اضافي "اختياري" ',
+                    style: customTextStyle,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(15.0),
+                      hintText: ' ادخل رقم موبيل اخر',
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 240, 240, 240),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 218, 217, 217),
+                          width: 1.0,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 240, 240, 240),
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      LengthLimitingTextInputFormatter(11),
+                    ],
+                    style: customTextStyle,
+                  ),
+                ],
+              ),
+            SizedBox(height: 20),
+ Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '  المدينة',
+                    style: customTextStyle,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(15.0),
+                      hintText: '  ادخل اسم المدينة ',
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 240, 240, 240),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 218, 217, 217),
+                          width: 1.0,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 240, 240, 240),
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                     // Change keyboardType to TextInputType.text for entering a username
+  keyboardType: TextInputType.text,
+  // Remove the inputFormatters for username, or you can add specific formatters as needed
+  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
+  // inputFormatters: <TextInputFormatter>[
+  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
+  // ],
+                 
+                    style: customTextStyle,
+                  ),
+                ],
+              ),
+            SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '  اسم المستخدم',
+                    '  المنطقة',
                     style: customTextStyle,
                   ),
                   TextFormField(
- controller: nameController, // Use the name controller here
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
-                      hintText: 'ادخل اسم المستخدم',
+                      hintText: '  ادخل اسم االمنطقة او الحي ',
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 240, 240, 240),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 218, 217, 217),
+                          width: 1.0,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 240, 240, 240),
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                     // Change keyboardType to TextInputType.text for entering a username
+  keyboardType: TextInputType.text,
+  // Remove the inputFormatters for username, or you can add specific formatters as needed
+  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
+  // inputFormatters: <TextInputFormatter>[
+  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
+  // ],
+                 
+                    style: customTextStyle,
+                  ),
+                ],
+              ),
+            SizedBox(height: 20),
+
+             
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '  العنوان التفصيلي',
+                    style: customTextStyle,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(15.0),
+                      hintText: '   مثال : 5 ش مراد ,الجيزة',
                       filled: true,
                       fillColor: Color.fromARGB(255, 240, 240, 240),
                       focusedBorder: OutlineInputBorder(
@@ -71,188 +220,128 @@ final TextEditingController passwordController = TextEditingController();
                 ],
               ),
               SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '  رقم الموبيل',
-                    style: customTextStyle,
-                  ),
-                  TextFormField(
- controller: phoneController , 
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(15.0),
-                      hintText: 'ادخل رقم الموبيل',
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 240, 240, 240),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 218, 217, 217),
-                          width: 1.0,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 240, 240, 240),
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                      LengthLimitingTextInputFormatter(11),
-                    ],
-                    style: customTextStyle,
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '  البريد الالكتروني',
-                    style: customTextStyle,
-                  ),
-                  TextFormField(
- controller: emailController  , 
 
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(15.0),
-                      hintText: 'ادخل البريد الالكتروني',
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 240, 240, 240),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 218, 217, 217),
-                          width: 1.0,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 240, 240, 240),
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
-                   keyboardType: TextInputType.emailAddress, // Use TextInputType.emailAddress
-  inputFormatters: <TextInputFormatter>[
-    LengthLimitingTextInputFormatter(255), // Limit the length to a reasonable email length (255 characters)
-  ],
-                    style: customTextStyle,
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
+              
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '  كلمة السر',
+                    '  العنوان التفصيلي',
                     style: customTextStyle,
                   ),
                   TextFormField(
- controller: passwordController   , 
+                                  initialValue: widget.locationLink ?? '', // Display the location link
 
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(15.0),
-                      hintText: 'ادخل كلمة السر',
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 240, 240, 240),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 218, 217, 217),
-                          width: 1.0,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 240, 240, 240),
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
-                    obscureText: true,
-                    style: customTextStyle,
+                    // ... (other TextFormFie
+                    //ld properties)
+
+                                  readOnly: false, // Make it read-only
+
                   ),
-                ],
-              ),
-             
-              SizedBox(height: 10),
-              Text(
-                "ان كان لديك حساب",
-                style: TextStyle(
-                  fontFamily: AppVariables.serviceFontFamily,
-                ),
-              ),
-               GestureDetector( // Wrap the text with GestureDetector
-                onTap: () {
-                   Navigator.pushReplacementNamed(context, '/login');
-                },
-                child: Text(
-                  "اضغط هنا",
-                  style: TextStyle(
-                    fontFamily: AppVariables.serviceFontFamily,
-                    color: Colors.blue, // Change the text color to blue for the link
-                    decoration: TextDecoration.underline, // Add underline for link style
-                  ),
-                ),
-              ),
-             ElevatedButton(
+                  SizedBox(height: 20),
+
+                  // "Select on Map" button
+ElevatedButton(
   onPressed: () async {
-    // Call the registration method here
-    try {
-      await API.registerUser(
-        nameController.text,
-        phoneController.text,
-        emailController.text,
-        passwordController.text,
+    final permissionStatus = await _requestLocationPermission();
+    if (permissionStatus == LocationPermission.always || permissionStatus == LocationPermission.whileInUse) {
+      final selectedLocation = await Navigator.push<LatLng>(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MapSelectionScreen(),
+        ),
       );
 
-      // Registration successful, navigate to VerifyScreen with the phone number
-      Navigator.pushReplacementNamed(
-        context,
-        '/verify',
-        arguments: {'phone': phoneController.text}, // Pass the phone number
-      );
-    } catch (e) {
-      // Handle registration error here
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('خطأ في التسجيل', textAlign: TextAlign.right),
-            content: Text(
-              e.toString(),
-              textAlign: TextAlign.right,
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the alert dialog
-                },
-                child: Text('موافق'),
-              ),
-            ],
-          );
-        },
-      );
+      // Handle the selectedLocation here, it will be a LatLng object
+      if (selectedLocation != null) {
+        // Use the selected location as needed
+      }
+    } else {
+      print('Location permission denied');
     }
   },
-  child: Text('تسجيل'),
+  child: Text(
+    'حدد على الخريطة',
+    style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+  ),
+)
+
+
+
+                ],
+              ),
+              SizedBox(height: 20),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '  ملاحظات',
+                    style: customTextStyle,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(15.0),
+                      hintText: '   اضف ملاحظات فنية او شرح ',
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 240, 240, 240),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 218, 217, 217),
+                          width: 1.0,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 240, 240, 240),
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                     // Change keyboardType to TextInputType.text for entering a username
+  keyboardType: TextInputType.text,
+  // Remove the inputFormatters for username, or you can add specific formatters as needed
+  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
+  // inputFormatters: <TextInputFormatter>[
+  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
+  // ],
+                 
+                    style: customTextStyle,
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+          
+             
+             
+             ElevatedButton(
+  onPressed: () async {
+  },
+  child: Text('ارسال الطلب',    style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+),
 ),
             ],
           ),
         ),
         bottomNavigationBar: MyBottomNavigationBar(initialIndex: 1),
         drawer: const CustomDrawer(),
+      ),
+    );
+  }
+
+    // Function to show the map
+  void _showMap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: Text('Select Location on Maps'),
+          ),
+          body: MapSelectionScreen()
+
+        ),
       ),
     );
   }
