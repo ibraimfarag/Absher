@@ -67,6 +67,20 @@ print('$e');
 }
 
 
+  ElevatedButton buildSignInButton() {
+    return ElevatedButton(
+      onPressed: () {
+        // Set the predefined phone number and password
+        phoneController.text = "01001802216";
+        passwordController.text = "123456";
+
+        // Trigger the login attempt
+        attemptLogin();
+      },
+      child: Text('Sign In Developer'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -191,6 +205,8 @@ print('$e');
                  onPressed: attemptLogin, // Call the login method here
                 child: Text('تسجيل الدخول'),
               ),
+                            buildSignInButton(),
+
             ],
           ),
         ),
