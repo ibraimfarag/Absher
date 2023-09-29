@@ -1,5 +1,7 @@
+
 import 'package:absherv2/screens/imports.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class RequestOrderScreen extends StatefulWidget {
   final String? locationLink; // Location link received from MapSelectionScreen
@@ -17,7 +19,30 @@ class _RequestOrderScreenState extends State<RequestOrderScreen> {
     fontWeight: FontWeight.normal,
     color: Colors.black,
   );
-  
+DateTime? selectedDate;
+TimeOfDay? selectedTime;
+List<Asset> selectedImages = [];
+
+Future<void> _pickImages() async {
+  List<Asset> resultList = <Asset>[];
+  try {
+    resultList = await MultiImagePicker.pickImages(
+      maxImages: 10, // Set the maximum number of images to pick
+      enableCamera: true, // Enable camera option
+    );
+  } on Exception catch (e) {
+    // Handle exceptions if necessary
+  }
+
+  if (!mounted) return;
+
+  setState(() {
+    selectedImages = resultList;
+  });
+}
+
+
+
 Future<LocationPermission> _requestLocationPermission() async {
   final status = await Permission.location.request();
   if (status.isGranted) {
@@ -313,6 +338,135 @@ ElevatedButton(
                 ],
               ),
               SizedBox(height: 20),
+
+Align(
+  alignment: Alignment.centerRight,
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        '  حدد التاريخ و الساعة   ',
+        style: customTextStyle,
+      ),
+      ElevatedButton(
+        onPressed: () async {
+          // Show Date Picker
+          final pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2101),
+          );
+
+          if (pickedDate != null && pickedDate != selectedDate) {
+            setState(() {
+              selectedDate = pickedDate;
+            });
+          }
+
+          // Show Time Picker
+          final pickedTime = await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          );
+
+          if (pickedTime != null && pickedTime != selectedTime) {
+            setState(() {
+              selectedTime = pickedTime;
+            });
+          }
+        },
+        child: Text(
+          'اختر التاريخ و الساعه',
+          style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+        ),
+      ),
+      // Display selected date and time in the custom format
+      if (selectedDate != null && selectedTime != null)
+        Text(
+          'لقد اخترت موعد الزيارة يوم ${selectedDate!.toLocal().toString().split(' ')[0]} في الساعة ${selectedTime!.format(context)} بنجاح',
+          style: customTextStyle,
+        ),
+    ],
+  ),
+),
+
+
+
+
+
+     SizedBox(height: 20),
+Align(
+  alignment: Alignment.centerRight,
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      // ... Your existing form fields ...
+
+      // Add a button to pick multiple images
+      ElevatedButton(
+        onPressed: _pickImages,
+        child: Text(
+          'اختر صور',
+          style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+        ),
+      ),
+
+      // Display the selected images if available
+      if (selectedImages.isNotEmpty)
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'الصور المختارة:',
+              style: customTextStyle,
+            ),
+            Wrap(
+              spacing: 8.0,
+              runSpacing: 8.0,
+              children: List.generate(selectedImages.length, (index) {
+                return Stack(
+                  children: [
+                    AssetThumb(
+                      asset: selectedImages[index],
+                      width: 100,
+                      height: 100,
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedImages.removeAt(index);
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(4.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+            ),
+          ],
+        ),
+    ],
+  ),
+),
+
+
+     SizedBox(height: 20),
           
              
              

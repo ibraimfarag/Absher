@@ -11,6 +11,8 @@ export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:geolocator/geolocator.dart';
 
 export 'package:share/share.dart';
+export 'package:image_picker/image_picker.dart';
+export 'dart:io';
 // export
 // /* -------------------------------------------------------------------------- */
 // /* ------------------------------ // App config ----------------------------- */
