@@ -3,6 +3,11 @@ import 'package:absherv2/screens/imports.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
+
+
+
+
+
 class RequestOrderScreen extends StatefulWidget {
   final String? locationLink; // Location link received from MapSelectionScreen
 
@@ -63,6 +68,17 @@ Future<LocationPermission> _requestLocationPermission() async {
 
   @override
   Widget build(BuildContext context) {
+    // Retrieve the arguments
+     // Retrieve the arguments passed from ServiceDetailsScreen
+    final ServiceDetailsArguments? args =
+        ModalRoute.of(context)!.settings.arguments as ServiceDetailsArguments?;
+
+    if (args != null) {
+      // You can access the arguments like this:
+      // args.id, args.subId, args.name, args.imagePath, etc.
+
+      // Use the arguments in your UI or logic as needed.
+    }
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -74,11 +90,11 @@ Future<LocationPermission> _requestLocationPermission() async {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
                    Text(
-                    '  تم اختيار خدمة :  ',
+                    '  تم اختيار خدمة : ${args?.id} ',
                     style: customTextStyle,
                   ),
                    Text(
-                    '  رقم الخدمة:  ',
+                    '  رقم الخدمة: ${args?.name}',
                     style: customTextStyle,
                   ),
                  Column(
@@ -500,3 +516,7 @@ Align(
     );
   }
 }
+
+
+
+
