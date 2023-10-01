@@ -9,6 +9,7 @@ class MapSelectionScreen extends StatefulWidget {
 class _MapSelectionScreenState extends State<MapSelectionScreen> {
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = Set<Marker>(); // Use a Set to manage markers
+String? locationLink;
 
   @override
   void initState() {
@@ -42,28 +43,27 @@ class _MapSelectionScreenState extends State<MapSelectionScreen> {
     return await Geolocator.getCurrentPosition();
   }
 
-  // Function to handle sharing the location link
-  void _shareLocationLink(BuildContext context) {
-    // Check if there is a marker on the map
-    if (_markers.isNotEmpty) {
-      // Get the position of the first (and only) marker
-      LatLng markerPosition = _markers.first.position;
+// Function to handle sharing the location link
+// Modify the _shareLocationLink function to pass location link as a result
+void _shareLocationLink(BuildContext context) {
+  // Check if there is a marker on the map
+  if (_markers.isNotEmpty) {
+    // Get the position of the first (and only) marker
+    LatLng markerPosition = _markers.first.position;
 
-      // Create a location link based on the marker's position
-      String locationLink = "https://www.google.com/maps/search/?api=1&query=${markerPosition.latitude},${markerPosition.longitude}";
+    // Create a location link based on the marker's position
+    String locationLink =
+        "https://www.google.com/maps/search/?api=1&query=${markerPosition.latitude},${markerPosition.longitude}";
 
-      // Navigate to the RequestOrderScreen and pass the location link
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => RequestOrderScreen(locationLink: locationLink),
-        ),
-      );
-    } else {
-      // Handle the case when there is no marker on the map
-      print("No marker on the map");
-    }
+    // Navigate back to the previous screen and pass the location link as a result
+    Navigator.pop(context, locationLink);
+  } else {
+    // Handle the case when there is no marker on the map
+    print("No marker on the map");
   }
+}
+
+
 
   // Function to handle tapping on the map to add a marker
   void _addMarker(LatLng tappedPosition) {

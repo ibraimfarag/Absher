@@ -9,9 +9,6 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 
 
 class RequestOrderScreen extends StatefulWidget {
-  final String? locationLink; // Location link received from MapSelectionScreen
-
-  RequestOrderScreen({this.locationLink});
 
   @override
   State<RequestOrderScreen> createState() => _RequestOrderScreenState();
@@ -27,6 +24,12 @@ class _RequestOrderScreenState extends State<RequestOrderScreen> {
 DateTime? selectedDate;
 TimeOfDay? selectedTime;
 List<Asset> selectedImages = [];
+
+TextEditingController _locationLinkController = TextEditingController();
+
+
+
+
 
 Future<void> _pickImages() async {
   List<Asset> resultList = <Asset>[];
@@ -57,13 +60,7 @@ Future<LocationPermission> _requestLocationPermission() async {
   }
 }
 
-//  late GoogleMapController mapController;
 
-//    final LatLng _center = const LatLng(45.521563, -122.677433);
-
-//   void _onMapCreated(GoogleMapController controller) {
-//     mapController = controller;
-//   }
 
 
   @override
@@ -89,7 +86,7 @@ Future<LocationPermission> _requestLocationPermission() async {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-                   Text(
+                    Text(
                     '  تم اختيار خدمة : ${args?.id} ',
                     style: customTextStyle,
                   ),
@@ -266,39 +263,42 @@ Future<LocationPermission> _requestLocationPermission() async {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '  العنوان التفصيلي',
+
+
+ Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+ Text(
+                    '  رابط العنوان',
                     style: customTextStyle,
                   ),
-                  TextFormField(
-                                  initialValue: widget.locationLink ?? '', // Display the location link
+              TextFormField(
+  controller: _locationLinkController,
+  onChanged: (value) {
+    // Print the value when it changes
+    print('TextFormField value: $value');
+  },
+  readOnly: false, // Make it read-only
+),
 
-                    // ... (other TextFormFie
-                    //ld properties)
-
-                                  readOnly: false, // Make it read-only
-
-                  ),
                   SizedBox(height: 20),
 
                   // "Select on Map" button
 ElevatedButton(
   onPressed: () async {
-    final permissionStatus = await _requestLocationPermission();
-    if (permissionStatus == LocationPermission.always || permissionStatus == LocationPermission.whileInUse) {
-      final selectedLocation = await Navigator.push<LatLng>(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MapSelectionScreen(),
-        ),
-      );
+    final locationLink = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapSelectionScreen(),
+      ),
+    );
 
-      // Handle the selectedLocation here, it will be a LatLng object
-      if (selectedLocation != null) {
-        // Use the selected location as needed
-      }
-    } else {
-      print('Location permission denied');
+    // Update the TextFormField with the received locationLink
+    if (locationLink != null) {
+      setState(() {
+        // Update the TextFormField's value with the received locationLink
+        _locationLinkController.text = locationLink;
+      });
     }
   },
   child: Text(
@@ -307,6 +307,14 @@ ElevatedButton(
   ),
 )
 
+
+
+
+      // Other TextFormFields
+    ],
+  ),
+
+                 
 
 
                 ],
@@ -488,6 +496,7 @@ Align(
              
              ElevatedButton(
   onPressed: () async {
+    print('');
   },
   child: Text('ارسال الطلب',    style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
 ),
@@ -501,20 +510,7 @@ Align(
     );
   }
 
-    // Function to show the map
-  void _showMap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: Text('Select Location on Maps'),
-          ),
-          body: MapSelectionScreen()
-
-        ),
-      ),
-    );
-  }
+ 
 }
 
 
