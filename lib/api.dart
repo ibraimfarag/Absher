@@ -3,6 +3,8 @@ import 'package:absherv2/screens/auth/auth_provider.dart';
 import 'package:absherv2/screens/imports.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 class API {
   // Define the base URL of your API
@@ -192,6 +194,40 @@ static Future<void> updatePassword(String token, String newPassword, String conf
   }
 }
 
+  static Future<void> postRequest(String token, Map<String, dynamic> requestData) async {
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/Requests'),
+    );
+
+    // Set headers including the authorization header
+    request.headers['accept'] = 'text/plain';
+    request.headers['Authorization'] = 'bearer $token';
+
+    // Add fields to the request
+    requestData.forEach((key, value) {
+      request.fields[key] = value.toString();
+    });
+
+    try {
+      final response = await request.send();
+
+      if (response.statusCode != 200) {
+        final responseBody = await response.stream.bytesToString();
+        print('Error response code: ${response.statusCode}');
+        print('Error response body: $responseBody');
+        throw Exception('Failed to post data to the API');
+      }
+    } catch (e) {
+      // Handle errors here
+      print('Error posting request: $e');
+      // Show an error message to the user or handle the error appropriately
+    }
+  }
+
+
+
+
 
   // Example method to post data to the API
   static Future<void> postData(String endpoint, Map<String, dynamic> data) async {
@@ -219,4 +255,10 @@ class ApiException implements Exception {
   String toString() {
     return message;
   }
+}
+class ApiResponse {
+  final int statusCode;
+  final String message;
+
+  ApiResponse({required this.statusCode, required this.message});
 }

@@ -2,6 +2,7 @@
 import 'package:absherv2/screens/imports.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -25,7 +26,18 @@ DateTime? selectedDate;
 TimeOfDay? selectedTime;
 List<Asset> selectedImages = [];
 
-TextEditingController _locationLinkController = TextEditingController();
+  // Define TextEditingController for each TextFormField
+  TextEditingController _locationLinkController = TextEditingController();
+  TextEditingController _mobileController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
+  TextEditingController _areaController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _notesController = TextEditingController();
+
+
+String? TheTime;
+
+
 
 
 
@@ -76,6 +88,8 @@ Future<LocationPermission> _requestLocationPermission() async {
 
       // Use the arguments in your UI or logic as needed.
     }
+    var serviceID = args?.id;
+    var serviceNAME = args?.name;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -87,13 +101,10 @@ Future<LocationPermission> _requestLocationPermission() async {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
                     Text(
-                    '  تم اختيار خدمة : ${args?.id} ',
+                    '  تم اختيار خدمة : $serviceNAME ',
                     style: customTextStyle,
                   ),
-                   Text(
-                    '  رقم الخدمة: ${args?.name}',
-                    style: customTextStyle,
-                  ),
+              
                  Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -102,6 +113,7 @@ Future<LocationPermission> _requestLocationPermission() async {
                     style: customTextStyle,
                   ),
                   TextFormField(
+                     controller: _mobileController , // Assign the controller
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: ' ادخل رقم موبيل اخر',
@@ -140,6 +152,7 @@ Future<LocationPermission> _requestLocationPermission() async {
                     style: customTextStyle,
                   ),
                   TextFormField(
+                     controller: _cityController , // Assign the controller
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: '  ادخل اسم المدينة ',
@@ -181,6 +194,7 @@ Future<LocationPermission> _requestLocationPermission() async {
                     style: customTextStyle,
                   ),
                   TextFormField(
+                     controller: _areaController , // Assign the controller
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: '  ادخل اسم االمنطقة او الحي ',
@@ -225,6 +239,7 @@ Future<LocationPermission> _requestLocationPermission() async {
                     style: customTextStyle,
                   ),
                   TextFormField(
+                    controller: _addressController, // Assign the controller
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: '   مثال : 5 ش مراد ,الجيزة',
@@ -329,6 +344,7 @@ ElevatedButton(
                     style: customTextStyle,
                   ),
                   TextFormField(
+                    controller: _notesController, // Assign the controller
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: '   اضف ملاحظات فنية او شرح ',
@@ -398,7 +414,11 @@ Align(
             setState(() {
               selectedTime = pickedTime;
             });
+            
           }
+
+          // Update TheTime
+        
         },
         child: Text(
           'اختر التاريخ و الساعه',
@@ -411,6 +431,8 @@ Align(
           'لقد اخترت موعد الزيارة يوم ${selectedDate!.toLocal().toString().split(' ')[0]} في الساعة ${selectedTime!.format(context)} بنجاح',
           style: customTextStyle,
         ),
+        
+        
     ],
   ),
 ),
@@ -491,16 +513,75 @@ Align(
 
 
      SizedBox(height: 20),
-          
-             
-             
-             ElevatedButton(
-  onPressed: () async {
-    print('');
+Builder(
+  builder: (BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        TheTime = selectedDate != null && selectedTime != null
+            ? '${selectedDate!.toLocal().toString().split(' ')[0]}T${selectedTime!.hour}:${selectedTime!.minute}'
+            : '';
+        print(TheTime);
+
+        // Prepare the request data based on your requirements
+        Map<String, dynamic> requestData = {
+          'LocationDescription': _addressController.text,
+          'ServingId': serviceID,
+          'City': _cityController.text,
+          'District': _areaController.text,
+          'Date': TheTime,
+          'LocationLink': _locationLinkController.text,
+          'Comments': _notesController.text,
+          'OtherPhone': _mobileController.text,
+        };
+
+        try {
+          final authProvider = Provider.of<AuthProvider>(context, listen: false);
+          final token = authProvider.token; // Retrieve the token from your AuthProvider
+          // print(TheTime);
+          if (token != null) {
+            await API.postRequest(token, requestData);
+
+            // Request successful, show a dialog and navigate to the main screen
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(
+                    'شكرًا!',
+                    textAlign: TextAlign.right,
+                  ),
+                  content: Text(
+                    'تم إرسال الطلب بنجاح.',
+                    textAlign: TextAlign.right,
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                        Navigator.of(context).pushReplacementNamed('/screen1'); // Navigate to the main screen
+                      },
+                      child: Text('موافق'),
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            // Handle the case where the token is null (user is not authenticated)
+            // ...
+          }
+        } catch (e) {
+          // Handle errors here
+          print('Error posting request: $e');
+          // Show an error message to the user or handle the error appropriately
+        }
+      },
+      child: Text('ارسال الطلب', style: TextStyle(fontFamily: AppVariables.serviceFontFamily)),
+    );
   },
-  child: Text('ارسال الطلب',    style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
 ),
-),
+
+
             ],
           ),
         ),

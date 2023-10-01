@@ -335,26 +335,26 @@ class CustomDrawer extends StatelessWidget {
 },
 
                     ),
-                               ListTile(
-                      trailing: Icon(
-                        Icons.password,
-                        color: AppVariables().iconColor,
-                        size: AppVariables().iconSize, // Set the icon size here
-                      ),
-                      title: Text(
-                        'طلب ',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: AppVariables().titleColor,
-                          fontSize: AppVariables().titleFontSize,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppVariables().titleFontFamily,
-                        ),
-                      ),
-                      onTap: () {
-                             Navigator.pushReplacementNamed(context, '/RequestOrder');
-                      },
-                    ),
+                    //            ListTile(
+                    //   trailing: Icon(
+                    //     Icons.password,
+                    //     color: AppVariables().iconColor,
+                    //     size: AppVariables().iconSize, // Set the icon size here
+                    //   ),
+                    //   title: Text(
+                    //     'طلب ',
+                    //     textAlign: TextAlign.right,
+                    //     style: TextStyle(
+                    //       color: AppVariables().titleColor,
+                    //       fontSize: AppVariables().titleFontSize,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontFamily: AppVariables().titleFontFamily,
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //          Navigator.pushReplacementNamed(context, '/RequestOrder');
+                    //   },
+                    // ),
                     // Add more menu items as needed
                   ],
                 ),
