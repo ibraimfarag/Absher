@@ -22,6 +22,8 @@ class _RequestOrderScreenState extends State<RequestOrderScreen> {
     fontWeight: FontWeight.normal,
     color: Colors.black,
   );
+  bool isLoading = false;
+
 DateTime? selectedDate;
 TimeOfDay? selectedTime;
 List<Asset> selectedImages = [];
@@ -40,6 +42,24 @@ String? TheTime;
 
 
 
+void _showLoadingDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // Prevent dismissing the dialog by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(), // Show the loading indicator
+            SizedBox(height: 16),
+            Text("يرجى الانتظار..."), // Add a message to inform the user
+          ],
+        ),
+      );
+    },
+  );
+}
 
 
 
@@ -100,6 +120,7 @@ Future<LocationPermission> _requestLocationPermission() async {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+       
                     Text(
                     '  تم اختيار خدمة : $serviceNAME ',
                     style: customTextStyle,
@@ -501,6 +522,7 @@ Align(
                         ),
                       ),
                     ),
+                      
                   ],
                 );
               }),
@@ -516,72 +538,85 @@ Align(
 Builder(
   builder: (BuildContext context) {
     return ElevatedButton(
-  onPressed: () async {
-    TheTime = selectedDate != null && selectedTime != null
-        ? '${selectedDate!.toLocal().toString().split(' ')[0]}T${selectedTime!.hour}:${selectedTime!.minute}'
-        : '';
-    print(TheTime);
+      onPressed: () async {
+        TheTime = selectedDate != null && selectedTime != null
+            ? '${selectedDate!.toLocal().toString().split(' ')[0]}T${selectedTime!.hour}:${selectedTime!.minute}'
+            : '';
+        print(TheTime);
+        setState(() {
+          isLoading = true; // Start loading
+        });
 
-    // Prepare the request data based on your requirements
-    Map<String, dynamic> requestData = {
-      'LocationDescription': _addressController.text,
-      'ServingId': serviceID,
-      'City': _cityController.text,
-      'District': _areaController.text,
-      'Date': TheTime,
-      'LocationLink': _locationLinkController.text,
-      'Comments': _notesController.text,
-      'OtherPhone': _mobileController.text,
-    };
+        // Show the loading dialog
+        _showLoadingDialog(context);
 
- try {
-  final authProvider = Provider.of<AuthProvider>(context, listen: false);
-  final token = authProvider.token; // Retrieve the token from your AuthProvider
+        // Prepare the request data based on your requirements
+        Map<String, dynamic> requestData = {
+          'LocationDescription': _addressController.text,
+          'ServingId': serviceID,
+          'City': _cityController.text,
+          'District': _areaController.text,
+          'Date': TheTime,
+          'LocationLink': _locationLinkController.text,
+          'Comments': _notesController.text,
+          'OtherPhone': _mobileController.text,
+        };
 
-  if (token != null) {
-    await API.postRequestWithImages(token, requestData, selectedImages);
+        try {
+          final authProvider =
+              Provider.of<AuthProvider>(context, listen: false);
+          final token = authProvider.token; // Retrieve the token from your AuthProvider
 
-    // Request successful, show a dialog and navigate to the main screen
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'شكرًا!',
-            textAlign: TextAlign.right,
-          ),
-          content: Text(
-            'تم إرسال الطلب بنجاح مع الصور.',
-            textAlign: TextAlign.right,
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                Navigator.of(context).pushReplacementNamed('/screen1'); // Navigate to the main screen
+          if (token != null) {
+            await API.postRequestWithImages(token, requestData, selectedImages);
+
+            // Request successful, close the loading dialog and show a success dialog
+            Navigator.of(context, rootNavigator: true).pop(); // Close the loading dialog
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(
+                    'شكرًا!',
+                    textAlign: TextAlign.right,
+                  ),
+                  content: Text(
+                    'تم إرسال الطلب بنجاح مع الصور.',
+                    textAlign: TextAlign.right,
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the success dialog
+                        Navigator.of(context).pushReplacementNamed('/screen1'); // Navigate to the main screen
+                      },
+                      child: Text('موافق'),
+                    ),
+                  ],
+                );
               },
-              child: Text('موافق'),
-            ),
-          ],
-        );
+            );
+          } else {
+            // Handle the case where the token is null (user is not authenticated)
+            // ...
+          }
+          setState(() {
+            isLoading = false; // Stop loading
+          });
+        } catch (e) {
+          // Handle errors here
+          print('Error posting request with images: $e');
+          // Show an error message to the user or handle the error appropriately
+          setState(() {
+            isLoading = false;
+          });
+        }
       },
+      child: Text('ارسال الطلب', style: TextStyle(fontFamily: AppVariables.serviceFontFamily)),
     );
-  } else {
-    // Handle the case where the token is null (user is not authenticated)
-    // ...
-  }
-} catch (e) {
-  // Handle errors here
-  print('Error posting request with images: $e');
-  // Show an error message to the user or handle the error appropriately
-}
-
-  },
-  child: Text('ارسال الطلب', style: TextStyle(fontFamily: AppVariables.serviceFontFamily)),
-);
-
   },
 ),
+
 
 
             ],
