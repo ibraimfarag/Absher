@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:absherv2/screens/auth/auth_provider.dart';
 import 'package:absherv2/screens/imports.dart';
 import 'package:http/http.dart' as http;
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
@@ -194,36 +195,51 @@ static Future<void> updatePassword(String token, String newPassword, String conf
   }
 }
 
-  static Future<void> postRequest(String token, Map<String, dynamic> requestData) async {
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse('$baseUrl/Requests'),
+static Future<void> postRequestWithImages(String token, Map<String, dynamic> requestData, List<Asset> selectedImages) async {
+  final request = http.MultipartRequest(
+    'POST',
+    Uri.parse('$baseUrl/Requests'),
+  );
+
+  // Set headers including the authorization header
+  request.headers['accept'] = 'text/plain';
+  request.headers['Authorization'] = 'bearer $token';
+
+  // Add fields to the request
+  requestData.forEach((key, value) {
+    request.fields[key] = value.toString();
+  });
+
+  // Add images to the request
+  for (int i = 0; i < selectedImages.length; i++) {
+    final byteData = await selectedImages[i].getByteData();
+    final buffer = byteData.buffer.asUint8List();
+
+    final multipartFile = http.MultipartFile.fromBytes(
+      'files',
+      buffer,
+      filename: 'image$i.jpg',
+      contentType: MediaType('image', 'jpeg'),
     );
 
-    // Set headers including the authorization header
-    request.headers['accept'] = 'text/plain';
-    request.headers['Authorization'] = 'bearer $token';
-
-    // Add fields to the request
-    requestData.forEach((key, value) {
-      request.fields[key] = value.toString();
-    });
-
-    try {
-      final response = await request.send();
-
-      if (response.statusCode != 200) {
-        final responseBody = await response.stream.bytesToString();
-        print('Error response code: ${response.statusCode}');
-        print('Error response body: $responseBody');
-        throw Exception('Failed to post data to the API');
-      }
-    } catch (e) {
-      // Handle errors here
-      print('Error posting request: $e');
-      // Show an error message to the user or handle the error appropriately
-    }
+    request.files.add(multipartFile);
   }
+
+  try {
+    final response = await request.send();
+
+    if (response.statusCode != 200) {
+      final responseBody = await response.stream.bytesToString();
+      print('Error response code: ${response.statusCode}');
+      print('Error response body: $responseBody');
+      throw Exception('Failed to post data to the API');
+    }
+  } catch (e) {
+    // Handle errors here
+    print('Error posting request with images: $e');
+    // Show an error message to the user or handle the error appropriately
+  }
+}
 
 
 
