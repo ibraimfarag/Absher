@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:absherv2/screens/auth/auth_provider.dart';
 import 'package:absherv2/screens/imports.dart';
 import 'package:http/http.dart' as http;
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
@@ -240,7 +240,6 @@ static Future<void> postRequestWithImages(String token, Map<String, dynamic> req
     // Show an error message to the user or handle the error appropriately
   }
 }
-
 
 
 
