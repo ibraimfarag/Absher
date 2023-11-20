@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:absherv2/screens/imports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
   String? _token;
@@ -25,6 +26,23 @@ class AuthProvider with ChangeNotifier {
     _email = email;
     _mobile = mobile;
     notifyListeners();
+  }
+
+
+ Future<String?> getCachedToken() async {
+    return await API.getCachedUserToken();
+  }
+// Constructor to initialize AuthProvider
+  AuthProvider() {
+    loadCachedToken();
+  }
+
+  // Load cached token when the AuthProvider initializes
+  Future<void> loadCachedToken() async {
+    final String? cachedToken = await API.getCachedUserToken();
+    if (cachedToken != null) {
+      decodeAndSetToken(cachedToken);
+    }
   }
 void decodeAndSetToken(String token) {
   List<String> tokenParts = token.split('.');

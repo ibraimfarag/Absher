@@ -17,8 +17,24 @@ class _LoginScreenState extends State<LoginScreen> {
     fontWeight: FontWeight.normal,
     color: Colors.black,
   );
+
 final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+final TextEditingController passwordController = TextEditingController();
+  String? userToken;
+
+  @override
+  void initState() {
+    super.initState();
+    loadCachedToken();
+  }
+
+ Future<void> loadCachedToken() async {
+    final String? token = await API.getCachedUserToken();
+    setState(() {
+      userToken = token;
+    });
+  }
+
 Future<void> attemptLogin() async {
   final String phone = phoneController.text;
   final String password = passwordController.text;
@@ -83,6 +99,8 @@ print('$e');
 
   @override
   Widget build(BuildContext context) {
+        final authProvider = Provider.of<AuthProvider>(context);
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -206,6 +224,13 @@ print('$e');
                 child: Text('تسجيل الدخول'),
               ),
                             buildSignInButton(),
+
+        Center(
+        child: userToken != null
+            ? Text('User Token: $userToken')
+            : Text('Token not available'),
+      ),
+    
 
             ],
           ),

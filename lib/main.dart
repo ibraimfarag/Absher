@@ -3,12 +3,16 @@
 import 'package:absherv2/screens/imports.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final String? cachedToken = await API.getCachedUserToken();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => AuthProvider(),
       child: MainApp(),
+
     ),
   );
 }
