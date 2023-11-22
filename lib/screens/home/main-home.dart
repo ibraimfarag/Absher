@@ -110,6 +110,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: AppVariables.fontSizesmail,
+                                                      fontFamily: AppVariables.serviceFontFamily,
+
                       color: AppVariables
                           .themeColor, // Set your desired text color
                     ),

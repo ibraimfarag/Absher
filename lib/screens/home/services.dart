@@ -51,6 +51,8 @@ class DynamicItemListGrid extends StatelessWidget {
             if (dynamicItems.isEmpty) {
               return Text('No items available.');
             } else {
+              // Use min function to limit the number of items displayed
+              final limitedItems = dynamicItems.take(itemCount).toList();
               return LayoutBuilder(
                 builder: (context, constraints) {
                   final itemWidth =
@@ -59,7 +61,7 @@ class DynamicItemListGrid extends StatelessWidget {
                   return Wrap(
                     spacing: 20.0, // horizontal spacing between items
                     runSpacing: 8.0, // vertical spacing between rows
-                    children: dynamicItems.map((dynamicItem) {
+                    children: limitedItems.map((dynamicItem) {
                       return GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
@@ -104,7 +106,7 @@ class DynamicItemListGrid extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 8,
+                                fontSize: 14,
                                 color: AppVariables.themeColor,
                                 fontFamily: AppVariables.serviceFontFamily,
                               ),

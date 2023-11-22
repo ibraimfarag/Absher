@@ -223,13 +223,13 @@ print('$e');
                  onPressed: attemptLogin, // Call the login method here
                 child: Text('تسجيل الدخول'),
               ),
-                            buildSignInButton(),
+                            // buildSignInButton(),
 
-        Center(
-        child: userToken != null
-            ? Text('User Token: $userToken')
-            : Text('Token not available'),
-      ),
+      //   Center(
+      //   child: userToken != null
+      //       ? Text('User Token: $userToken')
+      //       : Text('Token not available'),
+      // ),
     
 
             ],
