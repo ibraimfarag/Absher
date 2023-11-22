@@ -1,10 +1,14 @@
 import 'package:absherv2/screens/imports.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppBar({super.key});
+  final bool showBackButton;
+
+  const MyAppBar({Key? key, required this.showBackButton})
+      : super(key: key);
 
   @override
-  Size get preferredSize => const Size.fromHeight(100); // Adjust the height as needed
+  Size get preferredSize =>
+      const Size.fromHeight(100); // Adjust the height as needed
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +23,34 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       leading: Builder(
-        builder: (context) => IconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: AppVariables.themeColor, // Replace with your desired color
-          ),
-          onPressed: () {
-            // Open the drawer when the menu icon is pressed
-            Scaffold.of(context).openDrawer();
-          },
-        ),
+        builder: (context) {
+        
+            return IconButton(
+              icon: const Icon(
+                Icons.menu,
+                color: AppVariables.themeColor, // Replace with your desired color
+              ),
+              onPressed: () {
+                // Open the drawer when the menu icon is pressed
+                Scaffold.of(context).openDrawer();
+              },
+            );
+       
+        },
       ),
-      // actions: [],
+      actions: [
+        if (showBackButton)
+          IconButton(
+            icon: const Icon(
+              Icons.arrow_forward,
+              color: AppVariables.themeColor, // Replace with your desired color
+            ),
+            onPressed: () {
+              // Navigate back when the back button is pressed
+              Navigator.of(context).pop();
+            },
+          ),
+      ],
     );
   }
 }

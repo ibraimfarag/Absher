@@ -7,12 +7,18 @@ class MainHomeScreen extends StatefulWidget {
   State<MainHomeScreen> createState() => _MainHomeScreenState();
 }
 
+
 class _MainHomeScreenState extends State<MainHomeScreen> {
   final List<Testimonial> _testimonials = getTestimonials();
-
+  // int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Directionality(
+        // Set the text direction for the app
+        textDirection: TextDirection.rtl, // or TextDirection.rtl
+        // textDirection: TextDirection.ltr, // or TextDirection.rtl
+        child:  Scaffold(
+           appBar: MyAppBar(showBackButton: false),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -72,20 +78,32 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                 ],
               ),
             ),
-             SizedBox(
-  height: 200,
-  child: DynamicItemListGrid(
-    itemCount: 8,
-    dynamicItemsFuture: fetchDynamicItems(), // Replace with your data fetching method
-  ),
-),
+//              SizedBox(
+//   height: 200,
+//   child: DynamicItemListGrid(
+    
+//     itemCount: 8,
+//     dynamicItemsFuture: fetchDynamicItems(), // Replace with your data fetching method
+//     navigator: Navigator.of(context),
+//   ),
+// ),
+        Container(
+          // height: 200,  // Set a fixed height or use other sizing constraints as needed
+          child: DynamicItemListGrid(
+            itemCount: 8,
+            dynamicItemsFuture: fetchDynamicItems(),
+            navigator: Navigator.of(context),
+          ),
+        ),
+
             // Row 4
             Container(
               color: Colors.transparent,
               height: 50,
               child: GestureDetector(
                 onTap: () {
-                  // _currentIndex = 1;
+                                          Navigator.pushReplacementNamed(context, '/screen2');
+
                 },
                 child: const Center(
                   child: Text(
@@ -93,6 +111,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: AppVariables.fontSizesmail,
+                                                      fontFamily: AppVariables.serviceFontFamily,
+
                       color: AppVariables
                           .themeColor, // Set your desired text color
                     ),
@@ -153,6 +173,13 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
           ],
         ),
       ),
+                 bottomNavigationBar: MyBottomNavigationBar(initialIndex: 0), // Add the bottom navigation bar here
+
+
+          drawer: const CustomDrawer(),
+    ),
+    
     );
+  
   }
 }

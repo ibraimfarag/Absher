@@ -44,4 +44,9 @@ class AppVariables {
   double titleFontSize = 13;
   double iconSize = 34;
   String titleFontFamily = 'sidebar-menu';
+  static const String  serviceFontFamily = 'sidebar-menu';
+
+    String phoneNumber = '+201001802203'; 
+    String whatsappMsg= 'مرحبًا، أنا أود القدوم ببعض الاقتراحات/الشكاوي'; 
+
 }
