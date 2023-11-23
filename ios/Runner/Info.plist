@@ -10,6 +10,8 @@
     <string>We need access to your photo library to save images.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>We need access to your photo library to save images.</string>
+    <key>NSFileProviderDomainUsageDescription</key>
+    <string>Our app needs access to files</string>
     <key>io.flutter.embedded_views_preview</key>
     <string>YES</string>
     <key>CFBundleDevelopmentRegion</key>

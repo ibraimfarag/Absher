@@ -86,16 +86,18 @@ class DynamicItemListGrid extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               child: Container(
                                 padding:
-                                    EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                height: itemWidth,
-                                width: itemWidth,
+                                    EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                height: 60,
+                                width: 60,
+                                // height: itemWidth,
+                                // width: itemWidth,
                                 color: AppVariables.themeColor,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(0),
                                   child: Image.network(
                                     dynamicItem.imagePath,
-                                    width: 10,
-                                    fit: BoxFit.cover,
+
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
@@ -106,7 +108,7 @@ class DynamicItemListGrid extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                                fontSize: 10,
                                 color: AppVariables.themeColor,
                                 fontFamily: AppVariables.serviceFontFamily,
                               ),
