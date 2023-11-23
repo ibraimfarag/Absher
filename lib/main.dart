@@ -2,6 +2,14 @@
 
 import 'package:absherv2/screens/imports.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+
+
+
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +25,15 @@ void main() async {
   );
 }
 
+
+
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
         final authProvider = Provider.of<AuthProvider>(context);
+ 
 
     // Removed the unused themeColor variable
     return MaterialApp(

@@ -1,4 +1,14 @@
 import 'package:absherv2/screens/imports.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'dart:typed_data';
+import 'dart:io' ;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:pwa_install/pwa_install.dart';
+
+
+
 
 class MainHomeScreen extends StatefulWidget {
   const MainHomeScreen({super.key});
@@ -7,12 +17,16 @@ class MainHomeScreen extends StatefulWidget {
   State<MainHomeScreen> createState() => _MainHomeScreenState();
 }
 
-
 class _MainHomeScreenState extends State<MainHomeScreen> {
   final List<Testimonial> _testimonials = getTestimonials();
   // int _currentIndex = 0;
   @override
+
+
+
+  @override
   Widget build(BuildContext context) {
+    
     return  Directionality(
         // Set the text direction for the app
         textDirection: TextDirection.rtl, // or TextDirection.rtl
@@ -27,6 +41,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
             Container(
               color: Colors.transparent,
               height: 200,
+              width: 400,
               child: const ImageSlider(
                 assetImagePaths: [
                   'assets/banner1.png',
