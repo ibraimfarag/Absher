@@ -38,19 +38,23 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
        
         },
       ),
-      actions: [
+ actions: [
         if (showBackButton)
           IconButton(
             icon: const Icon(
               Icons.arrow_forward,
-              color: AppVariables.themeColor, // Replace with your desired color
+              color: AppVariables.themeColor,
             ),
             onPressed: () {
-              // Navigate back when the back button is pressed
-              Navigator.of(context).pop();
+              // Ensure there's a route to pop to before popping
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                // If there's no route to pop to, handle it accordingly
+                print("No route to pop to");
+              }
             },
           ),
-      ],
-    );
+      ],    );
   }
 }
