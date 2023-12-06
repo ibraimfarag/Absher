@@ -76,13 +76,19 @@ void decodeAndSetToken(String token) {
     notifyListeners();
   }
 }
-
+  // Clear cached token when logging out
+  void clearCachedToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userToken');
+  }
  void logout() {
     _token = null;
     _id = null;
     _name = null;
     _email = null;
     _mobile = null;
+        clearCachedToken();
+
     notifyListeners();
   }
 

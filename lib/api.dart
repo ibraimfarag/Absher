@@ -87,6 +87,8 @@ static Future<void> registerUser(String name, String phone, String email, String
 
   if (response.statusCode != 200) {
     final Map<String, dynamic> responseBody = json.decode(response.body);
+    final String token = responseBody['token'];
+    await cacheUserToken(token);
     final String error = responseBody['message'];
     throw ApiException(error); // Throw your custom ApiException
   }
@@ -319,6 +321,7 @@ static Future<String?> resetPassword(String email, String code, String password,
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseBody = json.decode(response.body);
     final String token = responseBody['token'];
+        await cacheUserToken(token);
     print('Token: $token');
     return token;
   } else {
