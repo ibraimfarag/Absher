@@ -87,6 +87,8 @@ static Future<void> registerUser(String name, String phone, String email, String
 
   if (response.statusCode != 200) {
     final Map<String, dynamic> responseBody = json.decode(response.body);
+    final String token = responseBody['token'];
+    await cacheUserToken(token);
     final String error = responseBody['message'];
     throw ApiException(error); // Throw your custom ApiException
   }
@@ -275,7 +277,61 @@ static Future<void> postRequestWithImages(String token, Map<String, dynamic> req
     }
   }
 
-  // Add more API methods as needed
+  static Future<void> sendVerificationCode(String email) async {
+    final Map<String, dynamic> requestData = {
+      'email': email,
+    };
+
+    final response = await http.post(
+      Uri.parse('$baseUrl/Clients/SendCode'),
+      headers: <String, String>{
+        'accept': 'text/plain',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(requestData),
+    );
+
+    if (response.statusCode != 200) {
+      final Map<String, dynamic> responseBody = json.decode(response.body);
+      final String error = responseBody['message'];
+      throw ApiException(error); // Throw your custom ApiException
+    }
+  }
+
+static Future<String?> resetPassword(String email, String code, String password, String confirmPassword) async {
+  final url = Uri.parse('$baseUrl/Clients/resetPassword');
+  final requestBody = {
+    'email': email,
+    'code': code,
+    'password': password,
+    'confirmPassword': confirmPassword,
+  };
+
+  print('Request Body: ${jsonEncode(requestBody)}');
+
+  final response = await http.patch(
+    url,
+    headers: {
+      'accept': 'text/plain',
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode(requestBody),
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> responseBody = json.decode(response.body);
+    final String token = responseBody['token'];
+        await cacheUserToken(token);
+    print('Token: $token');
+    return token;
+  } else {
+    throw Exception('Failed to reset password');
+  }
+}
+
+
+
+
 }
 class ApiException implements Exception {
   final String message;

@@ -185,20 +185,29 @@ print('$e');
                   ),
                 ],
               ),
-              // Row(
-              //   children: [
-              //     Checkbox(
-              //       value: false,
-              //       onChanged: (value) {},
-              //     ),
-              //     Text(
-              //       'تذكرني',
-              //       style: TextStyle(
-              //         fontFamily: AppVariables.serviceFontFamily,
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              GestureDetector(
+            onTap: () {
+             
+        
+                Navigator.pushNamed(context, '/resetPassword');
+
+
+            },
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'هل نسيت كلمة السر؟',
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                                      color: Colors.blue, // Change the text color to blue for the link
+
+                ),
+              ),
+            ),
+          ),
+              
               SizedBox(height: 10),
               Text(
                 "ان لم يكن لديك حساب",

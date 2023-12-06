@@ -51,6 +51,7 @@ class MainApp extends StatelessWidget {
     '/profile': (context) => ProfileScreen(), // Define a route for update ProfileScreen
     '/changePassword': (context) => ChangePasswordScreen(), // Define a route for ChangePasswordScreen
     '/RequestOrder': (context) => RequestOrderScreen(), // Define a route for ChangePasswordScreen
+  '/resetPassword': (context) => PasswordResetScreen(),
 
   },
     );

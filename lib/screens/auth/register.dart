@@ -1,4 +1,6 @@
+import 'package:absherv2/main.dart';
 import 'package:absherv2/screens/imports.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -6,17 +8,16 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-   TextStyle customTextStyle = TextStyle(
+  TextStyle customTextStyle = TextStyle(
     fontFamily: AppVariables.serviceFontFamily,
     fontSize: 16,
     fontWeight: FontWeight.normal,
     color: Colors.black,
   );
-final TextEditingController nameController = TextEditingController();
-final TextEditingController phoneController = TextEditingController();
-final TextEditingController emailController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
-
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,8 @@ final TextEditingController passwordController = TextEditingController();
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: MyAppBar(showBackButton: false),
-        body:  SingleChildScrollView( // Wrap your content in SingleChildScrollView
+        body: SingleChildScrollView(
+          // Wrap your content in SingleChildScrollView
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +39,7 @@ final TextEditingController passwordController = TextEditingController();
                     style: customTextStyle,
                   ),
                   TextFormField(
- controller: nameController, // Use the name controller here
+                    controller: nameController, // Use the name controller here
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: 'ادخل اسم المستخدم',
@@ -58,14 +60,14 @@ final TextEditingController passwordController = TextEditingController();
                         ),
                       ),
                     ),
-                     // Change keyboardType to TextInputType.text for entering a username
-  keyboardType: TextInputType.text,
-  // Remove the inputFormatters for username, or you can add specific formatters as needed
-  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
-  // inputFormatters: <TextInputFormatter>[
-  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
-  // ],
-                 
+                    // Change keyboardType to TextInputType.text for entering a username
+                    keyboardType: TextInputType.text,
+                    // Remove the inputFormatters for username, or you can add specific formatters as needed
+                    // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
+                    // inputFormatters: <TextInputFormatter>[
+                    //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
+                    // ],
+
                     style: customTextStyle,
                   ),
                 ],
@@ -79,7 +81,7 @@ final TextEditingController passwordController = TextEditingController();
                     style: customTextStyle,
                   ),
                   TextFormField(
- controller: phoneController , 
+                    controller: phoneController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: 'ادخل رقم الموبيل',
@@ -118,7 +120,7 @@ final TextEditingController passwordController = TextEditingController();
                     style: customTextStyle,
                   ),
                   TextFormField(
- controller: emailController  , 
+                    controller: emailController,
 
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
@@ -140,10 +142,12 @@ final TextEditingController passwordController = TextEditingController();
                         ),
                       ),
                     ),
-                   keyboardType: TextInputType.emailAddress, // Use TextInputType.emailAddress
-  inputFormatters: <TextInputFormatter>[
-    LengthLimitingTextInputFormatter(255), // Limit the length to a reasonable email length (255 characters)
-  ],
+                    keyboardType: TextInputType
+                        .emailAddress, // Use TextInputType.emailAddress
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(
+                          255), // Limit the length to a reasonable email length (255 characters)
+                    ],
                     style: customTextStyle,
                   ),
                 ],
@@ -157,8 +161,7 @@ final TextEditingController passwordController = TextEditingController();
                     style: customTextStyle,
                   ),
                   TextFormField(
- controller: passwordController   , 
-
+                    controller: passwordController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: 'ادخل كلمة السر',
@@ -184,7 +187,6 @@ final TextEditingController passwordController = TextEditingController();
                   ),
                 ],
               ),
-             
               SizedBox(height: 10),
               Text(
                 "ان كان لديك حساب",
@@ -192,23 +194,26 @@ final TextEditingController passwordController = TextEditingController();
                   fontFamily: AppVariables.serviceFontFamily,
                 ),
               ),
-               GestureDetector( // Wrap the text with GestureDetector
+              GestureDetector(
+                // Wrap the text with GestureDetector
                 onTap: () {
-                   Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushReplacementNamed(context, '/login');
                 },
                 child: Text(
                   "اضغط هنا",
                   style: TextStyle(
                     fontFamily: AppVariables.serviceFontFamily,
-                    color: Colors.blue, // Change the text color to blue for the link
-                    decoration: TextDecoration.underline, // Add underline for link style
+                    color: Colors
+                        .blue, // Change the text color to blue for the link
+                    decoration: TextDecoration
+                        .underline, // Add underline for link style
                   ),
                 ),
               ),
-             ElevatedButton(
+           ElevatedButton(
   onPressed: () async {
-    // Call the registration method here
     try {
+      // Call the registration method here
       await API.registerUser(
         nameController.text,
         phoneController.text,
@@ -216,14 +221,17 @@ final TextEditingController passwordController = TextEditingController();
         passwordController.text,
       );
 
-      // Registration successful, navigate to VerifyScreen with the phone number
-      Navigator.pushReplacementNamed(
-        context,
-        '/verify',
-        arguments: {'phone': phoneController.text}, // Pass the phone number
-      );
+      // Login the user automatically after successful registration
+      final token = await API.login(phoneController.text, passwordController.text);
+
+      // Decode the token and set it in the AuthProvider
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.decodeAndSetToken(token!);
+
+      // Navigate to the next screen or perform other actions
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainApp()));
     } catch (e) {
-      // Handle registration error here
+      // Handle registration or login error here
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -248,6 +256,7 @@ final TextEditingController passwordController = TextEditingController();
   },
   child: Text('تسجيل'),
 ),
+
             ],
           ),
         ),
