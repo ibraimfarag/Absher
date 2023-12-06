@@ -1,8 +1,8 @@
 
 import 'package:absherv2/screens/imports.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:multiple_images_picker/multiple_images_picker.dart';
 
 
 
@@ -62,11 +62,10 @@ void _showLoadingDialog(BuildContext context) {
 }
 
 
-
 Future<void> _pickImages() async {
   List<Asset> resultList = <Asset>[];
   try {
-    resultList = await MultiImagePicker.pickImages(
+    resultList = await MultipleImagesPicker.pickImages(
       maxImages: 10, // Set the maximum number of images to pick
       enableCamera: true, // Enable camera option
     );
@@ -480,55 +479,55 @@ Align(
       ),
 
       // Display the selected images if available
-      if (selectedImages.isNotEmpty)
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'الصور المختارة:',
-              style: customTextStyle,
-            ),
-            Wrap(
-              spacing: 8.0,
-              runSpacing: 8.0,
-              children: List.generate(selectedImages.length, (index) {
-                return Stack(
-                  children: [
-                    AssetThumb(
-                      asset: selectedImages[index],
-                      width: 100,
-                      height: 100,
+if (selectedImages.isNotEmpty)
+  Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'الصور المختارة:',
+        style: customTextStyle,
+      ),
+      Wrap(
+        spacing: 8.0,
+        runSpacing: 8.0,
+        children: List.generate(selectedImages.length, (index) {
+          return Stack(
+            children: [
+              AssetThumb(
+                asset: selectedImages[index],
+                width: 100,
+                height: 100,
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedImages.removeAt(index);
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red,
                     ),
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedImages.removeAt(index);
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.red,
-                          ),
-                          child: Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 18.0,
-                          ),
-                        ),
-                      ),
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 18.0,
                     ),
-                      
-                  ],
-                );
-              }),
-            ),
-          ],
-        ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
+    ],
+  ),
+
     ],
   ),
 ),

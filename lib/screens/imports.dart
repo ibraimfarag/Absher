@@ -12,6 +12,9 @@ export 'package:geolocator/geolocator.dart';
 
 export 'package:share/share.dart';
 export 'package:image_picker/image_picker.dart';
+import 'package:multiple_images_picker/multiple_images_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 export 'dart:io';
 // export
 // /* -------------------------------------------------------------------------- */

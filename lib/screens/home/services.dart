@@ -51,6 +51,8 @@ class DynamicItemListGrid extends StatelessWidget {
             if (dynamicItems.isEmpty) {
               return Text('No items available.');
             } else {
+              // Use min function to limit the number of items displayed
+              final limitedItems = dynamicItems.take(itemCount).toList();
               return LayoutBuilder(
                 builder: (context, constraints) {
                   final itemWidth =
@@ -59,7 +61,7 @@ class DynamicItemListGrid extends StatelessWidget {
                   return Wrap(
                     spacing: 20.0, // horizontal spacing between items
                     runSpacing: 8.0, // vertical spacing between rows
-                    children: dynamicItems.map((dynamicItem) {
+                    children: limitedItems.map((dynamicItem) {
                       return GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
@@ -84,7 +86,9 @@ class DynamicItemListGrid extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               child: Container(
                                 padding:
-                                    EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                    EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                // height: 60,
+                                // width: 60,
                                 height: itemWidth,
                                 width: itemWidth,
                                 color: AppVariables.themeColor,
@@ -92,8 +96,8 @@ class DynamicItemListGrid extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(0),
                                   child: Image.network(
                                     dynamicItem.imagePath,
-                                    width: 10,
-                                    fit: BoxFit.cover,
+
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
@@ -104,7 +108,7 @@ class DynamicItemListGrid extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 8,
+                                fontSize: 10,
                                 color: AppVariables.themeColor,
                                 fontFamily: AppVariables.serviceFontFamily,
                               ),

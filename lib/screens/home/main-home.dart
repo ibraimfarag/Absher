@@ -1,5 +1,11 @@
 import 'package:absherv2/screens/imports.dart';
 
+
+
+
+
+
+
 class MainHomeScreen extends StatefulWidget {
   const MainHomeScreen({super.key});
 
@@ -11,7 +17,12 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   final List<Testimonial> _testimonials = getTestimonials();
   // int _currentIndex = 0;
   @override
+
+
+
+  @override
   Widget build(BuildContext context) {
+    
     return  Directionality(
         // Set the text direction for the app
         textDirection: TextDirection.rtl, // or TextDirection.rtl
@@ -26,6 +37,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
             Container(
               color: Colors.transparent,
               height: 200,
+              width: 400,
               child: const ImageSlider(
                 assetImagePaths: [
                   'assets/banner1.png',
@@ -110,6 +122,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: AppVariables.fontSizesmail,
+                                                      fontFamily: AppVariables.serviceFontFamily,
+
                       color: AppVariables
                           .themeColor, // Set your desired text color
                     ),

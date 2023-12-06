@@ -3,15 +3,26 @@
 import 'package:absherv2/screens/imports.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  
+
+
+
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final String? cachedToken = await API.getCachedUserToken();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => AuthProvider(),
       child: MainApp(),
+
     ),
   );
 }
+
+
 
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -19,6 +30,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         final authProvider = Provider.of<AuthProvider>(context);
+ 
 
     // Removed the unused themeColor variable
     return MaterialApp(

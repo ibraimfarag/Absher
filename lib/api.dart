@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:absherv2/screens/auth/auth_provider.dart';
 import 'package:absherv2/screens/imports.dart';
 import 'package:http/http.dart' as http;
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
   // Define the base URL of your API
@@ -25,6 +26,20 @@ static Future<List<Map<String, dynamic>>> fetchData(String endpoint) async {
     throw Exception('Failed to load data from the API');
   }
 }
+  // Cache user token
+  static Future<void> cacheUserToken(String token) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userToken', token);
+  }
+
+  // Retrieve cached user token
+  static Future<String?> getCachedUserToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userToken');
+  }
+
+
+
 
 static Future<String> login(String phone, String password) async {
   final Map<String, String> requestData = {
@@ -43,6 +58,7 @@ static Future<String> login(String phone, String password) async {
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseBody = json.decode(response.body);
     final String token = responseBody['token'];
+      await cacheUserToken(token);
        print('$token');
     return token;
   } else {
@@ -240,7 +256,6 @@ static Future<void> postRequestWithImages(String token, Map<String, dynamic> req
     // Show an error message to the user or handle the error appropriately
   }
 }
-
 
 
 
