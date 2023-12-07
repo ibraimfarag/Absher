@@ -324,7 +324,9 @@ class CustomDrawer extends StatelessWidget {
   final phoneNumber = AppVariables().phoneNumber; // Replace with the desired phone number
   final message = AppVariables().whatsappMsg;
 
-  final whatsappUrl = 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
+  final whatsappUrl = Platform.isIOS
+    ? 'whatsapp://wa.me/$phoneNumber/?text=${Uri.encodeQueryComponent(message)}'
+    : 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
 
   if (await canLaunch(whatsappUrl)) {
     await launch(whatsappUrl);

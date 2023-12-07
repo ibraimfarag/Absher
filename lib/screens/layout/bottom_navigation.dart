@@ -18,30 +18,32 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      // Set the default text style for the entire BottomNavigationBar
       style: TextStyle(
-        fontFamily: AppVariables.serviceFontFamily, // Use the font family you defined in pubspec.yaml
-        fontSize: 20, // Adjust the font size as needed
+        fontFamily: AppVariables.serviceFontFamily,
+        fontSize: 20,
       ),
       child: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
-          // Handle tab tap
           setState(() {
             _currentIndex = index;
           });
 
-          // Navigate to the corresponding screen
           switch (index) {
             case 0:
-              // Navigate to Screen 1
               Navigator.pushReplacementNamed(context, '/screen1');
               break;
+          
             case 1:
-              // Navigate to Screen 2
-              Navigator.pushReplacementNamed(context, '/screen2');
+              // Handle the new button for sending a message on WhatsApp
+              final phoneNumber = AppVariables().phoneNumber;
+              final message = "Your custom message here";
+              final whatsappUrl = Platform.isIOS
+                  ? 'whatsapp://wa.me/$phoneNumber/?text=${Uri.encodeQueryComponent(message)}'
+                  : 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
+
+              launchWhatsApp(whatsappUrl);
               break;
-            
           }
         },
         items: [
@@ -49,13 +51,23 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             icon: Icon(Icons.home),
             label: 'الرئيسية',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'الخدمات',
-          ),
          
+          BottomNavigationBarItem(
+            icon: Icon(Icons.send), // Use the appropriate icon for sending on WhatsApp
+            label: 'إرسال على واتساب',
+          ),
         ],
       ),
     );
+  }
+
+  // Helper method to launch WhatsApp
+  Future<void> launchWhatsApp(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      // Handle error - unable to launch WhatsApp
+      print('Could not launch WhatsApp');
+    }
   }
 }
