@@ -11,6 +11,8 @@ export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:geolocator/geolocator.dart';
 
 export 'package:share/share.dart';
+export 'package:app_updater/app_updater.dart';
+
 export 'package:image_picker/image_picker.dart';
 import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,6 +67,9 @@ export 'package:absherv2/screens/auth/profile.dart';
 export 'package:absherv2/screens/auth/changePassword.dart';
 
 
+export 'package:absherv2/screens/auth/privacy_screen.dart';
+
+
 export 'package:absherv2/screens/auth/restPassword.dart';
 
 
@@ -80,4 +85,5 @@ export 'package:absherv2/screens/widgets/testimonial_list.dart';
 export 'package:absherv2/screens/services/main_services.dart';
 export 'package:absherv2/screens/services/service_details_screen.dart';
 export 'package:absherv2/screens/services/request.dart';
+export 'package:absherv2/screens/services/AboutCompanyScreen.dart';
 

@@ -18,7 +18,20 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   // int _currentIndex = 0;
   @override
 
-
+@override
+  void initState() {
+    super.initState();
+    _verifyVersion();
+  }
+ void _verifyVersion() async {
+    checkAppUpdate(
+    context,
+    appName: 'Abshr',
+    iosAppId: 'Z7UB2G8R72',
+    androidAppBundleId: 'com.AbsherApp.HomeServices ',
+);
+ 
+  }
 
   @override
   Widget build(BuildContext context) {

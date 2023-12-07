@@ -284,26 +284,26 @@ class CustomDrawer extends StatelessWidget {
                     //     // Handle menu item 1 click
                     //   },
                     // ),
-                    // ListTile(
-                    //   trailing: Icon(
-                    //     Icons.phone_enabled,
-                    //     color: AppVariables().iconColor,
-                    //     size: AppVariables().iconSize, // Set the icon size here
-                    //   ),
-                    //   title: Text(
-                    //     'اتصل بنا',
-                    //     textAlign: TextAlign.right,
-                    //     style: TextStyle(
-                    //       color: AppVariables().titleColor,
-                    //       fontSize: AppVariables().titleFontSize,
-                    //       fontWeight: FontWeight.bold,
-                    //       fontFamily: AppVariables().titleFontFamily,
-                    //     ),
-                    //   ),
-                    //   onTap: () {
-                    //     // Handle menu item 1 click
-                    //   },
-                    // ),
+                    ListTile(
+                      trailing: Icon(
+                        Icons.document_scanner_outlined,
+                        color: AppVariables().iconColor,
+                        size: AppVariables().iconSize, // Set the icon size here
+                      ),
+                      title: Text(
+                        'عن الشركة',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: AppVariables().titleColor,
+                          fontSize: AppVariables().titleFontSize,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: AppVariables().titleFontFamily,
+                        ),
+                      ),
+                      onTap: () {
+                    Navigator.pushNamed(context, '/about');
+                      },
+                    ),
                     ListTile(
                       trailing: Icon(
                         Icons.chat_bubble_outline,
