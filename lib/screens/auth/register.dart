@@ -1,5 +1,5 @@
-import 'package:absherv2/main.dart';
-import 'package:absherv2/screens/imports.dart';
+import 'package:Abshr/main.dart';
+import 'package:Abshr/screens/imports.dart';
 import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 

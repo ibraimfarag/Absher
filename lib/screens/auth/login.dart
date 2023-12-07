@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 
-import 'package:absherv2/main.dart';
-import 'package:absherv2/screens/imports.dart';
+import 'package:Abshr/main.dart';
+import 'package:Abshr/screens/imports.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {

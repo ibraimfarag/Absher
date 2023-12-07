@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "absherv2",
+            "name": "Abshr",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "absherv2 (profile mode)",
+            "name": "Abshr (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "absherv2 (release mode)",
+            "name": "Abshr (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

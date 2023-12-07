@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:absherv2/screens/imports.dart';
+import 'package:Abshr/screens/imports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
