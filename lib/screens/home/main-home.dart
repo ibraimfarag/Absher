@@ -17,6 +17,58 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   final List<Testimonial> _testimonials = getTestimonials();
   // int _currentIndex = 0;
   
+   @override
+  void initState() {
+    super.initState();
+    _verifyVersion();
+  }
+
+  void _verifyVersion() async {
+    await AppVersionUpdate.checkForUpdates(
+      appleId: '6473955612',
+      playStoreId: 'com.AbsherApp.HomeServices',
+      country: 'eg',
+    ).then((result) async {
+      if (result.canUpdate!) {
+        // await AppVersionUpdate.showBottomSheetUpdate(context: context, appVersionResult: appVersionResult)
+        // await AppVersionUpdate.showPageUpdate(context: context, appVersionResult: appVersionResult)
+        // or use your own widget with information received from AppVersionResult
+
+        //##############################################################################################
+        await AppVersionUpdate.showAlertUpdate(
+          appVersionResult: result,
+          context: context,
+          backgroundColor: Colors.grey[200],
+          title: 'إصدار أحدث متاح',
+          titleTextStyle: const TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 24.0),
+          content:
+              'هل ترغب في تحديث تطبيقك إلى الإصدار الأحدث؟',
+          contentTextStyle: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+          ),
+          updateButtonText: 'تحديث',
+          cancelButtonText: 'تجاهل',
+        );
+
+        //## AppVersionUpdate.showBottomSheetUpdate ##
+        // await AppVersionUpdate.showBottomSheetUpdate(
+        //   context: context,
+        //   mandatory: true,
+        //   appVersionResult: result,
+        // );
+
+        //## AppVersionUpdate.showPageUpdate ##
+
+        // await AppVersionUpdate.showPageUpdate(
+        //   context: context,
+        //   appVersionResult: result,
+        // );
+      }
+    });
+    // TODO: implement initState
+  }
 
   @override
   Widget build(BuildContext context) {
