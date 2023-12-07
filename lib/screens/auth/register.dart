@@ -1,5 +1,6 @@
 import 'package:absherv2/main.dart';
 import 'package:absherv2/screens/imports.dart';
+import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -8,6 +9,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+    bool isChecked = false;
   TextStyle customTextStyle = TextStyle(
     fontFamily: AppVariables.serviceFontFamily,
     fontSize: 16,
@@ -185,6 +187,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: true,
                     style: customTextStyle,
                   ),
+SizedBox(height: 10),
+  Row(
+      children: [
+        Checkbox(
+          value: isChecked,
+          onChanged: (bool? value) {
+            setState(() {
+              isChecked = value ?? false;
+            });
+          },
+        ),
+        RichText(
+          text: TextSpan(
+            style: TextStyle(
+              fontFamily: AppVariables.serviceFontFamily,
+              color: Colors.black,
+            ),
+            children: [
+              TextSpan(
+                text: "أوافق على الشروط والأحكام، للمزيد ",
+              ),
+              TextSpan(
+                text: "اضغط هنا",
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    // Define the route to navigate to when "اضغط هنا" is clicked
+                    Navigator.pushNamed(context, '/privacy');
+                  },
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  Row(children: [    if (!isChecked) // Show an error message if the checkbox is not checked
+    Text(
+      "يجب الموافقة على الشروط والأحكام للمتابعة",
+      style: TextStyle(
+        color: Colors.red,
+        fontFamily: AppVariables.serviceFontFamily,
+      ),
+    ),],)
+
+
                 ],
               ),
               SizedBox(height: 10),
@@ -197,7 +247,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               GestureDetector(
                 // Wrap the text with GestureDetector
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: Text(
                   "اضغط هنا",
@@ -210,35 +260,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ),
-           ElevatedButton(
+       ElevatedButton(
   onPressed: () async {
-    try {
-      // Call the registration method here
-      await API.registerUser(
-        nameController.text,
-        phoneController.text,
-        emailController.text,
-        passwordController.text,
-      );
-
-      // Login the user automatically after successful registration
-      final token = await API.login(phoneController.text, passwordController.text);
-
-      // Decode the token and set it in the AuthProvider
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      authProvider.decodeAndSetToken(token!);
-
-      // Navigate to the next screen or perform other actions
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainApp()));
-    } catch (e) {
-      // Handle registration or login error here
+    if (!isChecked) {
+      // Display an error or prevent registration
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('خطأ في التسجيل', textAlign: TextAlign.right),
             content: Text(
-              e.toString(),
+              "يجب الموافقة على الشروط والأحكام للتسجيل",
               textAlign: TextAlign.right,
             ),
             actions: [
@@ -252,10 +284,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
         },
       );
+    } else {
+      try {
+        // Call the registration method here
+        await API.registerUser(
+          nameController.text,
+          phoneController.text,
+          emailController.text,
+          passwordController.text,
+        );
+
+        // Login the user automatically after successful registration
+        final token = await API.login(
+            phoneController.text, passwordController.text);
+
+        // Decode the token and set it in the AuthProvider
+        final authProvider =
+            Provider.of<AuthProvider>(context, listen: false);
+        authProvider.decodeAndSetToken(token!);
+
+        // Navigate to the next screen or perform other actions
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MainApp()));
+      } catch (e) {
+        // Handle registration or login error here
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('خطأ في التسجيل', textAlign: TextAlign.right),
+              content: Text(
+                e.toString(),
+                textAlign: TextAlign.right,
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the alert dialog
+                  },
+                  child: Text('موافق'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   },
   child: Text('تسجيل'),
 ),
+
 
             ],
           ),
