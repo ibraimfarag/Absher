@@ -20,7 +20,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
+
     return  Directionality(
         // Set the text direction for the app
         textDirection: TextDirection.rtl, // or TextDirection.rtl

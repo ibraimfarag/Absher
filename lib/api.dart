@@ -329,7 +329,47 @@ static Future<String?> resetPassword(String email, String code, String password,
   }
 }
 
+static Future<List<Map<String, dynamic>>> getOwnRequests(String token) async {
+  final response = await http.get(
+    Uri.parse('$baseUrl/Requests/own'),
+    headers: <String, String>{
+      'accept': 'text/plain',
+      'Authorization': 'bearer $token',
+    },
+  );
 
+  if (response.statusCode == 200) {
+    final List<dynamic> responseData = json.decode(response.body);
+
+    // Transform the response data to match the desired structure
+    final List<Map<String, dynamic>> ownRequests = responseData.map((request) {
+      return {
+        'id': request['id'],
+        'otherPhone': request['otherPhone'],
+        'servingId': request['servingId'],
+        'servingName': request['servingName'],
+        'clientId': request['clientId'],
+        'client': {
+          'id': request['client']['id'],
+          'name': request['client']['name'],
+          'phone': request['client']['phone'],
+          'email': request['client']['email'],
+        },
+        'city': request['city'],
+        'district': request['district'],
+        'locationDescription': request['locationDescription'],
+        'locationLink': request['locationLink'],
+        'comments': request['comments'],
+        'date': request['date'],
+        'requestFiles': request['requestFiles'],
+      };
+    }).toList();
+
+    return ownRequests;
+  } else {
+    throw Exception('Failed to load own requests from the API');
+  }
+}
 
 
 }

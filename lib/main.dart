@@ -8,10 +8,15 @@ import 'package:provider/provider.dart';
 
 
 
+
+
+ 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final String? cachedToken = await API.getCachedUserToken();
+
 
   runApp(
     ChangeNotifierProvider(
@@ -24,13 +29,16 @@ void main() async {
 
 
 
+
+
+
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
         final authProvider = Provider.of<AuthProvider>(context);
- 
+
 
     // Removed the unused themeColor variable
     return MaterialApp(
@@ -54,6 +62,8 @@ class MainApp extends StatelessWidget {
     '/resetPassword': (context) => PasswordResetScreen(),
     '/privacy': (context) => PrivacyScreen(),
     '/about': (context) => AboutCompanyScreen(),
+    '/myrequests': (context) => MyRequestsScreen(),
+    '/request': (context) => RequestScreen(),
 
   },
     );

@@ -245,6 +245,26 @@ class CustomDrawer extends StatelessWidget {
                       if (isAuthenticated)
                     ListTile(
                       trailing: Icon(
+                        Icons.request_page,
+                        color: AppVariables().iconColor,
+                        size: AppVariables().iconSize, // Set the icon size here
+                      ),
+                      title: Text(
+                        'طلباتي',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: AppVariables().titleColor,
+                          fontSize: AppVariables().titleFontSize,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: AppVariables().titleFontFamily,
+                        ),
+                      ),
+                      onTap: () {
+     Navigator.pushNamed(context, '/myrequests');                      },
+                    ),
+                      if (isAuthenticated)
+                    ListTile(
+                      trailing: Icon(
                         Icons.logout_outlined,
                         color: AppVariables().iconColor,
                         size: AppVariables().iconSize, // Set the icon size here
