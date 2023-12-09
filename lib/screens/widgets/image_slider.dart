@@ -33,9 +33,13 @@ class ImageSlider extends StatelessWidget {
                     enlargeStrategy: CenterPageEnlargeStrategy.scale,
                   ),
                   items: [
-                    'assets/banner1.png',
-                    'assets/banner2.png',
-                    'assets/banner3.png',
+                                 'assets/sliders/1.png',
+                  'assets/sliders/2.png',
+                  'assets/sliders/3.png',
+                  'assets/sliders/4.png',
+                  'assets/sliders/5.png',
+                  'assets/sliders/6.png',
+                 
                   ]
                       .map((imageUrl) => Container(
                             margin: const EdgeInsets.all(3.0),

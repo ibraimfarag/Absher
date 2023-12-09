@@ -18,6 +18,13 @@ class _RequestScreenState extends State<RequestScreen> {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
     if (args != null) {
+      // Replace "null" with "لايوجد" in the requestData
+      args.forEach((key, value) {
+        if (value == null) {
+          args[key] = "لايوجد";
+        }
+      });
+
       // Set the requestData if arguments are not null
       setState(() {
         requestData = args;
@@ -27,6 +34,7 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
+ 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -66,19 +74,33 @@ class _RequestScreenState extends State<RequestScreen> {
                 child: Column(
                   children: [
                     if (requestData != null)
-                      buildTextRow('اسم الخدمة: ', '${requestData?['servingName']}'),
+                      buildTextRow(
+                          'اسم الخدمة: ', '${requestData?['servingName']}'),
                     if (requestData != null)
-                      buildTextRow('رقم الموبايل: ', '${requestData?['otherPhone']}'),
+                      buildTextRow(' رقم الموبايل : ',
+                          '${requestData?['client']['phone']}'),
+                    if (requestData != null)
+                      buildTextRow(' رقم الموبايل الاضافي: ',
+                          '${requestData?['otherPhone']}'),
                     if (requestData != null)
                       buildTextRow('المدينة: ', '${requestData?['city']}'),
                     if (requestData != null)
                       buildTextRow('المنطقة: ', '${requestData?['district']}'),
                     if (requestData != null)
-                      buildTextRow('العنوان: ', '${requestData?['locationDescription']}'),
+                      buildTextRow('العنوان: ',
+                          '${requestData?['locationDescription']}'),
                     if (requestData != null)
-                      buildTextRow('الملاحظات: ', '${requestData?['comments']}'),
+                      buildTextRow(
+                          'الملاحظات: ', '${requestData?['comments']}'),
+buildTextRow('حالة الطلب: ', requestData?['status'] != null && requestData?['status'].isNotEmpty
+    ? '${requestData?['status']}'
+    : 'ليس هناك حالة محددة'),
+
+
+
                     if (requestData != null)
-                      buildTextRow('تاريخ المعاينة: ', '${formatDate(requestData?['date'])}'),
+                      buildTextRow('تاريخ المعاينة: ',
+                          '${formatDate(requestData?['date'])}'),
                   ],
                 ),
               ),
@@ -91,45 +113,47 @@ class _RequestScreenState extends State<RequestScreen> {
     );
   }
 
-Widget buildTextRow(String label, String value) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      SizedBox(height: 100),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: AppVariables.serviceFontFamily,
-                color: AppVariables.themeColor,
+  Widget buildTextRow(String label, String value) {
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(height: 100),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: AppVariables.serviceFontFamily,
+                  color: AppVariables.themeColor,
+                ),
+                textAlign: TextAlign.right,
               ),
-              textAlign: TextAlign.right,
-            ),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: AppVariables.serviceFontFamily,
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: AppVariables.serviceFontFamily,
+                ),
+                textAlign: TextAlign.right,
               ),
-              textAlign: TextAlign.right,
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
   String formatDate(String dateString) {
     // Parse the date string
     DateTime date = DateTime.parse(dateString);
 
     // Format the date using a custom function
-    String formattedDate = " ${date.year}-${_twoDigits(date.month)}-${_twoDigits(date.day)} "
+    String formattedDate =
+        " ${date.year}-${_twoDigits(date.month)}-${_twoDigits(date.day)} "
         " الساعة : ${_twoDigits(date.hour)}:${_twoDigits(date.minute)} ${_getPeriod(date.hour)}";
 
     return formattedDate;
