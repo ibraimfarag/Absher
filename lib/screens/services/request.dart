@@ -292,68 +292,68 @@ Future<LocationPermission> _requestLocationPermission() async {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              // SizedBox(height: 20),
 
               
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+//               Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
 
 
- Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
- Text(
-                    '  رابط العنوان',
-                    style: customTextStyle,
-                  ),
-              TextFormField(
-  controller: _locationLinkController,
-  onChanged: (value) {
-    // Print the value when it changes
-    print('TextFormField value: $value');
-  },
-  readOnly: false, // Make it read-only
-),
+//  Column(
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     children: [
+//  Text(
+//                     '  رابط العنوان',
+//                     style: customTextStyle,
+//                   ),
+//               TextFormField(
+//   controller: _locationLinkController,
+//   onChanged: (value) {
+//     // Print the value when it changes
+//     print('TextFormField value: $value');
+//   },
+//   readOnly: false, // Make it read-only
+// ),
 
-                  SizedBox(height: 20),
+//                   SizedBox(height: 20),
 
-                  // "Select on Map" button
-ElevatedButton(
-  onPressed: () async {
-    final locationLink = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MapSelectionScreen(),
-      ),
-    );
+//                   // "Select on Map" button
+// ElevatedButton(
+//   onPressed: () async {
+//     final locationLink = await Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => MapSelectionScreen(),
+//       ),
+//     );
 
-    // Update the TextFormField with the received locationLink
-    if (locationLink != null) {
-      setState(() {
-        // Update the TextFormField's value with the received locationLink
-        _locationLinkController.text = locationLink;
-      });
-    }
-  },
-  child: Text(
-    'حدد على الخريطة',
-    style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
-  ),
-)
-
-
+//     // Update the TextFormField with the received locationLink
+//     if (locationLink != null) {
+//       setState(() {
+//         // Update the TextFormField's value with the received locationLink
+//         _locationLinkController.text = locationLink;
+//       });
+//     }
+//   },
+//   child: Text(
+//     'حدد على الخريطة',
+//     style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
+//   ),
+// )
 
 
-      // Other TextFormFields
-    ],
-  ),
+
+
+//       // Other TextFormFields
+//     ],
+//   ),
 
                  
 
 
-                ],
-              ),
+//                 ],
+//               ),
               SizedBox(height: 20),
 
               Column(
