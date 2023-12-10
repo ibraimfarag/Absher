@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:absherv2/screens/imports.dart';
+import 'package:Abshr/screens/imports.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {

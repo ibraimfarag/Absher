@@ -1,4 +1,4 @@
-import 'package:absherv2/screens/imports.dart';
+import 'package:Abshr/screens/imports.dart';
 
 
 
@@ -16,26 +16,11 @@ class MainHomeScreen extends StatefulWidget {
 class _MainHomeScreenState extends State<MainHomeScreen> {
   final List<Testimonial> _testimonials = getTestimonials();
   // int _currentIndex = 0;
-  @override
-
-@override
-  void initState() {
-    super.initState();
-    _verifyVersion();
-  }
- void _verifyVersion() async {
-    checkAppUpdate(
-    context,
-    appName: 'Abshr',
-    iosAppId: 'Z7UB2G8R72',
-    androidAppBundleId: 'com.AbsherApp.HomeServices ',
-);
- 
-  }
+  
 
   @override
   Widget build(BuildContext context) {
-    
+
     return  Directionality(
         // Set the text direction for the app
         textDirection: TextDirection.rtl, // or TextDirection.rtl
@@ -53,9 +38,13 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
               width: 400,
               child: const ImageSlider(
                 assetImagePaths: [
-                  'assets/banner1.png',
-                  'assets/banner2.png',
-                  'assets/banner3.png',
+                  'assets/sliders/1.png',
+                  'assets/sliders/2.png',
+                  'assets/sliders/3.png',
+                  'assets/sliders/4.png',
+                  'assets/sliders/5.png',
+                  'assets/sliders/6.png',
+                 
                   // Add more asset image paths as needed
                 ],
               ),
@@ -68,7 +57,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset(
-                    'assets/banner4.png', // Replace with your logo image path
+                    'assets/sliders/6.png', // Replace with your logo image path
                     width: 460, // Adjust the logo height as needed
                   ),
                 ),
@@ -181,19 +170,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                   testimonials: _testimonials,
                 )),
             // Row 6
-            Container(
-              color: AppVariables.themeColor,
-              height: 50,
-              child: const Center(
-                  child: Text(
-                'placeHolder',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: AppVariables.fontSizesmail,
-                  color: AppVariables.textcolor, // Set your desired text color
-                ),
-              )),
-            ),
+    
           ],
         ),
       ),

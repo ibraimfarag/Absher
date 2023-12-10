@@ -1,4 +1,4 @@
-import 'package:absherv2/screens/imports.dart';
+import 'package:Abshr/screens/imports.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -245,6 +245,26 @@ class CustomDrawer extends StatelessWidget {
                       if (isAuthenticated)
                     ListTile(
                       trailing: Icon(
+                        Icons.request_page,
+                        color: AppVariables().iconColor,
+                        size: AppVariables().iconSize, // Set the icon size here
+                      ),
+                      title: Text(
+                        'طلباتي',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: AppVariables().titleColor,
+                          fontSize: AppVariables().titleFontSize,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: AppVariables().titleFontFamily,
+                        ),
+                      ),
+                      onTap: () {
+     Navigator.pushNamed(context, '/myrequests');                      },
+                    ),
+                      if (isAuthenticated)
+                    ListTile(
+                      trailing: Icon(
                         Icons.logout_outlined,
                         color: AppVariables().iconColor,
                         size: AppVariables().iconSize, // Set the icon size here
@@ -324,7 +344,9 @@ class CustomDrawer extends StatelessWidget {
   final phoneNumber = AppVariables().phoneNumber; // Replace with the desired phone number
   final message = AppVariables().whatsappMsg;
 
-  final whatsappUrl = 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
+  final whatsappUrl = Platform.isIOS
+    ? 'whatsapp://wa.me/$phoneNumber/?text=${Uri.encodeQueryComponent(message)}'
+    : 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
 
   if (await canLaunch(whatsappUrl)) {
     await launch(whatsappUrl);
