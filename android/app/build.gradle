@@ -60,6 +60,8 @@ android {
     }
  signingConfigs {
         release {
+              storeFile = file('key.jks')
+
             keyAlias keystoreProperties['keyAlias'] // Use the correct key alias from your key.properties file
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
