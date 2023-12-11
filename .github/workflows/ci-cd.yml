@@ -1,0 +1,17 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+    pull_request:
+      branches:
+        - develop
+        - master
+
+env:
+  JAVA_VERSION: "12.x"
+  FLUTTER_VERSION: "3.13.7"
+  FLUTTER_CHANNEL: "stable"
+  PROPERTIES_PATH: "./android/key.properties"
