@@ -363,6 +363,8 @@ static Future<List<Map<String, dynamic>>> getOwnRequests(String token) async {
         'locationDescription': request['locationDescription'],
         'locationLink': request['locationLink'],
         'comments': request['comments'],
+        'status': request['status'],
+        'statusAR': request['statusAR'],
         'date': request['date'],
         'requestFiles': request['requestFiles'],
       };
