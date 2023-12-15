@@ -49,3 +49,4 @@ app.*.map.json
 /Absher.jks
 /android/KEYAPP.jks
 /android/files.zip
+android/key.properties
