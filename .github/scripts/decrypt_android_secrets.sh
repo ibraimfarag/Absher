@@ -2,7 +2,7 @@
 # --batch to prevent interactive command
 # --yes to assume "yes" for questions
 gpg --quiet --batch --yes --decrypt --passphrase="12345678" \
---output android/key_files.zip android/files.zip.gpg && cd android && jar xvf key_files.zip && cd -
+--output android/files.zip android/files.zip.gpg && cd android && jar xvf files.zip && cd -
 ls -d $PWD/android/*
 # mv ./android/expensemanager.jks ./android/app
 # move your file according to path in key.properties
