@@ -85,13 +85,16 @@ static Future<void> registerUser(String name, String phone, String email, String
     body: jsonEncode(requestData),
   );
 
-  if (response.statusCode != 200) {
-    final Map<String, dynamic> responseBody = json.decode(response.body);
+if (response.statusCode == 200) {    
+  final Map<String, dynamic> responseBody = json.decode(response.body);
     final String token = responseBody['token'];
     await cacheUserToken(token);
+}else{
+    final Map<String, dynamic> responseBody = json.decode(response.body);
+
     final String error = responseBody['message'];
     throw ApiException(error); // Throw your custom ApiException
-  }
+  } 
 }
 // API function to verify the account
 static Future<String?> verifyAccount(String phoneNumber, String code) async {
@@ -371,6 +374,114 @@ static Future<List<Map<String, dynamic>>> getOwnRequests(String token) async {
   }
 }
 
+static Future<void> deactivateAccount(BuildContext context) async {
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  final String? token = authProvider.token;
+
+  if (token != null) {
+    try {
+      final response = await http.patch(
+        Uri.parse('$baseUrl/Clients/own/deactivate'),
+        headers: <String, String>{
+          'accept': 'text/plain',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Account deactivated successfully
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                'تم تعطيل الحساب',
+                textAlign: TextAlign.right,
+              ),
+              content: Text(
+                'تم تعطيل الحساب بنجاح.',
+                textAlign: TextAlign.right,
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the success dialog
+                    // You may want to navigate the user to the login screen or take other actions
+                  },
+                  child: Text('موافق'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        print('Error during account deactivation. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Account deactivation failed.');
+      }
+    } catch (e) {
+      print('Error during account deactivation: $e');
+      throw e;
+    }
+  } else {
+    throw Exception('Token is null. User is not authenticated.');
+  }
+}
+static Future<void> deleteAccount(BuildContext context) async {
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  final String? token = authProvider.token;
+
+  if (token != null) {
+    try {
+      final response = await http.patch(
+        Uri.parse('$baseUrl/Clients/own/delete'),
+        headers: <String, String>{
+          'accept': 'text/plain',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+      );
+ if (response.statusCode == 200) {
+        // Account deactivated successfully
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                'تم حذف الحساب',
+                textAlign: TextAlign.right,
+              ),
+              content: Text(
+                'تم حذف الحساب بنجاح.',
+                textAlign: TextAlign.right,
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the success dialog
+                    // You may want to navigate the user to the login screen or take other actions
+                  },
+                  child: Text('موافق'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // Handle error cases
+        print('Error during account deletion. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Account deletion failed.');
+      }
+    } catch (e) {
+      print('Error during account deletion: $e');
+      throw e;
+    }
+  } else {
+    throw Exception('Token is null. User is not authenticated.');
+  }
+}
 
 }
 class ApiException implements Exception {

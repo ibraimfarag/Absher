@@ -173,10 +173,116 @@ showDialog(
                 child: Text('تحديث'),
               ),
                             SizedBox(height: 20),
-// Text(
-//   'Your Token: ${authProvider.token}', // Display the token here
-//   style: customTextStyle,
-// ),
+SizedBox(height: 20),
+
+    // Button to disable the account temporarily
+// Inside the _ProfileScreenState class
+ElevatedButton(
+  onPressed: () async {
+    // Show a confirmation dialog before deactivating the account
+    bool confirmDeactivation = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'تأكيد تعطيل الحساب',
+            textAlign: TextAlign.right,
+          ),
+          content: Text(
+            'هل أنت متأكد أنك تريد تعطيل الحساب؟',
+            textAlign: TextAlign.right,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // User doesn't confirm
+              },
+              child: Text('إلغاء'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // User confirms
+              },
+              child: Text('تأكيد'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmDeactivation == true) {
+      // User confirmed, proceed with account deactivation
+      await API.deactivateAccount(context);
+
+      // Logout and clear cache
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.logout();
+            Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/screen1', // Replace '/home' with the route name of your home screen
+        (Route<dynamic> route) => false,
+      );
+
+    }
+  },
+  child: Text('تعطيل الحساب مؤقتاً'),
+),
+
+    SizedBox(height: 20),
+
+    // Button to delete the account permanently
+    ElevatedButton(
+  onPressed: () async {
+    bool confirmDeletion = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'تأكيد حذف الحساب',
+            textAlign: TextAlign.right,
+          ),
+          content: Text(
+            'هل أنت متأكد أنك تريد حذف الحساب نهائياً؟',
+            textAlign: TextAlign.right,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // User doesn't confirm
+              },
+              child: Text('إلغاء'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // User confirms
+              },
+              child: Text('تأكيد'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmDeletion == true) {
+      // User confirmed, proceed with account deletion
+      await API.deleteAccount(context);
+
+      // Logout and clear cache
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.logout();
+
+      // Navigate to the home route screen
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/screen1', // Replace '/home' with the route name of your home screen
+        (Route<dynamic> route) => false,
+      );
+    }
+  },
+  child: Text('حذف الحساب نهائياً'),
+),
+
+
 
                      
           ],

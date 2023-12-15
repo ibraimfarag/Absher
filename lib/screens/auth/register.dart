@@ -288,12 +288,12 @@ SizedBox(height: 10),
       try {
         // Call the registration method here
         await API.registerUser(
-          nameController.text,
-          phoneController.text,
-          emailController.text,
-          passwordController.text,
+              nameController.text,
+    phoneController.text ?? '',
+    emailController.text,
+    passwordController.text ?? '',
         );
-
+        
         // Login the user automatically after successful registration
         final token = await API.login(
             phoneController.text, passwordController.text);
@@ -306,29 +306,39 @@ SizedBox(height: 10),
         // Navigate to the next screen or perform other actions
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MainApp()));
+  
+
+
       } catch (e) {
-        // Handle registration or login error here
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('خطأ في التسجيل', textAlign: TextAlign.right),
-              content: Text(
-                e.toString(),
-                textAlign: TextAlign.right,
-              ),
-              actions: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the alert dialog
-                  },
-                  child: Text('موافق'),
-                ),
-              ],
-            );
-          },
+    // Handle login failure and display the API response message
+    
+    String errorMessage = '$e'; // Display the error message;
+
+    // Check if the error is an HTTP response error
+
+print('error : $e');
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('خطأ في عملية التسجيل', textAlign: TextAlign.right),
+          content: Text(
+            errorMessage,
+            textAlign: TextAlign.right,
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the alert dialog
+              },
+              child: Text('موافق'),
+            ),
+          ],
         );
-      }
+      },
+    );
+}
+
     }
   },
   child: Text('تسجيل'),
