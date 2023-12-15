@@ -89,12 +89,20 @@ class _RequestScreenState extends State<RequestScreen> {
                     if (requestData != null)
                       buildTextRow('العنوان: ',
                           '${requestData?['locationDescription']}'),
+                    
+
                     if (requestData != null)
                       buildTextRow(
                           'الملاحظات: ', '${requestData?['comments']}'),
-buildTextRow('حالة الطلب: ', requestData?['status'] != null && requestData?['status'].isNotEmpty
-    ? '${requestData?['status']}'
-    : 'ليس هناك حالة محددة'),
+
+                    // if (requestData != null)
+                    //   buildTextRow(
+                    //       'رقم الخدمة: ', '${requestData?['id']}'),
+                
+
+buildTextRow('حالة الطلب: ', requestData?['statusAR'] != null && requestData?['statusAR'].isNotEmpty
+    ? '${requestData?['statusAR']}'
+    : 'جاري التحديث'),
 
 
 
