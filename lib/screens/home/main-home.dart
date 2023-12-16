@@ -36,33 +36,47 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
               color: Colors.transparent,
               height: 200,
               width: 400,
-              child: const ImageSlider(
-                assetImagePaths: [
-                  'assets/sliders/1.png',
-                  'assets/sliders/2.png',
-                  'assets/sliders/3.png',
-                  'assets/sliders/4.png',
-                  'assets/sliders/5.png',
-                  'assets/sliders/6.png',
-                 
-                  // Add more asset image paths as needed
-                ],
-              ),
+              child:  const ImageSlider(assetImagePaths: [], ),
             ),
             // Row 2
             Container(
-              // height: 150, // Adjust the height of the slider
-              padding: const EdgeInsets.fromLTRB(40, 0, 40, 40),
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
-                    'assets/sliders/6.png', // Replace with your logo image path
-                    width: 460, // Adjust the logo height as needed
-                  ),
-                ),
-              ),
-            ),
+  padding: const EdgeInsets.fromLTRB(40, 0, 40, 40),
+  child: Center(
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: FutureBuilder<List<Map<String, dynamic>>>(
+        future: API.fetchSettings(), // Assuming fetchSettings returns the list of settings
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Text('No settings available');
+          } else {
+            // Find the setting with ID 3 (or the desired ID)
+            final setting = snapshot.data!.firstWhere(
+              (setting) => setting['name'] == 'Planner One', // Change this to the desired ID
+              orElse: () => Map<String, dynamic>(), // Default to an empty map if not found
+            );
+
+            // Check if the setting was found
+            if (setting.isNotEmpty && setting['type'] == 'file') {
+              final imageUrl = setting['value'];
+              return Image.network(
+                imageUrl,
+                width: 460,
+              );
+            } else {
+              return Text('Image setting not found or not of type "file"');
+            }
+          }
+        },
+      ),
+    ),
+  ),
+),
+
             // Row 3
             Container(
               color: Colors.transparent,

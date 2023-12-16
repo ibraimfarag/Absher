@@ -485,6 +485,32 @@ static Future<void> deleteAccount(BuildContext context) async {
   }
 }
 
+
+static Future<List<Map<String, dynamic>>> fetchSettings() async {
+    final response = await http.get(Uri.parse('$baseUrl/Settings'));
+
+    if (response.statusCode == 200) {
+      final List<Map<String, dynamic>> settings = List<Map<String, dynamic>>.from(json.decode(response.body));
+      return settings;
+    } else {
+      throw Exception('Failed to load settings from the API');
+    }
+  }
+
+
+
+static Future<List<Map<String, dynamic>>> fetchPlanners() async {
+  final response = await http.get(Uri.parse('$baseUrl/Planners'));
+
+  if (response.statusCode == 200) {
+    final List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(json.decode(response.body));
+    return data;
+  } else {
+    throw Exception('Failed to load planners from the API');
+  }
+}
+
+
 }
 class ApiException implements Exception {
   final String message;
@@ -501,4 +527,57 @@ class ApiResponse {
   final String message;
 
   ApiResponse({required this.statusCode, required this.message});
+}
+
+class SettingsWidget extends StatelessWidget {
+  final String targetSettingName; // Specify the name of the setting you want to display
+
+  SettingsWidget({required this.targetSettingName});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: API.fetchSettings(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); // Display a loading indicator while fetching data
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Text('No settings available'); // Handle the case where no settings are returned
+        } else {
+          // Find the setting with the specified name
+          final setting = snapshot.data!.firstWhere(
+            (setting) => setting['name'] == targetSettingName,
+            orElse: () => Map<String, dynamic>(), // Default to an empty map if not found
+          );
+
+          // Check if the setting was found
+          if (setting.isNotEmpty) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Text(
+                //   '${setting['name']}',
+                //   style: TextStyle(
+                //     fontSize: 24,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                //   textAlign: TextAlign.right,
+                // ),
+                SizedBox(height: 16),
+                Text(
+                  '${setting['value']}',
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.right,
+                ),
+              ],
+            );
+          } else {
+            return Text('Setting with name $targetSettingName not found');
+          }
+        }
+      },
+    );
+  }
 }

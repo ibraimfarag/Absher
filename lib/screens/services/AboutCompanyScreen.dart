@@ -27,11 +27,8 @@ class _AboutCompanyScreenState extends State<AboutCompanyScreen> {
                 textAlign: TextAlign.right,
               ),
               SizedBox(height: 16),
-              Text(
-                'نص عن الشركة يمكن وضعه هنا...',
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.right,
-              ),
+                       SettingsWidget(targetSettingName: 'About company',),
+
               // You can add more text or widgets as needed
             ],
           ),

@@ -16,7 +16,6 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
       child: Scaffold(
         appBar: MyAppBar(showBackButton: true),
         body: SingleChildScrollView(
-          // Wrap your content in SingleChildScrollView
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -27,15 +26,12 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.right, // Align the heading to the right
+                textAlign: TextAlign.right,
               ),
               SizedBox(height: 16),
-              Text(
-                // Add your privacy policy text here
-                'نص سياسة الخصوصية يمكن وضعه هنا...',
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.right, // Align the text to the right
-              ),
+        
+              // Add the SettingsWidget here with the desired setting ID
+              SettingsWidget(targetSettingName: 'Terms and Conditions',),
               // You can add more text or widgets as needed
             ],
           ),
