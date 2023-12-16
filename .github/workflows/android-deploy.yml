@@ -26,13 +26,13 @@ jobs:
       - name: Install Flutter dependencies
         run: flutter pub get
         # Add build runner commands here if you have any
-      - name: Build the APK
-        run: flutter build apk --release
+      - name: Build the Bundle
+        run: flutter build appbundle --release
       - name: Upload artifact to Github
         uses: actions/upload-artifact@v1
         with:
-          name: release-apk
-          path: build/app/outputs/apk/release/app-release.apk
+          name: release-Bundle
+          path: build/app/outputs/apk/release/app-release.aab
   #CD
   deploy_android:
     name: Deploying to playstore
@@ -46,7 +46,7 @@ jobs:
         with:
           java-version: 12.x
       - name: Decrypt Android keys
-        run: sh ./.github/scripts/decrypt_secret.sh
+        run: sh ./.github/scripts/decrypt_android_secrets.sh
         env:
           ANDROID_KEYS_ZIP_PASSPHRASE: ${{ secrets.ANDROID_KEYS_ZIP_PASSPHRASE }}
       - name: Setup Flutter
@@ -54,12 +54,12 @@ jobs:
         with:
           flutter-version: 3.13.6
       - run: flutter pub get
-      - run: flutter build apk --release
+      - run: flutter build appbundle --release
       - name: Upload artifact to Github
         uses: actions/upload-artifact@v1
         with:
-          name: release-apk
-          path: build/app/outputs/apk/release/app-release.apk
+          name: release-Bundle
+          path: build/app/outputs/apk/release/app-release.aab
       - name: Run Fastlane
         uses: maierj/fastlane-action@v1.4.0
         with:
