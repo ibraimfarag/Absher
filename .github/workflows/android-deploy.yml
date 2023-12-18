@@ -60,8 +60,7 @@ jobs:
         with:
           name: release-Bundle
           path: build/app/outputs/bundle/release/app-release.aab
-      - name: Install Bundler
-        run: bundle install
+
       - name: Run Fastlane
         uses: maierj/fastlane-action@v1.4.0
         with:
