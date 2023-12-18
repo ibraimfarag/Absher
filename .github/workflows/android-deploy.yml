@@ -9,12 +9,13 @@ jobs:
     name: Building Android 
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: check password
         run: |
               echo"password is : "
               echo ${{ secrets.PASSPHRASE }}
-      - name: Checkout code
-        uses: actions/checkout@v2
+
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
