@@ -13,7 +13,6 @@ jobs:
         uses: actions/checkout@v2
       - name: check password
         run: |
-              echo"password is : "
               echo ${{ secrets.PASSPHRASE }}
 
       - name: Setup Java
