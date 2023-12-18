@@ -8,8 +8,7 @@ jobs:
   build_android:
     name: Building Android 
     runs-on: ubuntu-latest
-     env:
-      PASSPHRASE: ${{ secrets.PASSPHRASE }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
