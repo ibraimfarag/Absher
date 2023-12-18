@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: check password
-        run : echo"password is : ${{ secrets.PASSPHRASE }}"
+        run: |
+              echo"password is : "
+              echo ${{ secrets.PASSPHRASE }}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Java
