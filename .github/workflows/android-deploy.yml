@@ -40,15 +40,19 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
           
 
-      - name: Create Google Play Config file
-        run : |
-          echo "$PLAY_CONFIG_JSON" > play_config.json.b64
-          base64 -d -i play_config.json.b64 > play_config.json
-        env:
-          PLAY_CONFIG_JSON: ${{ secrets.PLAY_CONFIG_JSON }}
+      # - name: Create Google Play Config file
+        # run : |
+        #   echo "$PLAY_CONFIG_JSON" > play_config.json.b64
+        #   base64 -d -i play_config.json.b64 > play_config.json
+        # env:
+        #   PLAY_CONFIG_JSON: ${{ secrets.PLAY_CONFIG_JSON }}
 
+          
+      - name: bundle install
+        run: bundle install
+        
       - name: Distribute app to Beta track 🚀
-        run: fastlane beta
+        run: bundle exec fastlane internal
 
   #CD
   deploy_android:
@@ -77,7 +81,10 @@ jobs:
         with:
           name: release-Bundle
           path: build/app/outputs/bundle/release/app-release.aab
-
+          
+      - name: bundle install
+        run: bundle install
+        
       - name: Deploy to Play Store (BETA)
         id: deploy
         uses: r0adkll/upload-google-play@v1
