@@ -65,13 +65,6 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
 
       - name: Deploy to Play Store
-        uses: gradle-publish/gradle-publish-action@v1
+        uses: wzieba/Fastlane-Action@v2
         with:
-          gradle-version: 7.3
-          tasks: publishReleaseBundle
-          properties: |
-            releaseStatus=completed
-            track=internal
-          publish-plugin-id: com.android.application
-          publish-username: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_EMAIL }}
-          publish-password: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+          lane: deploy # Specify your Fastlane lane for deployment
