@@ -65,8 +65,11 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
 
      
-      - name: Fastlane Action
-        uses: maierj/fastlane-action@v3.0.0
+      - name: Upload Android App Bundle to Google Play Store
+        uses: KevinRohn/github-action-upload-play-store@v1.0.0
         with:
-          lane: deploy
-          
+          service_account_json: ${{ secrets.GOOGLE_PLAY_JSON_KEY }} # Base64 encoded service account JSON key
+          package_name: com.AbsherApp.HomeServices # Android package name
+          aab_file_path: build/app/outputs/bundle/release/app-release.aab # Path to the .aab file
+          track: internal # Can be internal, alpha, beta, production, or rollout (default is internal)
+          release_status: draft # Release status (e.g., draft, completed - default is draft)
