@@ -40,15 +40,12 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
           
           
-      - name: bundle install
-        run: |
-          cd android
-          sudo gem install bundler
         
       - name: Distribute app to Beta track 🚀
         run: |
           cd android
-          bundle exec fastlane internal
+          sudo gem install bundler
+          sudo bundle exec fastlane internal
 
   #CD
   # deploy_android:
