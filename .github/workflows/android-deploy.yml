@@ -49,7 +49,7 @@ jobs:
 
           
       - name: bundle install
-        run: bundle install
+        run: gem install bundler
         
       - name: Distribute app to Beta track 🚀
         run: bundle exec fastlane internal
