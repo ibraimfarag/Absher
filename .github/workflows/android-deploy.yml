@@ -51,7 +51,7 @@ jobs:
         run: cd android
           
       - name: bundle install
-        run: gem install bundler
+        run: sudo gem install bundler
         
       - name: Distribute app to Beta track 🚀
         run: bundle exec fastlane internal
