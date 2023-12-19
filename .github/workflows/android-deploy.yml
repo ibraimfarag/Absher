@@ -22,6 +22,7 @@ jobs:
         run: sh ./.github/scripts/decrypt_android_secrets.sh
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
+          
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
@@ -29,6 +30,14 @@ jobs:
       - name: Install Flutter dependencies
         run: flutter pub get
         # Add build runner commands here if you have any
+
+        
+      - name: Install bundle
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+          
       - name: Build the Bundle
         run: flutter build appbundle --release
       - name: Upload artifact to Github
