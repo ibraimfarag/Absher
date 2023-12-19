@@ -65,9 +65,8 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
 
       - name: Deploy to Play Store
-        uses: wzieba/Fake-Google-Play-Deploy@v1
+        uses: wzieba/gradle-play-publisher-action@v2
         with:
-          files: build/app/outputs/bundle/release/app-release.aab
-          track: 'internal'  # Specify the desired track (internal, alpha, beta, production)
-          service-account-email: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_EMAIL }}
-          service-account-json-key: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+          service-account-json: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+          package-name: com.AbsherApp.HomeServices
+          release-file: build/app/outputs/bundle/release/app-release.aab
