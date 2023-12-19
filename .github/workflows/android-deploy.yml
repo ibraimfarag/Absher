@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+        with: 
+          ruby-version: '3.1' 
+        
       - name: Checkout code
         uses: actions/checkout@v2
      
@@ -41,12 +46,12 @@ jobs:
           
           
         
-      - name: Distribute app to Beta track 🚀
+      - name: Distribute app to Beta track 🚀   
         run: |
           cd android
           sudo gem install bundler
-          bundle install
-          bundle exec fastlane internal
+          sudo bundle install
+          sudo bundle exec fastlane internal
   #CD
   # deploy_android:
   #   name: Deploying to playstore
