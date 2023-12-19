@@ -39,8 +39,6 @@ jobs:
           name: release-Bundle
           path: build/app/outputs/bundle/release/app-release.aab
           
-
-
           
       - name: bundle install
         run: |
@@ -91,5 +89,5 @@ jobs:
   #        packageName: com.AbsherApp.HomeServices
   #        releaseFile: build/app/outputs/bundle/release/app-release.aab
                       
-         track: alpha
-         whatsNewDirectory: whatsnew/
+         # track: alpha
+         # whatsNewDirectory: whatsnew/
