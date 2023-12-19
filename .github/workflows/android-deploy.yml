@@ -64,7 +64,9 @@ jobs:
           name: release-Bundle
           path: build/app/outputs/bundle/release/app-release.aab
 
-      - name: Deploy to Play Store
-        uses: wzieba/Fastlane-Action@v2
+     
+      - name: Fastlane Action
+        uses: maierj/fastlane-action@v3.0.0
         with:
-          lane: deploy # Specify your Fastlane lane for deployment
+          lane: deploy
+          
