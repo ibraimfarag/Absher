@@ -45,8 +45,8 @@ jobs:
         run: |
           cd android
           sudo gem install bundler
-          sudo bundle exec fastlane internal
-
+          bundle install
+          bundle exec fastlane internal
   #CD
   # deploy_android:
   #   name: Deploying to playstore
