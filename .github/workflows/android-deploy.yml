@@ -65,8 +65,13 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
 
       - name: Deploy to Play Store
-        uses: wzieba/gradle-play-publisher-action@v2
+        uses: gradle-publish/gradle-publish-action@v1
         with:
-          service-account-json: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
-          package-name: com.AbsherApp.HomeServices
-          release-file: build/app/outputs/bundle/release/app-release.aab
+          gradle-version: 7.3
+          tasks: publishReleaseBundle
+          properties: |
+            releaseStatus=completed
+            track=internal
+          publish-plugin-id: com.android.application
+          publish-username: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_EMAIL }}
+          publish-password: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
