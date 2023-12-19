@@ -46,50 +46,45 @@ jobs:
           
           
         
+
+  #CD
+  deploy_android:
+    name: Deploying to playstore
+    runs-on: ubuntu-latest
+    needs: [build_android]
+    steps:
+    
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+        with: 
+          ruby-version: '3.1' 
+
+          
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 12.x
+      - name: Decrypt Android keys
+        run: sh ./.github/scripts/decrypt_android_secrets.sh
+        env:
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: 3.13.6
+      - run: flutter pub get
+      - run: flutter build appbundle --release
+      - name: Upload artifact to Github
+        uses: actions/upload-artifact@v1
+        with:
+          name: release-Bundle
+          path: build/app/outputs/bundle/release/app-release.aab
+
       - name: Distribute app to Beta track 🚀   
         run: |
           cd android
           sudo gem install bundler
           sudo bundle install
           sudo bundle exec fastlane internal
-  #CD
-  # deploy_android:
-  #   name: Deploying to playstore
-  #   runs-on: ubuntu-latest
-  #   needs: [build_android]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-  #     - name: Setup Java
-  #       uses: actions/setup-java@v1
-  #       with:
-  #         java-version: 12.x
-  #     - name: Decrypt Android keys
-  #       run: sh ./.github/scripts/decrypt_android_secrets.sh
-  #       env:
-  #         PASSPHRASE: ${{ secrets.PASSPHRASE }}
-  #     - name: Setup Flutter
-  #       uses: subosito/flutter-action@v1
-  #       with:
-  #         flutter-version: 3.13.6
-  #     - run: flutter pub get
-  #     - run: flutter build appbundle --release
-  #     - name: Upload artifact to Github
-  #       uses: actions/upload-artifact@v1
-  #       with:
-  #         name: release-Bundle
-  #         path: build/app/outputs/bundle/release/app-release.aab
-          
-  #     - name: bundle install
-  #       run: bundle install
-        
-  #     - name: Deploy to Play Store (BETA)
-  #       id: deploy
-  #       uses: r0adkll/upload-google-play@v1
-  #       with:
-  #        serviceAccountJson: absher-400309-317f93cdd5f7.json
-  #        packageName: com.AbsherApp.HomeServices
-  #        releaseFile: build/app/outputs/bundle/release/app-release.aab
-                      
-         # track: alpha
-         # whatsNewDirectory: whatsnew/
