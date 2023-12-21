@@ -567,34 +567,37 @@ Builder(
           final token = authProvider.token; // Retrieve the token from your AuthProvider
 
           if (token != null) {
-            await API.postRequestWithImages(token, requestData, selectedImages);
+            // Make the API request
+            API.postRequestWithImages(context,token, requestData, selectedImages);
 
-            // Request successful, close the loading dialog and show a success dialog
-            Navigator.of(context, rootNavigator: true).pop(); // Close the loading dialog
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(
-                    'شكرًا!',
-                    textAlign: TextAlign.right,
-                  ),
-                  content: Text(
-                    'تم إرسال الطلب بنجاح مع الصور.',
-                    textAlign: TextAlign.right,
-                  ),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Close the success dialog
-                        Navigator.of(context).pushReplacementNamed('/screen1'); // Navigate to the main screen
-                      },
-                      child: Text('موافق'),
-                    ),
-                  ],
-                );
-              },
-            );
+            // Request successful, close the loading dialog
+            Navigator.of(context, rootNavigator: true).pop();
+
+            // // Show the success dialog
+            // showDialog(
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return AlertDialog(
+            //       title: Text(
+            //         'شكرًا!',
+            //         textAlign: TextAlign.right,
+            //       ),
+            //       content: Text(
+            //         'تم إرسال الطلب بنجاح مع الصور.',
+            //         textAlign: TextAlign.right,
+            //       ),
+            //       actions: [
+            //         ElevatedButton(
+            //           onPressed: () {
+            //             Navigator.of(context).pop(); // Close the success dialog
+            //             Navigator.of(context).pushReplacementNamed('/screen1'); // Navigate to the main screen
+            //           },
+            //           child: Text('موافق'),
+            //         ),
+            //       ],
+            //     );
+            //   },
+            // );
           } else {
             // Handle the case where the token is null (user is not authenticated)
             // ...
@@ -614,7 +617,7 @@ Builder(
       child: Text('ارسال الطلب', style: TextStyle(fontFamily: AppVariables.serviceFontFamily)),
     );
   },
-),
+)
 
 
 

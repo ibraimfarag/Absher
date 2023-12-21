@@ -1,2 +1,2 @@
-json_key_file("F:\home_services\abshr\absherv2\android\absher-400309-317f93cdd5f7.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+json_key_file("absher-400309-317f93cdd5f7.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
 package_name("com.AbsherApp.HomeServices") # e.g. com.krausefx.app
