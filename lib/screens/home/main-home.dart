@@ -149,40 +149,40 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
             ),SizedBox(
               height: 50,
             ),
-            Container(
-              color: Colors.transparent,
-              height: 80,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 0.0), // Adjust the padding as needed
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              right: 0.0), // Adjust the padding as needed
-                          child: Image.asset(
-                            'assets/reviews_ar.png', // Replace with your image asset path
-                            height: 50, // Adjust the height as needed
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+            // Container(
+            //   color: Colors.transparent,
+            //   height: 80,
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Padding(
+            //         padding: const EdgeInsets.symmetric(
+            //             horizontal: 0.0), // Adjust the padding as needed
+            //         child: Row(
+            //           children: [
+            //             Padding(
+            //               padding: const EdgeInsets.only(
+            //                   right: 0.0), // Adjust the padding as needed
+            //               child: Image.asset(
+            //                 'assets/reviews_ar.png', // Replace with your image asset path
+            //                 height: 50, // Adjust the height as needed
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
 
-                  // Add your grid list view below
-                ],
-              ),
-            ),
+            //       // Add your grid list view below
+            //     ],
+            //   ),
+            // ),
             // Row 5
-            Container(
-                color: Colors.transparent,
-                height: 280,
-                child: TestimonialList(
-                  testimonials: _testimonials,
-                )),
+            // Container(
+            //     color: Colors.transparent,
+            //     height: 280,
+            //     child: TestimonialList(
+            //       testimonials: _testimonials,
+            //     )),
             // Row 6
     
           ],
