@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
   // Define the base URL of your API
-  static const String baseUrl = 'http://magamy-006-site4.ctempurl.com/api/';
+  static const String baseUrl = 'https://absher.services/api/';
 
 
 
@@ -216,7 +216,7 @@ static Future<void> updatePassword(String token, String newPassword, String conf
   }
 }
 
-static Future<void> postRequestWithImages(String token, Map<String, dynamic> requestData, List<Asset> selectedImages) async {
+static Future<void> postRequestWithImages(BuildContext context, String token, Map<String, dynamic> requestData, List<Asset> selectedImages) async {
   final request = http.MultipartRequest(
     'POST',
     Uri.parse('$baseUrl/Requests'),
@@ -251,14 +251,74 @@ static Future<void> postRequestWithImages(String token, Map<String, dynamic> req
 
     if (response.statusCode != 200) {
       final responseBody = await response.stream.bytesToString();
+          final Map<String, dynamic> errorResponse = json.decode(responseBody);
+
       print('Error response code: ${response.statusCode}');
       print('Error response body: $responseBody');
+
+      // Show an error dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'خطأ في إرسال الطلب',
+              textAlign: TextAlign.right,
+            ),
+            content: Text(
+               '${errorResponse['message']}',
+              textAlign: TextAlign.right,
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('موافق'),
+              ),
+            ],
+          );
+        },
+      );
+
       throw Exception('Failed to post data to the API');
+    } else {
+       final responseBody = await response.stream.bytesToString();
+      print('Error response code: ${response.statusCode}');
+      print('Error response body: $responseBody');
+
+      // Show a success dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'تم اكتمال الطلب',
+              textAlign: TextAlign.right,
+            ),
+            content: Text(
+               'تم اكتمال الطلب بنجاح ,شكرا',
+              textAlign: TextAlign.right,
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed('/screen1');
+                },
+                child: Text('موافق'),
+              ),
+            ],
+          );
+        },
+      );
     }
   } catch (e) {
     // Handle errors here
     print('Error posting request with images: $e');
+
     // Show an error message to the user or handle the error appropriately
+    
   }
 }
 
