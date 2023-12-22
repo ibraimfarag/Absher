@@ -217,6 +217,9 @@ static Future<void> updatePassword(String token, String newPassword, String conf
 }
 
 static Future<void> postRequestWithImages(BuildContext context, String token, Map<String, dynamic> requestData, List<Asset> selectedImages) async {
+  // Show the loading dialog
+  _showLoadingDialog(context);
+
   final request = http.MultipartRequest(
     'POST',
     Uri.parse('$baseUrl/Requests'),
@@ -250,8 +253,11 @@ static Future<void> postRequestWithImages(BuildContext context, String token, Ma
     final response = await request.send();
 
     if (response.statusCode != 200) {
+      // Dismiss the loading dialog on error
+      Navigator.of(context, rootNavigator: true).pop();
+
       final responseBody = await response.stream.bytesToString();
-          final Map<String, dynamic> errorResponse = json.decode(responseBody);
+      final Map<String, dynamic> errorResponse = json.decode(responseBody);
 
       print('Error response code: ${response.statusCode}');
       print('Error response body: $responseBody');
@@ -283,9 +289,12 @@ static Future<void> postRequestWithImages(BuildContext context, String token, Ma
 
       throw Exception('Failed to post data to the API');
     } else {
-       final responseBody = await response.stream.bytesToString();
-      print('Error response code: ${response.statusCode}');
-      print('Error response body: $responseBody');
+      // Dismiss the loading dialog on success
+      Navigator.of(context, rootNavigator: true).pop();
+
+      final responseBody = await response.stream.bytesToString();
+      print('Success response code: ${response.statusCode}');
+      print('Success response body: $responseBody');
 
       // Show a success dialog
       showDialog(
@@ -314,11 +323,13 @@ static Future<void> postRequestWithImages(BuildContext context, String token, Ma
       );
     }
   } catch (e) {
+    // Dismiss the loading dialog on error
+    Navigator.of(context, rootNavigator: true).pop();
+
     // Handle errors here
     print('Error posting request with images: $e');
 
     // Show an error message to the user or handle the error appropriately
-    
   }
 }
 
@@ -572,6 +583,28 @@ static Future<List<Map<String, dynamic>>> fetchPlanners() async {
 
 
 }
+
+
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Prevent dismissing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(), // Show the loading indicator
+              SizedBox(height: 16),
+              Text("يرجى الانتظار..."), // Add a message to inform the user
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 class ApiException implements Exception {
   final String message;
 
