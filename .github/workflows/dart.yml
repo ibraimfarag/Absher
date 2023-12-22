@@ -1,0 +1,48 @@
+name: Check Build
+on: 
+  push:
+    branches:
+      - master
+jobs:
+  #CI
+  build_android:
+    name: Building Android 
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+        with: 
+          ruby-version: '3.1' 
+        
+      - name: Checkout code
+        uses: actions/checkout@v2
+     
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 12.x
+      - name: Decrypt Android keys
+        run: sh ./.github/scripts/decrypt_android_secrets.sh
+        env:
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+          
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: 3.13.6
+      - name: Install Flutter dependencies
+        run: flutter pub get
+        # Add build runner commands here if you have any
+
+      - name: Build the Bundle
+        run: flutter build appbundle --release
+      - name: Upload artifact to Github
+        uses: actions/upload-artifact@v1
+        with:
+          name: release-Bundle
+          path: build/app/outputs/bundle/release/app-release.aab
+          
+          
+        
