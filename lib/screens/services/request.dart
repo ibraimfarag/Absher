@@ -1,22 +1,15 @@
-
 import 'package:Abshr/screens/imports.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:multiple_images_picker/multiple_images_picker.dart';
 
-
-
-
-
-
 class RequestOrderScreen extends StatefulWidget {
-
   @override
   State<RequestOrderScreen> createState() => _RequestOrderScreenState();
 }
 
 class _RequestOrderScreenState extends State<RequestOrderScreen> {
-   TextStyle customTextStyle = TextStyle(
+  TextStyle customTextStyle = TextStyle(
     fontFamily: AppVariables.serviceFontFamily,
     fontSize: 16,
     fontWeight: FontWeight.normal,
@@ -24,9 +17,9 @@ class _RequestOrderScreenState extends State<RequestOrderScreen> {
   );
   bool isLoading = false;
 
-DateTime? selectedDate;
-TimeOfDay? selectedTime;
-List<Asset> selectedImages = [];
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
+  List<Asset> selectedImages = [];
 
   // Define TextEditingController for each TextFormField
   TextEditingController _locationLinkController = TextEditingController();
@@ -36,68 +29,72 @@ List<Asset> selectedImages = [];
   TextEditingController _addressController = TextEditingController();
   TextEditingController _notesController = TextEditingController();
 
-
-String? TheTime;
-
-
-
-
-void _showLoadingDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: false, // Prevent dismissing the dialog by tapping outside
-    builder: (BuildContext context) {
-      return AlertDialog(
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircularProgressIndicator(), // Show the loading indicator
-            SizedBox(height: 16),
-            Text("يرجى الانتظار..."), // Add a message to inform the user
-          ],
-        ),
-      );
-    },
-  );
+  String? TheTime;
+String _twoDigits(int n) {
+  if (n >= 10) {
+    return '$n';
+  }
+  return '0$n';
 }
 
-
-Future<void> _pickImages() async {
-  List<Asset> resultList = <Asset>[];
-  try {
-    resultList = await MultipleImagesPicker.pickImages(
-      maxImages: 10, // Set the maximum number of images to pick
-      enableCamera: true, // Enable camera option
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Prevent dismissing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(), // Show the loading indicator
+              SizedBox(height: 16),
+              Text("يرجى الانتظار..."), // Add a message to inform the user
+            ],
+          ),
+        );
+      },
     );
-  } on Exception catch (e) {
-    // Handle exceptions if necessary
   }
 
-  if (!mounted) return;
-
-  setState(() {
-    selectedImages = resultList;
-  });
-}
-
-
-
-Future<LocationPermission> _requestLocationPermission() async {
-  final status = await Permission.location.request();
+  Future<void> _pickImages() async {
+  var status = await Permission.photos.request();
   if (status.isGranted) {
-    return LocationPermission.always; // or LocationPermission.whileInUse
-  } else {
-    return LocationPermission.denied;
+              // Show the loading dialog
+                      _showLoadingDialog(context);
   }
-}
+    
+    List<Asset> resultList = <Asset>[];
+    try {
+      resultList = await MultipleImagesPicker.pickImages(
+        maxImages: 10, // Set the maximum number of images to pick
+        enableCamera: true, // Enable camera option
+      );
+    } on Exception catch (e) {
+      // Handle exceptions if necessary
+    }
 
+    if (!mounted) return;
 
+    setState(() {
+      selectedImages = resultList;
 
+    });
+  }
+
+  Future<LocationPermission> _requestLocationPermission() async {
+    final status = await Permission.location.request();
+    if (status.isGranted) {
+      return LocationPermission.always; // or LocationPermission.whileInUse
+    } else {
+      return LocationPermission.denied;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     // Retrieve the arguments
-     // Retrieve the arguments passed from ServiceDetailsScreen
+    // Retrieve the arguments passed from ServiceDetailsScreen
     final ServiceDetailsArguments? args =
         ModalRoute.of(context)!.settings.arguments as ServiceDetailsArguments?;
 
@@ -113,19 +110,19 @@ Future<LocationPermission> _requestLocationPermission() async {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: MyAppBar(showBackButton: false),
-        body:  SingleChildScrollView( // Wrap your content in SingleChildScrollView
+        body: SingleChildScrollView(
+          // Wrap your content in SingleChildScrollView
           padding: const EdgeInsets.all(16.0),
-          
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-       
-                    Text(
-                    '  تم اختيار خدمة : $serviceNAME ',
-                    style: customTextStyle,
-                  ),
-              
-                 Column(
+              Text(
+                '  تم اختيار خدمة : $serviceNAME ',
+                style: customTextStyle,
+              ),
+
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -133,7 +130,7 @@ Future<LocationPermission> _requestLocationPermission() async {
                     style: customTextStyle,
                   ),
                   TextFormField(
-                     controller: _mobileController , // Assign the controller
+                    controller: _mobileController, // Assign the controller
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: ' ادخل رقم موبيل اخر',
@@ -163,8 +160,8 @@ Future<LocationPermission> _requestLocationPermission() async {
                   ),
                 ],
               ),
-            SizedBox(height: 20),
- Column(
+              SizedBox(height: 20),
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -172,7 +169,7 @@ Future<LocationPermission> _requestLocationPermission() async {
                     style: customTextStyle,
                   ),
                   TextFormField(
-                     controller: _cityController , // Assign the controller
+                    controller: _cityController, // Assign the controller
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: '  ادخل اسم المدينة ',
@@ -193,19 +190,19 @@ Future<LocationPermission> _requestLocationPermission() async {
                         ),
                       ),
                     ),
-                     // Change keyboardType to TextInputType.text for entering a username
-  keyboardType: TextInputType.text,
-  // Remove the inputFormatters for username, or you can add specific formatters as needed
-  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
-  // inputFormatters: <TextInputFormatter>[
-  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
-  // ],
-                 
+                    // Change keyboardType to TextInputType.text for entering a username
+                    keyboardType: TextInputType.text,
+                    // Remove the inputFormatters for username, or you can add specific formatters as needed
+                    // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
+                    // inputFormatters: <TextInputFormatter>[
+                    //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
+                    // ],
+
                     style: customTextStyle,
                   ),
                 ],
               ),
-            SizedBox(height: 20),
+              SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -214,7 +211,7 @@ Future<LocationPermission> _requestLocationPermission() async {
                     style: customTextStyle,
                   ),
                   TextFormField(
-                     controller: _areaController , // Assign the controller
+                    controller: _areaController, // Assign the controller
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
                       hintText: '  ادخل اسم االمنطقة او الحي ',
@@ -235,21 +232,19 @@ Future<LocationPermission> _requestLocationPermission() async {
                         ),
                       ),
                     ),
-                     // Change keyboardType to TextInputType.text for entering a username
-  keyboardType: TextInputType.text,
-  // Remove the inputFormatters for username, or you can add specific formatters as needed
-  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
-  // inputFormatters: <TextInputFormatter>[
-  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
-  // ],
-                 
+                    // Change keyboardType to TextInputType.text for entering a username
+                    keyboardType: TextInputType.text,
+                    // Remove the inputFormatters for username, or you can add specific formatters as needed
+                    // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
+                    // inputFormatters: <TextInputFormatter>[
+                    //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
+                    // ],
+
                     style: customTextStyle,
                   ),
                 ],
               ),
-            SizedBox(height: 20),
-
-             
+              SizedBox(height: 20),
 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,25 +275,23 @@ Future<LocationPermission> _requestLocationPermission() async {
                         ),
                       ),
                     ),
-                     // Change keyboardType to TextInputType.text for entering a username
-  keyboardType: TextInputType.text,
-  // Remove the inputFormatters for username, or you can add specific formatters as needed
-  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
-  // inputFormatters: <TextInputFormatter>[
-  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
-  // ],
-                 
+                    // Change keyboardType to TextInputType.text for entering a username
+                    keyboardType: TextInputType.text,
+                    // Remove the inputFormatters for username, or you can add specific formatters as needed
+                    // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
+                    // inputFormatters: <TextInputFormatter>[
+                    //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
+                    // ],
+
                     style: customTextStyle,
                   ),
                 ],
               ),
               // SizedBox(height: 20),
 
-              
 //               Column(
 //                 crossAxisAlignment: CrossAxisAlignment.start,
 //                 children: [
-
 
 //  Column(
 //     crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,15 +335,9 @@ Future<LocationPermission> _requestLocationPermission() async {
 //   ),
 // )
 
-
-
-
 //       // Other TextFormFields
 //     ],
 //   ),
-
-                 
-
 
 //                 ],
 //               ),
@@ -385,242 +372,234 @@ Future<LocationPermission> _requestLocationPermission() async {
                         ),
                       ),
                     ),
-                     // Change keyboardType to TextInputType.text for entering a username
-  keyboardType: TextInputType.text,
-  // Remove the inputFormatters for username, or you can add specific formatters as needed
-  // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
-  // inputFormatters: <TextInputFormatter>[
-  //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
-  // ],
-                 
+                    // Change keyboardType to TextInputType.text for entering a username
+                    keyboardType: TextInputType.text,
+                    // Remove the inputFormatters for username, or you can add specific formatters as needed
+                    // Example: You can add a LengthLimitingTextInputFormatter if you want to limit the length
+                    // inputFormatters: <TextInputFormatter>[
+                    //   LengthLimitingTextInputFormatter(30), // Adjust the limit as needed
+                    // ],
+
                     style: customTextStyle,
                   ),
                 ],
               ),
+               
               SizedBox(height: 20),
 
-Align(
-  alignment: Alignment.centerRight,
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        '  حدد التاريخ و الساعة   ',
-        style: customTextStyle,
-      ),
-      ElevatedButton(
-        onPressed: () async {
-          // Show Date Picker
-          final pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2101),
-          );
-
-          if (pickedDate != null && pickedDate != selectedDate) {
-            setState(() {
-              selectedDate = pickedDate;
-            });
-          }
-
-          // Show Time Picker
-          final pickedTime = await showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-          );
-
-          if (pickedTime != null && pickedTime != selectedTime) {
-            setState(() {
-              selectedTime = pickedTime;
-            });
-            
-          }
-
-          // Update TheTime
-        
-        },
-        child: Text(
-          'اختر التاريخ و الساعه',
-          style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
-        ),
-      ),
-      // Display selected date and time in the custom format
-      if (selectedDate != null && selectedTime != null)
-        Text(
-          'لقد اخترت موعد الزيارة يوم ${selectedDate!.toLocal().toString().split(' ')[0]} في الساعة ${selectedTime!.format(context)} بنجاح',
-          style: customTextStyle,
-        ),
-        
-        
-    ],
-  ),
-),
-
-
-
-
-
-     SizedBox(height: 20),
-Align(
-  alignment: Alignment.centerRight,
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      // ... Your existing form fields ...
-
-      // Add a button to pick multiple images
-      ElevatedButton(
-        onPressed: _pickImages,
-        child: Text(
-          'اختر صور',
-          style: TextStyle(fontFamily: AppVariables.serviceFontFamily),
-        ),
-      ),
-
-      // Display the selected images if available
-if (selectedImages.isNotEmpty)
-  Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        'الصور المختارة:',
-        style: customTextStyle,
-      ),
-      Wrap(
-        spacing: 8.0,
-        runSpacing: 8.0,
-        children: List.generate(selectedImages.length, (index) {
-          return Stack(
-            children: [
-              AssetThumb(
-                asset: selectedImages[index],
-                width: 100,
-                height: 100,
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedImages.removeAt(index);
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(4.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red,
+              Align(
+                alignment: Alignment.centerRight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '  حدد التاريخ و الساعة   ',
+                      style: customTextStyle,
                     ),
-                    child: Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 18.0,
+                    ElevatedButton(
+                      onPressed: () async {
+                        // Show Date Picker
+                        final pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2101),
+                        );
+
+                        if (pickedDate != null && pickedDate != selectedDate) {
+                          setState(() {
+                            selectedDate = pickedDate;
+                          });
+                        }
+
+                        // Show Time Picker
+                        final pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+
+                        if (pickedTime != null && pickedTime != selectedTime) {
+                          setState(() {
+                            selectedTime = pickedTime;
+                          });
+                        }
+
+                        // Update TheTime
+                      },
+                      child: Text(
+                        'اختر التاريخ و الساعه',
+                        style: TextStyle(
+                            fontFamily: AppVariables.serviceFontFamily),
+                      ),
                     ),
-                  ),
+                    // Display selected date and time in the custom format
+                    if (selectedDate != null && selectedTime != null)
+                      Text(
+                        'لقد اخترت موعد الزيارة يوم ${selectedDate!.toLocal().toString().split(' ')[0]} في الساعة ${selectedTime!.format(context)} بنجاح',
+                        style: customTextStyle,
+                      ),
+                  ],
                 ),
               ),
-            ],
-          );
-        }),
-      ),
-    ],
-  ),
 
-    ],
-  ),
-),
+        
 
+              SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ... Your existing form fields ...
 
-     SizedBox(height: 20),
-Builder(
-  builder: (BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
-        TheTime = selectedDate != null && selectedTime != null
-            ? '${selectedDate!.toLocal().toString().split(' ')[0]}T${selectedTime!.hour}:${selectedTime!.minute}'
-            : '';
-        print(TheTime);
-        setState(() {
-          isLoading = true; // Start loading
-        });
+                    // Add a button to pick multiple images
+                    ElevatedButton(
+                      onPressed: _pickImages,
+                      child: Text(
+                        'اختر صور',
+                        style: TextStyle(
+                            fontFamily: AppVariables.serviceFontFamily),
+                      ),
+                    ),
 
-        // Show the loading dialog
-        _showLoadingDialog(context);
+                    // Display the selected images if available
+                    if (selectedImages.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'الصور المختارة:',
+                            style: customTextStyle,
+                          ),
+                          Wrap(
+                            spacing: 8.0,
+                            runSpacing: 8.0,
+                            children:
+                                List.generate(selectedImages.length, (index) {
+                              return Stack(
+                                children: [
+                                  AssetThumb(
+                                    asset: selectedImages[index],
+                                    width: 100,
+                                    height: 100,
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedImages.removeAt(index);
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(4.0),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.red,
+                                        ),
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                          size: 18.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
 
-        // Prepare the request data based on your requirements
-        Map<String, dynamic> requestData = {
-          'LocationDescription': _addressController.text,
-          'ServingId': serviceID,
-          'City': _cityController.text,
-          'District': _areaController.text,
-          'Date': TheTime,
-          'LocationLink': _locationLinkController.text,
-          'Comments': _notesController.text,
-          'OtherPhone': _mobileController.text,
-        };
+              SizedBox(height: 20),
+              Builder(
+                builder: (BuildContext context) {
+                  return ElevatedButton(
+                    onPressed: () async {
+   // Show the loading dialog
+    _showLoadingDialog(context);
+              
+                     TheTime = selectedDate != null && selectedTime != null
+    ? '${selectedDate!.year}-${_twoDigits(selectedDate!.month)}-${_twoDigits(selectedDate!.day)}T${_twoDigits(selectedTime!.hour)}:${_twoDigits(selectedTime!.minute)}'
+    : '';
 
-        try {
-          final authProvider =
-              Provider.of<AuthProvider>(context, listen: false);
-          final token = authProvider.token; // Retrieve the token from your AuthProvider
+                      print(TheTime);
+    
+           
 
-          if (token != null) {
-            // Make the API request
-            API.postRequestWithImages(context,token, requestData, selectedImages);
+                      // Prepare the request data based on your requirements
+                      Map<String, dynamic> requestData = {
+                        'LocationDescription': _addressController.text,
+                        'ServingId': serviceID,
+                        'City': _cityController.text,
+                        'District': _areaController.text,
+                        'Date': TheTime,
+                        'LocationLink': _locationLinkController.text,
+                        'Comments': _notesController.text,
+                        'OtherPhone': _mobileController.text,
+                      };
+  
+                      try {
+                        final authProvider =
+                            Provider.of<AuthProvider>(context, listen: false);
+                        final token = authProvider
+                            .token; // Retrieve the token from your AuthProvider
 
-            // Request successful, close the loading dialog
-            Navigator.of(context, rootNavigator: true).pop();
+                        if (token != null) {
+                          // Make the API request
+                          API.postRequestWithImages(
+                              context, token, requestData, selectedImages);
 
-            // // Show the success dialog
-            // showDialog(
-            //   context: context,
-            //   builder: (BuildContext context) {
-            //     return AlertDialog(
-            //       title: Text(
-            //         'شكرًا!',
-            //         textAlign: TextAlign.right,
-            //       ),
-            //       content: Text(
-            //         'تم إرسال الطلب بنجاح مع الصور.',
-            //         textAlign: TextAlign.right,
-            //       ),
-            //       actions: [
-            //         ElevatedButton(
-            //           onPressed: () {
-            //             Navigator.of(context).pop(); // Close the success dialog
-            //             Navigator.of(context).pushReplacementNamed('/screen1'); // Navigate to the main screen
-            //           },
-            //           child: Text('موافق'),
-            //         ),
-            //       ],
-            //     );
-            //   },
-            // );
-          } else {
-            // Handle the case where the token is null (user is not authenticated)
-            // ...
-          }
-          setState(() {
-            isLoading = false; // Stop loading
-          });
-        } catch (e) {
-          // Handle errors here
-          print('Error posting request with images: $e');
-          // Show an error message to the user or handle the error appropriately
-          setState(() {
-            isLoading = false;
-          });
-        }
-      },
-      child: Text('ارسال الطلب', style: TextStyle(fontFamily: AppVariables.serviceFontFamily)),
-    );
-  },
-)
+                          // Request successful, close the loading dialog
+                          Navigator.of(context, rootNavigator: true).pop();
 
-
-
+                          // // Show the success dialog
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (BuildContext context) {
+                          //     return AlertDialog(
+                          //       title: Text(
+                          //         'شكرًا!',
+                          //         textAlign: TextAlign.right,
+                          //       ),
+                          //       content: Text(
+                          //         'تم إرسال الطلب بنجاح مع الصور.',
+                          //         textAlign: TextAlign.right,
+                          //       ),
+                          //       actions: [
+                          //         ElevatedButton(
+                          //           onPressed: () {
+                          //             Navigator.of(context).pop(); // Close the success dialog
+                          //             Navigator.of(context).pushReplacementNamed('/screen1'); // Navigate to the main screen
+                          //           },
+                          //           child: Text('موافق'),
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          // );
+                        } else {
+                          // Handle the case where the token is null (user is not authenticated)
+                          // ...
+                        }
+           // Show the loading dialog
+                      } catch (e) {
+                        // Handle errors here
+                        print('Error posting request with images: $e');
+                        // Show an error message to the user or handle the error appropriately
+                      } 
+                    },
+                    child: Text('ارسال الطلب',
+                        style: TextStyle(
+                            fontFamily: AppVariables.serviceFontFamily)),
+                  );
+                },
+              )
             ],
           ),
         ),
@@ -629,10 +608,4 @@ Builder(
       ),
     );
   }
-
- 
 }
-
-
-
-
