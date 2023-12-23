@@ -1,0 +1,6 @@
+git_url("https://github.com/ibraimfarag/absher-ios")
+
+storage_mode("git")
+
+type("development")
+type("appstore")
