@@ -1,4 +1,4 @@
-import 'package:Abshr/screens/imports.dart';
+import 'package:Absher/screens/imports.dart';
 
 class ImageSlider extends StatelessWidget {
   final List<String> assetImagePaths; // Add this line to accept assetImagePaths

@@ -21,28 +21,28 @@ export 'dart:io';
 // /* ------------------------------ // App config ----------------------------- */
 // /* -------------------------------------------------------------------------- */
 
-export 'package:Abshr/app-config.dart';
+export 'package:Absher/app-config.dart';
 
 // /* -------------------------------------------------------------------------- */
 // /* --------------------------------- // API --------------------------------- */
 // /* -------------------------------------------------------------------------- */
-export 'package:Abshr/api.dart';
+export 'package:Absher/api.dart';
 
 // /* -------------------------------------------------------------------------- */
 // /* -------------------------------- // Layout ------------------------------- */
 // /* -------------------------------------------------------------------------- */
-export 'package:Abshr/screens/layout/app_bar.dart';
-export 'package:Abshr/screens/layout/custom_drawer.dart';
-export 'package:Abshr/screens/layout/bottom_navigation.dart';
-export 'package:Abshr/screens/layout/body_widget_builder.dart';
+export 'package:Absher/screens/layout/app_bar.dart';
+export 'package:Absher/screens/layout/custom_drawer.dart';
+export 'package:Absher/screens/layout/bottom_navigation.dart';
+export 'package:Absher/screens/layout/body_widget_builder.dart';
 
 // /* -------------------------------------------------------------------------- */
 // /* ------------------------------- // widgets ------------------------------- */
 // /* -------------------------------------------------------------------------- */
 
-export 'package:Abshr/screens/widgets/image_slider.dart';
+export 'package:Absher/screens/widgets/image_slider.dart';
 
-export 'package:Abshr/screens/widgets/map_screen.dart';
+export 'package:Absher/screens/widgets/map_screen.dart';
 
 // /* -------------------------------------------------------------------------- */
 // /* ------------------------------- // screens ------------------------------- */
@@ -52,41 +52,41 @@ export 'package:Abshr/screens/widgets/map_screen.dart';
 
 // /* ---------------------------- // Authentication --------------------------- */
 
-export 'package:Abshr/screens/auth/login.dart';
+export 'package:Absher/screens/auth/login.dart';
 
-export 'package:Abshr/screens/auth/register.dart';
+export 'package:Absher/screens/auth/register.dart';
 
-export 'package:Abshr/screens/auth/auth_provider.dart';
+export 'package:Absher/screens/auth/auth_provider.dart';
 
-export 'package:Abshr/screens/auth/verify.dart';
+export 'package:Absher/screens/auth/verify.dart';
 
-export 'package:Abshr/screens/auth/profile.dart';
+export 'package:Absher/screens/auth/profile.dart';
 
-export 'package:Abshr/screens/auth/changePassword.dart';
-
-
-export 'package:Abshr/screens/auth/privacy_screen.dart';
+export 'package:Absher/screens/auth/changePassword.dart';
 
 
-export 'package:Abshr/screens/auth/restPassword.dart';
+export 'package:Absher/screens/auth/privacy_screen.dart';
 
 
-export 'package:Abshr/screens/auth/MyRequests.dart';
+export 'package:Absher/screens/auth/restPassword.dart';
 
-export 'package:Abshr/screens/auth/request.dart';
+
+export 'package:Absher/screens/auth/MyRequests.dart';
+
+export 'package:Absher/screens/auth/request.dart';
 
 
 
 // /* ----------------------------- // Home screen ----------------------------- */
 
-export 'package:Abshr/screens/home/main-home.dart';
-export 'package:Abshr/screens/home/services.dart';
-export 'package:Abshr/screens/widgets/testimonial_list.dart';
+export 'package:Absher/screens/home/main-home.dart';
+export 'package:Absher/screens/home/services.dart';
+export 'package:Absher/screens/widgets/testimonial_list.dart';
 
 // /* --------------------------- // services screen --------------------------- */
 
-export 'package:Abshr/screens/services/main_services.dart';
-export 'package:Abshr/screens/services/service_details_screen.dart';
-export 'package:Abshr/screens/services/request.dart';
-export 'package:Abshr/screens/services/AboutCompanyScreen.dart';
+export 'package:Absher/screens/services/main_services.dart';
+export 'package:Absher/screens/services/service_details_screen.dart';
+export 'package:Absher/screens/services/request.dart';
+export 'package:Absher/screens/services/AboutCompanyScreen.dart';
 

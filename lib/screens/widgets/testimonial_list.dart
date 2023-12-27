@@ -1,4 +1,4 @@
-import 'package:Abshr/screens/imports.dart';
+import 'package:Absher/screens/imports.dart';
 
 class TestimonialList extends StatelessWidget {
   final List<Testimonial> testimonials;
