@@ -18,8 +18,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       title: Center(
         child: Image.asset(
-          'assets/logo.png',
-          height: 40,
+          'assets/s7.png',
+          height: 150,
         ),
       ),
       leading: Builder(
