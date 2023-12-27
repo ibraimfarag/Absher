@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:Abshr/screens/auth/auth_provider.dart';
-import 'package:Abshr/screens/imports.dart';
+import 'package:Absher/screens/auth/auth_provider.dart';
+import 'package:Absher/screens/imports.dart';
 import 'package:http/http.dart' as http;
 import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:provider/provider.dart';

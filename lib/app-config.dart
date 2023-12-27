@@ -1,4 +1,4 @@
-import 'package:Abshr/screens/imports.dart';
+import 'package:Absher/screens/imports.dart';
 
 class AppVariables {
   static final AppVariables _instance = AppVariables._internal();

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Abshr/screens/imports.dart';
+import 'package:Absher/screens/imports.dart';
 import 'package:provider/provider.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
